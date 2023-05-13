@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/sql/user_schema.sql
+  - include:
+      file: db/changelog/sql/user_activity_schema.sql
+  - include:
+      file: db/changelog/sql/training_schema.sql
+  - include:
+      file: db/changelog/sql/user_well_being_note_schema.sql
+  - include:
+      file: db/changelog/sql/user_goal_schema.sql
+  - include:
+      file: db/changelog/sql/user_sleep_diary_schema.sql
+  - include:
+      file: db/changelog/sql/user_body_measurement_schema.sql
+  - include:
+      file: db/changelog/sql/friendship_schema.sql
+  - include:
+      file: db/changelog/sql/meal_schema.sql
