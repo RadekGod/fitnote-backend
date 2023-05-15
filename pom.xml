@@ -14,6 +14,7 @@
 	<modules>
 		<module>bootloader</module>
 		<module>core</module>
+		<module>modules</module>
 	</modules>
 
 	<properties>
@@ -26,7 +27,7 @@
 		<spring-boot.version>3.0.6</spring-boot.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<keycloak.version>21.1.1</keycloak.version>
-		<final-war-name>OptiFit</final-war-name>
+		<final-application-name>OptiFit</final-application-name>
 
 	</properties>
 

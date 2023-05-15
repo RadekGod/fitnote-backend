@@ -50,7 +50,7 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/admin").hasRole(ADMIN)
                         .requestMatchers("/user").hasRole(STANDARD_USER)
                         .requestMatchers("/anonymous").permitAll()
-                        .requestMatchers("/contact","/register").permitAll()
+                        .requestMatchers("/users/test","/register").permitAll()
                 .and().oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter);
         return http.build();
     }
