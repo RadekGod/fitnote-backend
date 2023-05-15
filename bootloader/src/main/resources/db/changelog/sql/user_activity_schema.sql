@@ -12,6 +12,6 @@ CREATE TABLE IF NOT EXISTS user_activity.user_activity_entry
     finish_date    TIMESTAMP    NULL,
     coleries_burnt INT          NULL,
     user_id        BIGINT       NOT NULL,
-        FOREIGN KEY (user_id)
-            REFERENCES user_details.user_entry (id)
+    FOREIGN KEY (user_id)
+        REFERENCES user_details.user_entry (id)
 );

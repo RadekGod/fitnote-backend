@@ -9,7 +9,7 @@ public class NoticesController {
     @GetMapping("/anonymous")
     public String getNotices() {
 
-            return "anonymous";
+        return "anonymous";
     }
 
     @GetMapping("/admin")
