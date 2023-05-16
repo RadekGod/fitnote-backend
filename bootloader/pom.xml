@@ -15,7 +15,7 @@
     <artifactId>bootloader</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>bootloader</name>
-    <description>Bootloader module for OptiFit Backend application</description>
+    <description>Bootloader module for FitNote Backend application</description>
 
     <dependencies>
         <dependency>
