@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS meal.ingredient
     created_by_user  BOOLEAN      NOT NULL,
     user_id          BIGINT       NULL,
     FOREIGN KEY (user_id)
-        REFERENCES user_details.user_entry (id)
+        REFERENCES user_details.user (id)
 );
 
 
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS meal.user_meal
     meals_id       BIGINT    NOT NULL,
     favourite_meal BOOLEAN   NOT NULL,
     FOREIGN KEY (user_id)
-        REFERENCES user_details.user_entry (id),
+        REFERENCES user_details.user (id),
     FOREIGN KEY (meals_id)
         REFERENCES meal.meal_entry (id)
 );

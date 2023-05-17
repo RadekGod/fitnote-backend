@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS training.exercise
 ) NULL
     );
 
-CREATE TABLE IF NOT EXISTS training.user_entry_training_plan
+CREATE TABLE IF NOT EXISTS training.user_training_plan
 (
     user_id
     BIGINT
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS training.user_entry_training_plan
 (
     user_id
 )
-    REFERENCES user_details.user_entry
+    REFERENCES user_details.user
 (
     id
 ),
@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS training.training_entry
 (
     user_id
 )
-    REFERENCES user_details.user_entry
+    REFERENCES user_details.user
 (
     id
 ),

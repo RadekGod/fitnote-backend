@@ -11,9 +11,9 @@ CREATE TABLE IF NOT EXISTS friendship.friendship_entry
     receiver_id        BIGINT                   NOT NULL,
     creation_date_time TIMESTAMP WITH TIME ZONE NOT NULL,
     FOREIGN KEY (requester_id)
-        REFERENCES user_details.user_entry (id),
+        REFERENCES user_details.user (id),
     FOREIGN KEY (receiver_id)
-        REFERENCES user_details.user_entry (id)
+        REFERENCES user_details.user (id)
 );
 
 
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS friendship.friendship_status
     specified_date_time TIMESTAMP WITH TIME ZONE NOT NULL,
     friendship_id       BIGINT                   NOT NULL,
     FOREIGN KEY (specifier_id)
-        REFERENCES user_details.user_entry (id),
+        REFERENCES user_details.user (id),
     FOREIGN KEY (friendship_id)
         REFERENCES friendship.friendship_entry (id)
 );
