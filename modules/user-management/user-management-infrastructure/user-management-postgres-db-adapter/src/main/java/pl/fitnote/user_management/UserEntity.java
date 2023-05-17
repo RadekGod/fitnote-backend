@@ -7,20 +7,20 @@ import java.sql.Date;
 import java.time.Instant;
 
 @Entity
-@Table(name = "user", schema = "user_details")
+@Table(name = "user", schema = "user_management")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-class UserEntryEntity {
+class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence_generator")
     @SequenceGenerator(name = "user_sequence_generator",
             sequenceName = "user_id_seq",
             allocationSize = 1,
-            schema = "user_details")
+            schema = "user_management")
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
 

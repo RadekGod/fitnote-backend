@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS training.user_training_plan
 (
     user_id
 )
-    REFERENCES user_details.user
+    REFERENCES user_management.user
 (
     id
 ),
@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS training.training_entry
 (
     user_id
 )
-    REFERENCES user_details.user
+    REFERENCES user_management.user
 (
     id
 ),

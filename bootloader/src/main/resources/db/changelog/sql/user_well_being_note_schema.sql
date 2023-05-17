@@ -14,5 +14,5 @@ CREATE TABLE IF NOT EXISTS user_well_being_note.user_well_being_note_entry
     note_date_time             TIMESTAMP     NOT NULL,
     user_id                    BIGINT        NOT NULL,
     FOREIGN KEY (user_id)
-        REFERENCES user_details.user (id)
+        REFERENCES user_management.user (id)
 );

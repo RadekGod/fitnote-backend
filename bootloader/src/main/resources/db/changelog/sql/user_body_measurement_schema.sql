@@ -11,5 +11,5 @@ CREATE TABLE IF NOT EXISTS body_measurement.body_measurement_entry
     measurement_date_time TIMESTAMP WITH TIME ZONE NOT NULL,
     user_id               BIGINT                   NOT NULL,
     FOREIGN KEY (user_id)
-        REFERENCES user_details.user (id)
+        REFERENCES user_management.user (id)
 );

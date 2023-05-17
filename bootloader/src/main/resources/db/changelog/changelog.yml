@@ -1,6 +1,6 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/sql/user_schema.sql
+      file: db/changelog/sql/user_management_schema.sql
 #  - include:
 #      file: db/changelog/sql/user_activity_schema.sql
 #  - include:

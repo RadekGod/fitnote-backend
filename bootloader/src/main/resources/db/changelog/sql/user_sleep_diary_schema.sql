@@ -13,5 +13,5 @@ CREATE TABLE IF NOT EXISTS user_sleep_diary.sleep_diary_entry
     note              VARCHAR(1000) NULL,
     user_id           BIGINT        NOT NULL,
     FOREIGN KEY (user_id)
-        REFERENCES user_details.user (id)
+        REFERENCES user_management.user (id)
 );

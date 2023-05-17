@@ -2,9 +2,9 @@
 
 -- changeset liquibase:user_schema_1 runOnChange:false
 
-CREATE SCHEMA IF NOT EXISTS user_details;
+CREATE SCHEMA IF NOT EXISTS user_management;
 
-CREATE TABLE IF NOT EXISTS user_details.user
+CREATE TABLE IF NOT EXISTS user_management.user
 (
     id            BIGSERIAL PRIMARY KEY,
     keycloak_id   VARCHAR(50)  NOT NULL UNIQUE,
@@ -19,17 +19,17 @@ CREATE TABLE IF NOT EXISTS user_details.user
 );
 
 
--- CREATE TABLE IF NOT EXISTS user_details.user_authority
+-- CREATE TABLE IF NOT EXISTS user_management.user_authority
 -- (
 --     id          BIGSERIAL PRIMARY KEY,
 --     authorities VARCHAR(255) NOT NULL,
 --     user_id     BIGINT       NOT NULL,
 --     FOREIGN KEY (user_id)
---         REFERENCES user_details.user (id)
+--         REFERENCES user_management.user (id)
 -- );
 
 
-CREATE TABLE IF NOT EXISTS user_details.user_settings
+CREATE TABLE IF NOT EXISTS user_management.user_settings
 (
     id          BIGSERIAL    NOT NULL PRIMARY KEY,
     language    VARCHAR(255) NULL,
@@ -37,5 +37,5 @@ CREATE TABLE IF NOT EXISTS user_details.user_settings
     length_unit VARCHAR(40)  NULL,
     user_id     BIGINT       NOT NULL,
     FOREIGN KEY (user_id)
-        REFERENCES user_details.user (id)
+        REFERENCES user_management.user (id)
 );

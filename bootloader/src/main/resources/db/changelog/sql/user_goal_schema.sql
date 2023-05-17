@@ -14,5 +14,5 @@ CREATE TABLE IF NOT EXISTS user_goal.user_goal_entry
     goal_target_value   INT          NOT NULL,
     user_id             BIGINT       NOT NULL,
     FOREIGN KEY (user_id)
-        REFERENCES user_details.user (id)
+        REFERENCES user_management.user (id)
 );

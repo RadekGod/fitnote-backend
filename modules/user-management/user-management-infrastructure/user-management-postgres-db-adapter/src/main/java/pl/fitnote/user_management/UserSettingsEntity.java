@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "user_settings", schema = "user_details")
+@Table(name = "user_settings", schema = "user_management")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,7 +18,7 @@ class UserSettingsEntity {
     @SequenceGenerator(name = "user_settings_sequence_generator",
             sequenceName = "user_settings_id_seq",
             allocationSize = 1,
-            schema = "user_details")
+            schema = "user_management")
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
 
@@ -32,6 +32,6 @@ class UserSettingsEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserEntryEntity userEntry;
+    private UserEntity userEntry;
 
 }
