@@ -2,6 +2,7 @@ package pl.fitnote.user_management;
 
 import jakarta.persistence.*;
 import lombok.*;
+import pl.fitnote.user_management.model.user.vo.Gender;
 
 import java.sql.Date;
 import java.time.Instant;

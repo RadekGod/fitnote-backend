@@ -3,6 +3,8 @@ package pl.fitnote.user_management;
 
 import jakarta.persistence.*;
 import lombok.*;
+import pl.fitnote.user_management.model.user.vo.LengthUnit;
+import pl.fitnote.user_management.model.user.vo.WeightUnit;
 
 @Entity
 @Table(name = "user_settings", schema = "user_management")

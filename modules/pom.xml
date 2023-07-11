@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>user-management</module>
+        <module>training</module>
     </modules>
 
 </project>
