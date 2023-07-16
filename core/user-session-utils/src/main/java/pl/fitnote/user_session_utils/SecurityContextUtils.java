@@ -5,8 +5,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import pl.fitnote.commons.CreateUserDetails;
 import pl.fitnote.commons.UserDetails;
 
-import java.util.Map;
-
 public class SecurityContextUtils {
 
     private SecurityContextUtils() {
@@ -29,7 +27,7 @@ public class SecurityContextUtils {
     }
 
     public static CreateUserDetails getDataForUserCreation() {
-        return new CreateLoggedUserDetails(getLoggedUserKeycloakId(), getLoggedUserKeycloakId(), getLoggedUserFirstName(), getLoggedUserLastName());
+        return new CreateLoggedUserDetails(getLoggedUserKeycloakId(), getLoggedUserEmail(), getLoggedUserFirstName(), getLoggedUserLastName());
     }
 
     public static UserDetails getLoggedUserDetails() {

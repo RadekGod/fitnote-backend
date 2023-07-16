@@ -50,6 +50,7 @@ public class ProjectSecurityConfig {
                 .requestMatchers("/test/admin").hasRole(ADMIN)
                 .requestMatchers("/test/user").hasRole(STANDARD_USER)
                 .requestMatchers("/users").hasAnyRole(STANDARD_USER, ADMIN)
+                .requestMatchers("/users/settings").hasAnyRole(STANDARD_USER, ADMIN)
                 .requestMatchers("/anonymous").permitAll()
 //                .requestMatchers("/user").permitAll()
 //                .requestMatchers("/*").permitAll()

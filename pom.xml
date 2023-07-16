@@ -15,6 +15,7 @@
 		<module>bootloader</module>
 		<module>core</module>
 		<module>modules</module>
+		<module>application</module>
 	</modules>
 
 	<properties>
