@@ -1,6 +1,6 @@
 package pl.fitnote.user;
 
-enum LengthUnit {
+public enum LengthUnit {
     CENTIMETER,
     INCH
 }

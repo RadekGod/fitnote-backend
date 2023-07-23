@@ -5,12 +5,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.fitnote.commons.UserDetails;
+import pl.fitnote.user.dto.CreateUserDto;
+import pl.fitnote.user.dto.UpdateUserDto;
+import pl.fitnote.user.dto.UserSettingsDto;
 
 import java.time.Instant;
 
 @Service
 @RequiredArgsConstructor
-public class UserFacadeImpl implements UserFacade {
+class UserFacadeImpl implements UserFacade {
 
     private final UserPersistRepository userPersistRepository;
     private final UserQueryRepository userQueryRepository;
@@ -19,8 +22,8 @@ public class UserFacadeImpl implements UserFacade {
 
     @Override
     @Transactional
-    public Long createUser(CreateUserDto toCreate, UserDetails userDetails) {
-        User toSave = userFactory.createUserFromDto(toCreate);
+    public Long createUser(CreateUserDto command, UserDetails userDetails) {
+        User toSave = userFactory.createUserFromDto(command);
         toSave.setKeycloakId(userDetails.getKeycloakId());
         toSave.setEmail(userDetails.getEmail());
         toSave.setEnabled(true);
@@ -29,8 +32,8 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public UserProjection getUser(final UserDetails userDetails) {
-        return userQueryRepository.findByKeycloakId(userDetails.getKeycloakId(), UserProjection.class)
+    public <T> T getUser(final UserDetails userDetails, final Class<T> type) {
+        return userQueryRepository.findByKeycloakId(userDetails.getKeycloakId(), type)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with given keycloakId"));
     }
 

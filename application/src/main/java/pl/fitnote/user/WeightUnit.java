@@ -1,6 +1,6 @@
 package pl.fitnote.user;
 
-enum WeightUnit {
+public enum WeightUnit {
     KILOGRAM,
     POUND
 }

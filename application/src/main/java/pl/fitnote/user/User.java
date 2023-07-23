@@ -1,20 +1,39 @@
 package pl.fitnote.user;
 
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import pl.fitnote.exercise.Exercise;
 
 import java.sql.Date;
 import java.time.Instant;
+import java.util.Set;
 
 @Entity
 @Table(name = "user_details", schema = "user_management")
-@Getter
-@Setter
+@Getter(AccessLevel.PACKAGE)
+@Setter(AccessLevel.PACKAGE)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-class User {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_details_sequence_generator")
@@ -52,4 +71,7 @@ class User {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private UserSettings userSettings;
+
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private Set<Exercise> exercises;
 }

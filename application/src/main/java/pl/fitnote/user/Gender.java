@@ -1,6 +1,6 @@
 package pl.fitnote.user;
 
-enum Gender {
+public enum Gender {
     MALE,
     FEMALE
 }

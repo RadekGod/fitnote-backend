@@ -1,11 +1,7 @@
 package pl.fitnote;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.fitnote.training.NewTrainingPlanApplication;
-import pl.fitnote.training.port.incoming.NewTrainingPlanPort;
-import pl.fitnote.training.port.outgoing.TrainingPlanPersistPort;
 
 @Configuration
 @RequiredArgsConstructor
@@ -26,10 +22,10 @@ public class BeansConfiguration {
 //        return new CreateUserApplication(userPersistPort);
 //    }
 
-    @Bean
-    NewTrainingPlanPort newTrainingPlanPort(TrainingPlanPersistPort trainingPlanPersistPort) {
-        return new NewTrainingPlanApplication(trainingPlanPersistPort);
-    }
+//    @Bean
+//    NewTrainingPlanPort newTrainingPlanPort(TrainingPlanPersistPort trainingPlanPersistPort) {
+//        return new NewTrainingPlanApplication(trainingPlanPersistPort);
+//    }
 
 
 }
