@@ -14,7 +14,7 @@ import pl.fitnote.trainingPlan.TrainingPlanDto;
 @NoArgsConstructor
 @Builder
 public class ExerciseSetDto {
-
+    private Long id;
     private Float weight;
     private MeasureUnit measureUnit;
     private Long repeats;
@@ -22,4 +22,16 @@ public class ExerciseSetDto {
     private String note;
     private ExerciseDto exercise;
     private TrainingPlanDto trainingPlan;
+
+    public static ExerciseSet toEntity(ExerciseSetDto source) {
+        return ExerciseSet.builder()
+        .weight(source.getWeight())
+        .measureUnit(source.getMeasureUnit())
+        .repeats(source.getRepeats())
+        .completed(source.getCompleted())
+        .note(source.getNote())
+//        .exercise(getExercise())
+//        .trainingPlan(source.getTrainingPlan())
+        .build();
+    }
 }

@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.fitnote.exercise.Exercise;
+import pl.fitnote.trainingPlan.TrainingPlan;
 
 import java.sql.Date;
 import java.time.Instant;
@@ -74,4 +75,7 @@ public class User {
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private Set<Exercise> exercises;
+
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private Set<TrainingPlan> trainingPlans;
 }

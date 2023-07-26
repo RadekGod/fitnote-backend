@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS training.exercise
     supportive_muscles VARCHAR(255) NULL,
     exercise_category_groups VARCHAR(255) NULL,
     exercise_type VARCHAR(255) NULL,
-    user_id BIGINT NULL
+    user_id BIGINT NULL,
+    FOREIGN KEY (user_id) REFERENCES user_management.user_details (id)
     );
 
 CREATE TABLE IF NOT EXISTS training.training_plan
@@ -22,7 +23,9 @@ CREATE TABLE IF NOT EXISTS training.training_plan
     id  BIGSERIAL  NOT  NULL  PRIMARY  KEY,
     name VARCHAR(255) NULL,
     training_days VARCHAR(255) NOT NULL,
-    note VARCHAR (1000) NULL
+    note VARCHAR (1000) NULL,
+    user_id BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user_management.user_details (id)
     );
 
 CREATE TABLE IF NOT EXISTS training.exercise_set

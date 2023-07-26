@@ -12,6 +12,7 @@ class ExerciseFactory {
         List<ExerciseCategoryGroup> exerciseCategoryGroups = source.getExerciseCategoryGroups();
         exerciseCategoryGroups.add(ExerciseCategoryGroup.CUSTOM);
         return Exercise.builder()
+                .id(source.getId())
                 .name(source.getName())
                 .description(source.getDescription())
                 .mainMuscles(source.getMainMuscles())

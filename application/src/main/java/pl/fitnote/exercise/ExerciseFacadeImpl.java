@@ -34,15 +34,15 @@ class ExerciseFacadeImpl implements ExerciseFacade {
     }
 
     @Override
-    public ExerciseProjection getExercise(final Long exerciseId, final UserDetails userDetails) {
-        return exerciseQueryRepository.findExerciseForUserByKeycloakId(exerciseId, userDetails.getKeycloakId(), ExerciseProjection.class)
+    public <T> T getExercise(final Long exerciseId, final UserDetails userDetails, Class<T> type) {
+        return exerciseQueryRepository.findExerciseForUserByKeycloakId(exerciseId, userDetails.getKeycloakId(), type)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     @Transactional
-    public void updateExercise(final ExerciseDto command, final UserDetails userDetails) {
-        Exercise toUpdate = exerciseQueryRepository.findExerciseForUserByKeycloakId(command.getId(), userDetails.getKeycloakId(), Exercise.class)
+    public void updateExercise(final Long exerciseId, final ExerciseDto command, final UserDetails userDetails) {
+        Exercise toUpdate = exerciseQueryRepository.findExerciseForUserByKeycloakId(exerciseId, userDetails.getKeycloakId(), Exercise.class)
                 .orElseThrow(EntityNotFoundException::new);
         toUpdate.setName(command.getName());
         toUpdate.setDescription(command.getDescription());
@@ -51,7 +51,6 @@ class ExerciseFacadeImpl implements ExerciseFacade {
         toUpdate.setExerciseType(command.getExerciseType());
         toUpdate.setExerciseCategoryGroups(command.getExerciseCategoryGroups());
         exercisePersistRepository.save(toUpdate);
-
     }
 
     @Override

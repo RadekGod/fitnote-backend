@@ -26,7 +26,7 @@ import pl.fitnote.trainingPlan.TrainingPlan;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class ExerciseSet {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "exercise_set_sequence_generator")
@@ -48,6 +48,6 @@ public class ExerciseSet {
     private Exercise exercise;
 
     @ManyToOne()
-    @JoinColumn(name="training_plan_id", nullable=false)
+    @JoinColumn(name = "training_plan_id", nullable = false)
     private TrainingPlan trainingPlan;
 }

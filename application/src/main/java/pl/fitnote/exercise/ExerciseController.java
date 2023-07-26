@@ -37,16 +37,16 @@ class ExerciseController {
     @GetMapping("/exercise")
     ResponseEntity<ExerciseProjection> getExercise(@RequestParam("id") Long exerciseId) {
         try {
-            return new ResponseEntity<>(exerciseFacade.getExercise(exerciseId, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
+            return new ResponseEntity<>(exerciseFacade.getExercise(exerciseId, SecurityContextUtils.getLoggedUserDetails(), ExerciseProjection.class), HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Exercise not found with given id");
         }
     }
 
-    @PutMapping()
-    ResponseEntity<Void> updateExercise(@RequestBody ExerciseDto command) {
+    @PutMapping("/exercise")
+    ResponseEntity<Void> updateExercise(@RequestParam("id") Long exerciseId, @RequestBody ExerciseDto command) {
         try {
-            exerciseFacade.updateExercise(command, SecurityContextUtils.getLoggedUserDetails());
+            exerciseFacade.updateExercise(exerciseId, command, SecurityContextUtils.getLoggedUserDetails());
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Exercise not found with given id");

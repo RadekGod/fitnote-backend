@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -16,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.fitnote.exerciseSet.ExerciseSet;
+import pl.fitnote.user.User;
 
 import java.util.List;
 
@@ -36,12 +39,20 @@ public class TrainingPlan {
             schema = "training")
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
+
     @Column(nullable = false)
     private String name;
+
     @Convert(converter = TrainingDaysConverter.class)
     private List<TrainingDay> trainingDays;
+
     private String note;
+
     @OneToMany(mappedBy = "trainingPlan")
     private List<ExerciseSet> exerciseSets;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

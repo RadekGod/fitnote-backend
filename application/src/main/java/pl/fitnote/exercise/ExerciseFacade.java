@@ -5,10 +5,10 @@ import pl.fitnote.exercise.dto.ExerciseProjection;
 
 import java.util.List;
 
-interface ExerciseFacade {
+public interface ExerciseFacade {
     Long createExercise(ExerciseDto command, UserDetails userDetails);
     List<ExerciseProjection> getAllExercises(UserDetails userDetails);
-    ExerciseProjection getExercise(Long exerciseId, UserDetails userDetails);
-    void updateExercise(ExerciseDto command, UserDetails userDetails);
+    <T> T getExercise(Long exerciseId, UserDetails userDetails, Class<T> type);
+    void updateExercise(Long exerciseId, ExerciseDto command, UserDetails userDetails);
     void deleteExercise(Long exerciseId, UserDetails userDetails);
 }

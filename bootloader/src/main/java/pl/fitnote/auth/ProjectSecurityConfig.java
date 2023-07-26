@@ -53,6 +53,8 @@ public class ProjectSecurityConfig {
                 .requestMatchers("/users/settings").hasAnyRole(STANDARD_USER, ADMIN)
                 .requestMatchers("/exercises").hasAnyRole(STANDARD_USER, ADMIN)
                 .requestMatchers("/exercises/*").hasAnyRole(STANDARD_USER, ADMIN)
+                .requestMatchers("/training-plans").hasAnyRole(STANDARD_USER, ADMIN)
+                .requestMatchers("/training-plans/**").hasAnyRole(STANDARD_USER, ADMIN)
                 .requestMatchers("/anonymous").permitAll()
 //                .requestMatchers("/user").permitAll()
 //                .requestMatchers("/*").permitAll()
