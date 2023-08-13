@@ -1,8 +1,7 @@
-package pl.fitnote.trainingPlan;
+package pl.fitnote.training;
 
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,39 +18,42 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.fitnote.user.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "training_plan", schema = "training_plan")
+@Table(name = "training", schema = "training_history")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class TrainingPlan {
+@Builder(toBuilder = true)
+class Training {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "training_plan_sequence_generator")
-    @SequenceGenerator(name = "training_plan_sequence_generator",
-            sequenceName = "training_plan_id_seq",
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "training_sequence_generator")
+    @SequenceGenerator(name = "training_sequence_generator",
+            sequenceName = "training_id_seq",
             allocationSize = 1,
-            schema = "training_plan")
+            schema = "training_history")
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
 
     @Column(nullable = false)
     private String name;
 
-    @Convert(converter = TrainingDaysConverter.class)
-    private List<TrainingDay> trainingDays;
-
     private String note;
 
-    @OneToMany(mappedBy = "trainingPlan")
-    private List<TrainingPlanExercise> trainingPlanExercises;
+    @Column(nullable = false)
+    private LocalDateTime startTime;
+
+    @Column(nullable = false)
+    private LocalDateTime finishTime;
+
+    @OneToMany(mappedBy = "training", cascade = CascadeType.ALL)
+    private List<TrainingExercise> trainingExercises;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
 }

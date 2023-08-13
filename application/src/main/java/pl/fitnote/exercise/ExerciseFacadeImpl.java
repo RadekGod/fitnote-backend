@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.fitnote.commons.UserDetails;
-import pl.fitnote.exercise.dto.ExerciseProjection;
 import pl.fitnote.user.User;
 import pl.fitnote.user.UserFacade;
 

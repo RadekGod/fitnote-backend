@@ -1,5 +1,7 @@
-package pl.fitnote.exerciseSet;
+package pl.fitnote.trainingPlan;
 
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -18,36 +21,44 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.fitnote.exercise.Exercise;
-import pl.fitnote.trainingPlan.TrainingPlan;
+
+import java.util.List;
 
 @Entity
-@Table(name = "exercise_set", schema = "training")
+@Table(name = "training_plan_exercise", schema = "training_plan")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder(toBuilder = true)
-public class ExerciseSet {
+@Builder
+public class TrainingPlanExercise {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "exercise_set_sequence_generator")
-    @SequenceGenerator(name = "exercise_set_sequence_generator",
-            sequenceName = "exercise_set_id_seq",
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "training_plan_exercise_sequence_generator")
+    @SequenceGenerator(name = "training_plan_exercise_sequence_generator",
+            sequenceName = "training_plan_exercise_id_seq",
             allocationSize = 1,
-            schema = "training")
+            schema = "training_plan")
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
-    private Float weight;
+
     @Enumerated(EnumType.STRING)
     private MeasureUnit measureUnit;
-    private Long repeats;
-    private Boolean completed;
+
+//    @Column(nullable = false)
+//    private Long exerciseSequenceNumber;
+
     private String note;
 
     @OneToOne()
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "exercise_id", nullable = false)
     private Exercise exercise;
 
-    @ManyToOne()
+    @OneToMany(mappedBy = "trainingPlanExercise", cascade = CascadeType.ALL)
+    private List<ExerciseSet> exerciseSets;
+
+    @ManyToOne
     @JoinColumn(name = "training_plan_id", nullable = false)
     private TrainingPlan trainingPlan;
+
 }

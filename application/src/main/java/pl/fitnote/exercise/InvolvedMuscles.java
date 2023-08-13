@@ -1,6 +1,6 @@
 package pl.fitnote.exercise;
 
-public enum InvolvedMuscles {
+enum InvolvedMuscles {
     PECTORALIS_MAJOR,
     PECTORALIS_MINOR,
     TRICEPS,

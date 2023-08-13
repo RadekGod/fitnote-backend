@@ -1,8 +1,5 @@
-package pl.fitnote.exercise.dto;
+package pl.fitnote.exercise;
 
-import pl.fitnote.exercise.ExerciseCategoryGroup;
-import pl.fitnote.exercise.ExerciseType;
-import pl.fitnote.exercise.InvolvedMuscles;
 import pl.fitnote.user.dto.UserProjection;
 
 import java.util.List;

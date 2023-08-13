@@ -1,7 +1,6 @@
 package pl.fitnote.trainingPlan;
 
 import pl.fitnote.commons.UserDetails;
-import pl.fitnote.exerciseSet.ExerciseSetDto;
 
 import java.util.List;
 
@@ -12,7 +11,5 @@ public interface TrainingPlanFacade {
     <T> T getTrainingPlan(Long trainingPlanId, UserDetails userDetails, Class<T> type);
     List<TrainingPlanProjection> getAllTrainingPlans(UserDetails userDetails);
     void deleteTrainingPlan(final Long trainingPlanId, final UserDetails userDetails);
-    void addExerciseToTrainingPlan(Long trainingPlanId, List<ExerciseSetDto> command, UserDetails userDetails);
-    void updateExerciseInTrainingPlan(Long trainingPlanId, List<ExerciseSetDto> command, UserDetails userDetails);
-    void deleteExerciseFromTrainingPlan(Long trainingPlanId, UserDetails userDetails);
+
 }

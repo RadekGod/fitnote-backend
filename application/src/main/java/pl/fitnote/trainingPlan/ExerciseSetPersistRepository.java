@@ -1,7 +1,6 @@
-package pl.fitnote.exerciseSet;
+package pl.fitnote.trainingPlan;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pl.fitnote.exerciseSet.ExerciseSet;
 
 interface ExerciseSetPersistRepository extends JpaRepository<ExerciseSet, Long> {
 }
