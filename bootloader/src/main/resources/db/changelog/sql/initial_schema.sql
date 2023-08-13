@@ -432,26 +432,26 @@ CREATE INDEX IF NOT EXISTS fk_friendship_status_user1_idx ON fitnote.friendship_
 CREATE INDEX IF NOT EXISTS fk_friendship_status_friendship1_idx ON fitnote.friendship_status (friendship_id ASC);
 
 
--- *** user_details`
-CREATE SEQUENCE IF NOT EXISTS fitnote.user_details_seq;
+-- *** user_management`
+CREATE SEQUENCE IF NOT EXISTS fitnote.user_management_seq;
 
-CREATE TABLE IF NOT EXISTS fitnote.user_details
+CREATE TABLE IF NOT EXISTS fitnote.user_management
 (
-    id         BIGINT       NOT NULL DEFAULT NEXTVAL('fitnote.user_details_seq'),
+    id         BIGINT       NOT NULL DEFAULT NEXTVAL('fitnote.user_management_seq'),
     name       VARCHAR(16)  NOT NULL,
     surname    VARCHAR(255) NULL,
     birth_date DATE         NOT NULL,
     gender     VARCHAR(6)   NULL,
     user_id    BIGINT       NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT fk_user_details_user1
+    CONSTRAINT fk_user_management_user1
         FOREIGN KEY (user_id)
             REFERENCES fitnote.user (id)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
 
-CREATE INDEX IF NOT EXISTS fk_user_details_user1_idx ON fitnote.user_details (user_id ASC);
+CREATE INDEX IF NOT EXISTS fk_user_management_user1_idx ON fitnote.user_management (user_id ASC);
 
 
 

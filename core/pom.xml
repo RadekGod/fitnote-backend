@@ -10,5 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>core</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>commons</module>
+        <module>user-session-utils</module>
+    </modules>
 
 </project>

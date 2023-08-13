@@ -13,5 +13,5 @@ CREATE TABLE IF NOT EXISTS user_activity.user_activity_entry
     coleries_burnt INT          NULL,
     user_id        BIGINT       NOT NULL,
     FOREIGN KEY (user_id)
-        REFERENCES user_details.user (id)
+        REFERENCES user_management.user (id)
 );

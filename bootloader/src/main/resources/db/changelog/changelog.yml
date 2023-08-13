@@ -1,10 +1,14 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/sql/user_schema.sql
+      file: db/changelog/sql/schema/user_schema.sql
+  - include:
+      file: db/changelog/sql/populate/user_populate.sql
+  - include:
+      file: db/changelog/sql/schema/training_schema.sql
+  - include:
+      file: db/changelog/sql/populate/training_populate.sql
 #  - include:
 #      file: db/changelog/sql/user_activity_schema.sql
-#  - include:
-#      file: db/changelog/sql/training_schema.sql
 #  - include:
 #      file: db/changelog/sql/user_well_being_note_schema.sql
 #  - include:

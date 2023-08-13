@@ -47,10 +47,17 @@ public class ProjectSecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
-                .requestMatchers("/admin").hasRole(ADMIN)
-                .requestMatchers("/user").hasRole(STANDARD_USER)
+                .requestMatchers("/test/admin").hasRole(ADMIN)
+                .requestMatchers("/test/user").hasRole(STANDARD_USER)
+                .requestMatchers("/users").hasAnyRole(STANDARD_USER, ADMIN)
+                .requestMatchers("/users/settings").hasAnyRole(STANDARD_USER, ADMIN)
+                .requestMatchers("/exercises").hasAnyRole(STANDARD_USER, ADMIN)
+                .requestMatchers("/exercises/*").hasAnyRole(STANDARD_USER, ADMIN)
+                .requestMatchers("/training-plans").hasAnyRole(STANDARD_USER, ADMIN)
+                .requestMatchers("/training-plans/**").hasAnyRole(STANDARD_USER, ADMIN)
                 .requestMatchers("/anonymous").permitAll()
-                .requestMatchers("/users/test", "/register").permitAll()
+//                .requestMatchers("/user").permitAll()
+//                .requestMatchers("/*").permitAll()
                 .and().oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter);
         return http.build();
     }
