@@ -22,12 +22,12 @@ import pl.fitnote.user.User;
 import java.util.List;
 
 @Entity
-@Table(name = "exercise", schema = "training")
+@Table(name = "exercise", schema = "training_plan")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class Exercise {
 
     @Id
@@ -35,7 +35,7 @@ public class Exercise {
     @SequenceGenerator(name = "exercise_sequence_generator",
             sequenceName = "exercise_id_seq",
             allocationSize = 1,
-            schema = "training")
+            schema = "training_plan")
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
 

@@ -1,6 +1,6 @@
 package pl.fitnote.exercise;
 
-public enum ExerciseCategoryGroup {
+enum ExerciseCategoryGroup {
     CHEST,
     SHOULDERS,
     UPPER_BACK,

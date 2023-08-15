@@ -21,15 +21,4 @@ class ExerciseFactory {
                 .exerciseType(source.getExerciseType())
                 .build();
     }
-
-    ExerciseDto createExerciseFromDto(Exercise source) {
-        return ExerciseDto.builder()
-                .name(source.getName())
-                .description(source.getDescription())
-                .mainMuscles(source.getMainMuscles())
-                .supportiveMuscles(source.getSupportiveMuscles())
-                .exerciseCategoryGroups(source.getExerciseCategoryGroups())
-                .exerciseType(source.getExerciseType())
-                .build();
-    }
 }

@@ -2,31 +2,25 @@ package pl.fitnote.trainingPlan;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
 import pl.fitnote.commons.UserDetails;
-import pl.fitnote.exercise.ExerciseFacade;
-import pl.fitnote.exerciseSet.ExerciseSetDto;
-import pl.fitnote.exerciseSet.ExerciseSetFacade;
 import pl.fitnote.user.User;
 import pl.fitnote.user.UserFacade;
-import pl.fitnote.user.dto.UserProjection;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 class TrainingPlanFacadeImpl implements TrainingPlanFacade {
 
     private final TrainingPlanFactory trainingPlanFactory;
-    private final ExerciseSetFacade exerciseSetFacade;
     private final UserFacade userFacade;
-    private final ExerciseFacade exerciseFacade;
     private final TrainingPlanQueryRepository trainingPlanQueryRepository;
     private final TrainingPlanPersistRepository trainingPlanPersistRepository;
+
     @Override
+    @Transactional
     public Long createTrainingPlan(final CreateTrainingPlanDto command, final UserDetails userDetails) {
         User requestingUser = userFacade.getUser(userDetails, User.class);
         TrainingPlan toCreate = trainingPlanFactory.createTrainingPlanFromDto(command, requestingUser);
@@ -34,6 +28,7 @@ class TrainingPlanFacadeImpl implements TrainingPlanFacade {
     }
 
     @Override
+    @Transactional
     public void updateTrainingPlan(final Long trainingPlanId, final TrainingPlanDto command, final UserDetails userDetails) {
         TrainingPlan toUpdate = trainingPlanQueryRepository.findTrainingPlanForUserByKeycloakId(trainingPlanId, userDetails.getKeycloakId(), TrainingPlan.class)
                 .orElseThrow(EntityNotFoundException::new);
@@ -55,45 +50,10 @@ class TrainingPlanFacadeImpl implements TrainingPlanFacade {
     }
 
     @Override
+    @Transactional
     public void deleteTrainingPlan(final Long trainingPlanId, final UserDetails userDetails) {
-        UserProjection requestingUser = userFacade.getUser(userDetails, UserProjection.class);
-        TrainingPlanProjection toDelete = trainingPlanQueryRepository.findTrainingPlanForUserByKeycloakId(trainingPlanId, userDetails.getKeycloakId(), TrainingPlanProjection.class)
+        TrainingPlan toDelete = trainingPlanQueryRepository.findTrainingPlanForUserByKeycloakId(trainingPlanId, userDetails.getKeycloakId(), TrainingPlan.class)
                 .orElseThrow(EntityNotFoundException::new);
-
-        if (isOwnerOfTrainingPlan(requestingUser, toDelete)) {
-            trainingPlanPersistRepository.deleteById(toDelete.getId());
-        } else {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        }
+        trainingPlanPersistRepository.delete(toDelete);
     }
-
-    private boolean isOwnerOfTrainingPlan(UserProjection requestingUser, TrainingPlanProjection trainingPlan) {
-        return Objects.equals(requestingUser.getId(), trainingPlan.getId());
-    }
-
-
-    @Override
-    public void addExerciseToTrainingPlan(final Long trainingPlanId, final List<ExerciseSetDto> command, final UserDetails userDetails) {
-        TrainingPlan toUpdate = trainingPlanQueryRepository.findTrainingPlanForUserByKeycloakId(trainingPlanId, userDetails.getKeycloakId(), TrainingPlan.class)
-                .orElseThrow(EntityNotFoundException::new);
-        exerciseSetFacade.addExerciseToTrainingPlan(toUpdate, command, userDetails);
-        trainingPlanPersistRepository.save(toUpdate);
-    }
-
-    @Override
-    public void updateExerciseInTrainingPlan(final Long trainingPlanId, final List<ExerciseSetDto> command, final UserDetails userDetails) {
-        TrainingPlan toUpdate = trainingPlanQueryRepository.findTrainingPlanForUserByKeycloakId(trainingPlanId, userDetails.getKeycloakId(), TrainingPlan.class)
-                .orElseThrow(EntityNotFoundException::new);
-        exerciseSetFacade.updateExerciseInTrainingPlan(toUpdate, command, userDetails);
-        trainingPlanPersistRepository.save(toUpdate);
-    }
-
-    @Override
-    public void deleteExerciseFromTrainingPlan(final Long trainingPlanId, final UserDetails userDetails) {
-        TrainingPlan toUpdate = trainingPlanQueryRepository.findTrainingPlanForUserByKeycloakId(trainingPlanId, userDetails.getKeycloakId(), TrainingPlan.class)
-                .orElseThrow(EntityNotFoundException::new);
-        exerciseSetFacade.deleteExerciseFromTrainingPlan(toUpdate, userDetails);
-        trainingPlanPersistRepository.save(toUpdate);
-    }
-
 }

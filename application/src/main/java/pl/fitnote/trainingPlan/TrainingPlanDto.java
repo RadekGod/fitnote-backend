@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.fitnote.exerciseSet.ExerciseSetDto;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ import java.util.List;
 public class TrainingPlanDto {
         private Long id;
         private String name;
-        private List<ExerciseSetDto> exerciseSets;
+        private List<TrainingPlanExerciseDto> trainingPlanExerciseDtoList;
         private List<TrainingDay> trainingDays;
         private String note;
 }

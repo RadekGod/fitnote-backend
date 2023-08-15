@@ -1,7 +1,6 @@
 package pl.fitnote.exercise;
 
 import pl.fitnote.commons.UserDetails;
-import pl.fitnote.exercise.dto.ExerciseProjection;
 
 import java.util.List;
 

@@ -4,9 +4,19 @@ databaseChangeLog:
   - include:
       file: db/changelog/sql/populate/user_populate.sql
   - include:
-      file: db/changelog/sql/schema/training_schema.sql
+      file: db/changelog/sql/schema/training_plan_schema.sql
   - include:
-      file: db/changelog/sql/populate/training_populate.sql
+      file: db/changelog/sql/populate/training_plan_populate.sql
+  - include:
+      file: db/changelog/sql/schema/training_history_schema.sql
+  - include:
+      file: db/changelog/sql/populate/training_history_populate.sql
+  - include:
+      file: db/changelog/sql/sequences/training_history_sequences.sql
+  - include:
+      file: db/changelog/sql/schema/body_measurement_schema.sql
+  - include:
+      file: db/changelog/sql/sequences/body_measurement_sequences.sql
 #  - include:
 #      file: db/changelog/sql/user_activity_schema.sql
 #  - include:
@@ -15,8 +25,6 @@ databaseChangeLog:
 #      file: db/changelog/sql/user_goal_schema.sql
 #  - include:
 #      file: db/changelog/sql/user_sleep_diary_schema.sql
-#  - include:
-#      file: db/changelog/sql/user_body_measurement_schema.sql
 #  - include:
 #      file: db/changelog/sql/friendship_schema.sql
 #  - include:
