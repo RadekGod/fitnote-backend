@@ -20,6 +20,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.fitnote.body.BodyMeasurement;
+import pl.fitnote.body.GeneralMeasurement;
 import pl.fitnote.exercise.Exercise;
 import pl.fitnote.trainingPlan.TrainingPlan;
 
@@ -75,6 +77,13 @@ public class User {
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private Set<Exercise> exercises;
+
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private Set<BodyMeasurement> bodyMeasurements;
+
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private Set<GeneralMeasurement> generalBodyData;
+
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private Set<TrainingPlan> trainingPlans;

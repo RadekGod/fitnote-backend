@@ -4,6 +4,7 @@
 
 CREATE SCHEMA IF NOT EXISTS training_history;
 
+
 CREATE TABLE IF NOT EXISTS training_history.training
 (
     id BIGSERIAL NOT NULL PRIMARY KEY,
@@ -14,6 +15,7 @@ CREATE TABLE IF NOT EXISTS training_history.training
     user_id BIGINT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user_management.user_details (id)
 );
+
 
 CREATE TABLE IF NOT EXISTS training_history.training_exercise
 (
