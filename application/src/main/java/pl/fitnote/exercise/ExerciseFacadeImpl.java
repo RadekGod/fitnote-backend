@@ -62,6 +62,5 @@ class ExerciseFacadeImpl implements ExerciseFacade {
         } else {
             throw new EntityNotFoundException();
         }
-
     }
 }

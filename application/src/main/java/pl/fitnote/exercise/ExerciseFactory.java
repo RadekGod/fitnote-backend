@@ -7,7 +7,6 @@ import java.util.List;
 @Service
 class ExerciseFactory {
 
-
     Exercise createExerciseFromDto(ExerciseDto source) {
         List<ExerciseCategoryGroup> exerciseCategoryGroups = source.getExerciseCategoryGroups();
         exerciseCategoryGroups.add(ExerciseCategoryGroup.CUSTOM);

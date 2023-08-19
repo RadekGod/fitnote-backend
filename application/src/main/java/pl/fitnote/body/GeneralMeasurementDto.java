@@ -17,7 +17,6 @@ class GeneralMeasurementDto {
     private Long id;
     private Float weight;
     private Float height;
-//    private Float bmi;
     private Float muscleContent;
     private Float fatContent;
     private LocalDateTime measurementDate;

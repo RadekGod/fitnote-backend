@@ -23,6 +23,7 @@ import lombok.Setter;
 import pl.fitnote.body.BodyMeasurement;
 import pl.fitnote.body.GeneralMeasurement;
 import pl.fitnote.exercise.Exercise;
+import pl.fitnote.sleep.Sleep;
 import pl.fitnote.trainingPlan.TrainingPlan;
 
 import java.sql.Date;
@@ -84,6 +85,8 @@ public class User {
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private Set<GeneralMeasurement> generalBodyData;
 
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private Set<Sleep> sleeps;
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private Set<TrainingPlan> trainingPlans;
