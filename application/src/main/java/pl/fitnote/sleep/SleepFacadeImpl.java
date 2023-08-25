@@ -1,6 +1,7 @@
 package pl.fitnote.sleep;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.fitnote.commons.UserDetails;
@@ -19,6 +20,7 @@ class SleepFacadeImpl implements SleepFacade {
     private final SleepPersistRepository sleepPersistRepository;
 
     @Override
+    @Transactional
     public Long createSleep(SleepDto command, UserDetails userDetails) {
         User requestingUser = userFacade.getUser(userDetails, User.class);
         Sleep sleepToSave = sleepFactory.createSleepFromDto(command, requestingUser);
@@ -26,10 +28,9 @@ class SleepFacadeImpl implements SleepFacade {
     }
 
     @Override
+    @Transactional
     public void updateSleep(Long sleepId, SleepDto command, UserDetails userDetails) {
-        Sleep sleepToUpdate = sleepQueryRepository.findById(sleepId)
-                .orElseThrow(EntityNotFoundException::new);
-
+        Sleep sleepToUpdate = getSleep(sleepId, userDetails, Sleep.class);
         sleepPersistRepository.save(sleepFactory.updateSleepWithDto(sleepToUpdate, command));
     }
 
@@ -45,6 +46,7 @@ class SleepFacadeImpl implements SleepFacade {
     }
 
     @Override
+    @Transactional
     public void deleteSleep(Long sleepId, UserDetails userDetails) {
         Sleep sleep = sleepQueryRepository.findSleepByGivenIdAndKeycloakId(sleepId, userDetails.getKeycloakId(), Sleep.class)
                 .orElseThrow(EntityNotFoundException::new);

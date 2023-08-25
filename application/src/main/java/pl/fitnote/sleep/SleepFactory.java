@@ -9,10 +9,12 @@ class SleepFactory {
     Sleep createSleepFromDto(SleepDto source, User user) {
         return Sleep.builder()
                 .id(source.getId())
+                .startDate(source.getStartDate())
+                .finishDate(source.getFinishDate())
                 .rating(source.getRating())
-                .awakeningsCount(source.getAwakeningsCount())
+                .awakeningsNumber(source.getAwakeningsNumber())
                 .note(source.getNote())
-                .measurementDate(source.getMeasurementDate())
+                .creationDate(source.getCreationDate())
                 .user(user)
                 .build();
     }
@@ -20,10 +22,12 @@ class SleepFactory {
     Sleep updateSleepWithDto(Sleep toUpdate, SleepDto source) {
         return toUpdate.toBuilder()
                 .id(source.getId())
+                .startDate(source.getStartDate())
+                .finishDate(source.getFinishDate())
                 .rating(source.getRating())
-                .awakeningsCount(source.getAwakeningsCount())
+                .awakeningsNumber(source.getAwakeningsNumber())
                 .note(source.getNote())
-                .measurementDate(source.getMeasurementDate())
+                .creationDate(source.getCreationDate())
                 .build();
     }
 }

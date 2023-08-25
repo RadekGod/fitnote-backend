@@ -17,8 +17,10 @@ databaseChangeLog:
       file: db/changelog/sql/schema/body_measurement_schema.sql
   - include:
       file: db/changelog/sql/sequences/body_measurement_sequences.sql
-#  - include:
-#      file: db/changelog/sql/user_activity_schema.sql
+  - include:
+      file: db/changelog/sql/schema/sleep_schema.sql
+  - include:
+      file: db/changelog/sql/schema/activity_schema.sql
 #  - include:
 #      file: db/changelog/sql/user_well_being_note_schema.sql
 #  - include:

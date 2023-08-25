@@ -23,12 +23,14 @@ public class Sleep {
             schema = "sleep")
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
+    private LocalDateTime startDate;
+    private LocalDateTime finishDate;
     private Float rating;
-    private Integer awakeningsCount;
+    private Integer awakeningsNumber;
     private String note;
 
     @Column(nullable = false)
-    private LocalDateTime measurementDate;
+    private LocalDateTime creationDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

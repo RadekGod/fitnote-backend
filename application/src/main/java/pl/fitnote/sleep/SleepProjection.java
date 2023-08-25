@@ -7,8 +7,8 @@ public interface SleepProjection {
 
     Long getId();
     Float getRating();
-    Integer getAwakeningsCount();
+    Integer getawakeningsNumber();
     String getNote();
-    LocalDateTime getMeasurementDate();
+    LocalDateTime getCreationDate();
     User getUser();
 }

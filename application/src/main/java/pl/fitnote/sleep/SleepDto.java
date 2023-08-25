@@ -1,7 +1,6 @@
 package pl.fitnote.sleep;
 
 import lombok.*;
-import pl.fitnote.user.User;
 
 import java.time.LocalDateTime;
 
@@ -13,9 +12,10 @@ import java.time.LocalDateTime;
 public class SleepDto {
 
     private Long id;
+    private LocalDateTime startDate;
+    private LocalDateTime finishDate;
     private Float rating;
-    private Integer awakeningsCount;
+    private Integer awakeningsNumber;
     private String note;
-    private LocalDateTime measurementDate;
-    private User user;
+    private LocalDateTime creationDate;
 }

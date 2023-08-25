@@ -28,13 +28,3 @@ CREATE TABLE IF NOT EXISTS user_management.user_details
 );
 
 
--- CREATE TABLE IF NOT EXISTS user_management.user_authority
--- (
---     id          BIGSERIAL PRIMARY KEY,
---     authorities VARCHAR(255) NOT NULL,
---     user_id     BIGINT       NOT NULL,
---     FOREIGN KEY (user_id)
---         REFERENCES user_management.user (id)
--- );
-
-
