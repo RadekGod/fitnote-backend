@@ -1,8 +1,10 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/sql/schema/user_schema.sql
+      file: db/changelog/sql/schema/user_management_schema.sql
   - include:
-      file: db/changelog/sql/populate/user_populate.sql
+      file: db/changelog/sql/populate/user_management_populate.sql
+  - include:
+      file: db/changelog/sql/sequences/user_management_sequences.sql
   - include:
       file: db/changelog/sql/schema/training_plan_schema.sql
   - include:
@@ -14,9 +16,11 @@ databaseChangeLog:
   - include:
       file: db/changelog/sql/sequences/training_history_sequences.sql
   - include:
-      file: db/changelog/sql/schema/body_measurement_schema.sql
+      file: db/changelog/sql/schema/body_schema.sql
   - include:
-      file: db/changelog/sql/sequences/body_measurement_sequences.sql
+      file: db/changelog/sql/populate/body_populate.sql
+  - include:
+      file: db/changelog/sql/sequences/body_sequences.sql
   - include:
       file: db/changelog/sql/schema/sleep_schema.sql
   - include:

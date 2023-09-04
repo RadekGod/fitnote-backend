@@ -6,15 +6,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,8 +33,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user_details", schema = "user_management")
-@Getter(AccessLevel.PACKAGE)
-@Setter(AccessLevel.PACKAGE)
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -48,11 +49,11 @@ public class User {
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
 
-    @Column(nullable = false, updatable = false, unique = true)
-    private String keycloakId;
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
-    private String email;
+    private String password;
 
     @Column(nullable = false)
     private Instant creationTime;
@@ -60,13 +61,13 @@ public class User {
     @Column(nullable = false)
     private Boolean enabled;
 
-    @Column(nullable = false)
+    @Column()
     private String firstName;
 
-    @Column(nullable = false)
+    @Column()
     private String lastName;
 
-    @Column(nullable = false)
+    @Column()
     private Date birthDate;
 
     @Enumerated(EnumType.STRING)
@@ -75,6 +76,9 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private UserSettings userSettings;
+
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Authority> userAuthorities;
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private Set<Exercise> exercises;

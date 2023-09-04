@@ -24,8 +24,8 @@ class BodyFacadeImpl implements BodyFacade {
 
     @Override
     @Transactional
-    public Long createBodyMeasurement(final BodyMeasurementDto command, final UserDetails userDetails) {
-        User requestingUser = userFacade.getUser(userDetails, User.class);
+    public Long createBodyMeasurement(final BodyMeasurementDto command, final String email) {
+        User requestingUser = userFacade.getUser(email, User.class);
         BodyMeasurement bodyMeasurementToSave = bodyMeasurementFactory.createBodyMeasurementFromDto(command);
         bodyMeasurementToSave.setUser(requestingUser);
         return bodyMeasurementPersistRepository.save(bodyMeasurementToSave).getId();
@@ -34,7 +34,7 @@ class BodyFacadeImpl implements BodyFacade {
     @Override
     @Transactional
     public void updateBodyMeasurement(final Long bodyMeasurementId, final BodyMeasurementDto command, final UserDetails userDetails) {
-        BodyMeasurement bodyMeasurementToUpdate = bodyMeasurementQueryRepository.findBodyMeasurementByGivenIdAndKeycloakId(bodyMeasurementId, userDetails.getKeycloakId(), BodyMeasurement.class)
+        BodyMeasurement bodyMeasurementToUpdate = bodyMeasurementQueryRepository.findBodyMeasurementByGivenIdAndEmail(bodyMeasurementId, userDetails.getEmail(), BodyMeasurement.class)
                 .orElseThrow(EntityNotFoundException::new);
 
         bodyMeasurementPersistRepository.save(bodyMeasurementFactory.updateBodyMeasurementWithDto(bodyMeasurementToUpdate, command));
@@ -42,19 +42,25 @@ class BodyFacadeImpl implements BodyFacade {
 
     @Override
     public <T> T getBodyMeasurement(final Long bodyMeasurementId, final UserDetails userDetails, final Class<T> type) {
-        return bodyMeasurementQueryRepository.findBodyMeasurementByGivenIdAndKeycloakId(bodyMeasurementId, userDetails.getKeycloakId(), type)
+        return bodyMeasurementQueryRepository.findBodyMeasurementByGivenIdAndEmail(bodyMeasurementId, userDetails.getEmail(), type)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public List<BodyMeasurementProjection> getAllBodyMeasurements(final UserDetails userDetails) {
-        return bodyMeasurementQueryRepository.findAllBodyMeasurementsByGivenKeycloakId(userDetails.getKeycloakId());
+    public <T> T getUsersLatestBodyMeasurement(final String email, final Class<T> type) {
+        return bodyMeasurementQueryRepository.findLatestBodyMeasurementByGivenEmail(email, type)
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public List<BodyMeasurementProjection> getAllBodyMeasurements(final String email) {
+        return bodyMeasurementQueryRepository.findAllBodyMeasurementsByGivenEmail(email);
     }
 
     @Override
     @Transactional
     public void deleteBodyMeasurement(final Long bodyMeasurementId, final UserDetails userDetails) {
-        BodyMeasurement bodyMeasurementToUpdate = bodyMeasurementQueryRepository.findBodyMeasurementByGivenIdAndKeycloakId(bodyMeasurementId, userDetails.getKeycloakId(), BodyMeasurement.class)
+        BodyMeasurement bodyMeasurementToUpdate = bodyMeasurementQueryRepository.findBodyMeasurementByGivenIdAndEmail(bodyMeasurementId, userDetails.getEmail(), BodyMeasurement.class)
                 .orElseThrow(EntityNotFoundException::new);
         bodyMeasurementPersistRepository.delete(bodyMeasurementToUpdate);
     }
@@ -72,7 +78,7 @@ class BodyFacadeImpl implements BodyFacade {
     @Override
     @Transactional
     public void updateGeneralMeasurement(final Long generalMeasurementId, final GeneralMeasurementDto command, final UserDetails userDetails) {
-        GeneralMeasurement generalMeasurementToUpdate = generalMeasurementQueryRepository.findGeneralMeasurementByGivenIdAndKeycloakId(generalMeasurementId, userDetails.getKeycloakId(), GeneralMeasurement.class)
+        GeneralMeasurement generalMeasurementToUpdate = generalMeasurementQueryRepository.findGeneralMeasurementByGivenIdAndEmail(generalMeasurementId, userDetails.getEmail(), GeneralMeasurement.class)
                 .orElseThrow(EntityNotFoundException::new);
 
         generalMeasurementPersistRepository.save(generalMeasurementFactory.updateGeneralMeasurementWithDto(generalMeasurementToUpdate, command));
@@ -80,19 +86,19 @@ class BodyFacadeImpl implements BodyFacade {
 
     @Override
     public <T> T getGeneralMeasurement(final Long generalMeasurementId, final UserDetails userDetails, final Class<T> type) {
-        return generalMeasurementQueryRepository.findGeneralMeasurementByGivenIdAndKeycloakId(generalMeasurementId, userDetails.getKeycloakId(), type)
+        return generalMeasurementQueryRepository.findGeneralMeasurementByGivenIdAndEmail(generalMeasurementId, userDetails.getEmail(), type)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public List<GeneralMeasurementProjection> getAllGeneralMeasurements(final UserDetails userDetails) {
-        return generalMeasurementQueryRepository.findAllGeneralMeasurementsByGivenKeycloakId(userDetails.getKeycloakId());
+    public List<GeneralMeasurementProjection> getAllGeneralMeasurements(final String email) {
+        return generalMeasurementQueryRepository.findAllGeneralMeasurementsByGivenEmail(email);
     }
 
     @Override
     @Transactional
     public void deleteGeneralMeasurement(final Long generalMeasurementId, final UserDetails userDetails) {
-        GeneralMeasurement generalMeasurement = generalMeasurementQueryRepository.findGeneralMeasurementByGivenIdAndKeycloakId(generalMeasurementId, userDetails.getKeycloakId(), GeneralMeasurement.class)
+        GeneralMeasurement generalMeasurement = generalMeasurementQueryRepository.findGeneralMeasurementByGivenIdAndEmail(generalMeasurementId, userDetails.getEmail(), GeneralMeasurement.class)
                 .orElseThrow(EntityNotFoundException::new);
         generalMeasurementPersistRepository.delete(generalMeasurement);
     }

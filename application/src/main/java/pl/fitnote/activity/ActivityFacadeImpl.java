@@ -53,19 +53,19 @@ class ActivityFacadeImpl implements ActivityFacade {
 
     @Override
     public List<ActivityProjection> getAllActivities(UserDetails userDetails) {
-        return activityQueryRepository.findAllActivitiesByGivenKeycloakId(userDetails.getKeycloakId());
+        return activityQueryRepository.findAllActivitiesByGivenEmail(userDetails.getEmail());
     }
 
     @Override
     public <T> T getActivity(Long activityId, UserDetails userDetails, Class<T> type) {
-        return activityQueryRepository.findActivityByGivenIdAndKeycloakId(activityId, userDetails.getKeycloakId(), type)
+        return activityQueryRepository.findActivityByGivenIdAndEmail(activityId, userDetails.getEmail(), type)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     @Transactional
     public void deleteActivity(Long activityId, UserDetails userDetails) {
-        Activity activityTypeToDelete = activityQueryRepository.findActivityByGivenIdAndKeycloakId(activityId, userDetails.getKeycloakId(), Activity.class)
+        Activity activityTypeToDelete = activityQueryRepository.findActivityByGivenIdAndEmail(activityId, userDetails.getEmail(), Activity.class)
                 .orElseThrow(EntityNotFoundException::new);
         activityPersistRepository.delete(activityTypeToDelete);
     }

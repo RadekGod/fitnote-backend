@@ -26,13 +26,13 @@ class TrainingPlanExerciseFacadeImpl implements TrainingPlanExerciseFacade {
 
     @Override
     public TrainingPlanExerciseProjection getExerciseFromTrainingPlan(final Long trainingPlanId, final Long trainingPlanExerciseId, final UserDetails userDetails) {
-        return trainingPlanExerciseQueryRepository.findTrainingPlanExerciseOfGivenTrainingPlan(trainingPlanExerciseId, userDetails.getKeycloakId())
+        return trainingPlanExerciseQueryRepository.findTrainingPlanExerciseOfGivenTrainingPlan(trainingPlanExerciseId, userDetails.getEmail())
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public List<TrainingPlanExerciseProjection> getAllExercisesFromTrainingPlan(final Long trainingPlanId, final UserDetails userDetails) {
-        return trainingPlanExerciseQueryRepository.findAllTrainingPlanExercisesOfGivenTrainingPlan(trainingPlanId, userDetails.getKeycloakId());
+        return trainingPlanExerciseQueryRepository.findAllTrainingPlanExercisesOfGivenTrainingPlan(trainingPlanId, userDetails.getEmail());
     }
 
     @Override
@@ -50,7 +50,7 @@ class TrainingPlanExerciseFacadeImpl implements TrainingPlanExerciseFacade {
     @Override
     @Transactional
     public void updateExerciseInTrainingPlan(final Long trainingPlanId, final TrainingPlanExerciseDto command, final UserDetails userDetails) {
-        List<ExerciseSet> exerciseSetsBeforeUpdate = trainingPlanExerciseQueryRepository.findAllExerciseSetsOfGivenTrainingPlanExerciseId(command.getId(), userDetails.getKeycloakId());
+        List<ExerciseSet> exerciseSetsBeforeUpdate = trainingPlanExerciseQueryRepository.findAllExerciseSetsOfGivenTrainingPlanExerciseId(command.getId(), userDetails.getEmail());
         List<ExerciseSet> exerciseSetsToSave = new ArrayList<>();
 
         if (command.getExerciseSetDtoList().size() >= exerciseSetsBeforeUpdate.size()) {

@@ -29,19 +29,19 @@ class ExerciseFacadeImpl implements ExerciseFacade {
 
     @Override
     public List<ExerciseProjection> getAllExercises(final UserDetails userDetails) {
-        return exerciseQueryRepository.findAllExercisesForUserByKeycloakId(userDetails.getKeycloakId());
+        return exerciseQueryRepository.findAllExercisesForUserByEmail(userDetails.getEmail());
     }
 
     @Override
     public <T> T getExercise(final Long exerciseId, final UserDetails userDetails, Class<T> type) {
-        return exerciseQueryRepository.findExerciseForUserByKeycloakId(exerciseId, userDetails.getKeycloakId(), type)
+        return exerciseQueryRepository.findExerciseForUserByEmail(exerciseId, userDetails.getEmail(), type)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     @Transactional
     public void updateExercise(final Long exerciseId, final ExerciseDto command, final UserDetails userDetails) {
-        Exercise toUpdate = exerciseQueryRepository.findExerciseForUserByKeycloakId(exerciseId, userDetails.getKeycloakId(), Exercise.class)
+        Exercise toUpdate = exerciseQueryRepository.findExerciseForUserByEmail(exerciseId, userDetails.getEmail(), Exercise.class)
                 .orElseThrow(EntityNotFoundException::new);
         toUpdate.setName(command.getName());
         toUpdate.setDescription(command.getDescription());
@@ -55,7 +55,7 @@ class ExerciseFacadeImpl implements ExerciseFacade {
     @Override
     @Transactional
     public void deleteExercise(final Long exerciseId, final UserDetails userDetails) {
-        Exercise toDelete = exerciseQueryRepository.findExerciseForUserByKeycloakId(exerciseId, userDetails.getKeycloakId(), Exercise.class)
+        Exercise toDelete = exerciseQueryRepository.findExerciseForUserByEmail(exerciseId, userDetails.getEmail(), Exercise.class)
                 .orElseThrow(EntityNotFoundException::new);
         if (toDelete.getUser() != null) {
             exercisePersistRepository.delete(toDelete);

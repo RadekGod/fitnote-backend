@@ -4,10 +4,10 @@ import pl.fitnote.user.Gender;
 
 import java.sql.Date;
 import java.time.Instant;
+import java.util.Set;
 
 public interface UserProjection {
     Long getId();
-    String getKeycloakId();
     String getEmail();
     Instant getCreationTime();
     Boolean getEnabled();
@@ -15,5 +15,6 @@ public interface UserProjection {
     String getLastName();
     Date getBirthDate();
     Gender getGender();
+    Set<AuthorityProjection> getUserAuthorities();
     UserSettingsProjection getUserSettings();
 }

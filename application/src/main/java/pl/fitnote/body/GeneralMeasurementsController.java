@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,8 +40,8 @@ class GeneralMeasurementsController {
     }
 
     @GetMapping()
-    ResponseEntity<List<GeneralMeasurementProjection>> getAllGeneralMeasurements() {
-        return new ResponseEntity<>(bodyFacade.getAllGeneralMeasurements(SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
+    ResponseEntity<List<GeneralMeasurementProjection>> getAllGeneralMeasurements(Authentication authentication) {
+        return new ResponseEntity<>(bodyFacade.getAllGeneralMeasurements(authentication.getName()), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

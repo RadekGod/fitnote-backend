@@ -8,9 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 interface BodyMeasurementQueryRepository extends JpaRepository<BodyMeasurement, Long> {
-    @Query(value = "select bm from Activity bm where bm.id = :bodyMeasurementId and bm.user.keycloakId = :keycloakId")
-    <T> Optional<T> findBodyMeasurementByGivenIdAndKeycloakId(@Param("bodyMeasurementId") Long bodyMeasurementId, @Param("keycloakId") String keycloakId, Class<T> type);
+    @Query(value = "select bm from BodyMeasurement bm where bm.id = :bodyMeasurementId and bm.user.email = :email")
+    <T> Optional<T> findBodyMeasurementByGivenIdAndEmail(@Param("bodyMeasurementId") Long bodyMeasurementId, @Param("email") String email, Class<T> type);
 
-    @Query(value = "select bm from Activity bm where bm.user.keycloakId = :keycloakId")
-    List<BodyMeasurementProjection> findAllBodyMeasurementsByGivenKeycloakId(@Param("keycloakId") String keycloakId);
+    @Query(value = "select bm from BodyMeasurement bm where bm.user.email = :email order by bm.measurementDate desc LIMIT 1")
+    <T> Optional<T> findLatestBodyMeasurementByGivenEmail( @Param("email") String email, Class<T> type);
+
+
+    @Query(value = "select bm from BodyMeasurement bm where bm.user.email = :email")
+    List<BodyMeasurementProjection> findAllBodyMeasurementsByGivenEmail(@Param("email") String email);
 }

@@ -36,19 +36,19 @@ class ActivityTypeFacadeImpl implements ActivityTypeFacade {
 
     @Override
     public List<ActivityTypeProjection> getAllActivityTypes(UserDetails userDetails) {
-        return activityTypeQueryRepository.findAllActivityTypesForUser(userDetails.getKeycloakId());
+        return activityTypeQueryRepository.findAllActivityTypesForUser(userDetails.getEmail());
     }
 
     @Override
     public <T> T getActivityType(Long activityTypeId, UserDetails userDetails, Class<T> type) {
-        return activityTypeQueryRepository.findActivityTypeByGivenIdAndKeycloakId(activityTypeId, userDetails.getKeycloakId(), type).
+        return activityTypeQueryRepository.findActivityTypeByGivenIdAndEmail(activityTypeId, userDetails.getEmail(), type).
                 orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     @Transactional
     public void deleteActivityType(Long activityTypeId, UserDetails userDetails) {
-        ActivityType activityTypeToDelete = activityTypeQueryRepository.findCustomActivityTypeByGivenIdAndKeycloakId(activityTypeId, userDetails.getKeycloakId(), ActivityType.class)
+        ActivityType activityTypeToDelete = activityTypeQueryRepository.findCustomActivityTypeByGivenIdAndEmail(activityTypeId, userDetails.getEmail(), ActivityType.class)
                 .orElseThrow(EntityNotFoundException::new);
         activityTypePersistRepository.delete(activityTypeToDelete);
     }

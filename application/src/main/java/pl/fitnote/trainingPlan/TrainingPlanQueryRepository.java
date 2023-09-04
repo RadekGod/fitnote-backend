@@ -9,9 +9,9 @@ import java.util.Optional;
 
 interface TrainingPlanQueryRepository extends JpaRepository<TrainingPlan, Long> {
 
-    @Query(value = "select tp from TrainingPlan tp left join tp.user u where u.keycloakId = :keycloakId")
-    List<TrainingPlanProjection> findAllTrainingPlansForUserByKeycloakId(@Param("keycloakId") String keycloakId);
+    @Query(value = "select tp from TrainingPlan tp left join tp.user u where u.email = :email")
+    List<TrainingPlanProjection> findAllTrainingPlansForUserByEmail(@Param("email") String email);
 
-    @Query(value = "select tp from TrainingPlan tp left join tp.user u where tp.id = :trainingPlanId and u.keycloakId = :keycloakId")
-    <T> Optional<T> findTrainingPlanForUserByKeycloakId(@Param("trainingPlanId") Long trainingPlanId, @Param("keycloakId") String keycloakId, Class<T> type);
+    @Query(value = "select tp from TrainingPlan tp left join tp.user u where tp.id = :trainingPlanId and u.email = :email")
+    <T> Optional<T> findTrainingPlanForUserByEmail(@Param("trainingPlanId") Long trainingPlanId, @Param("email") String email, Class<T> type);
 }

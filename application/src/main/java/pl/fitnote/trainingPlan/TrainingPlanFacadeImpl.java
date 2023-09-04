@@ -30,7 +30,7 @@ class TrainingPlanFacadeImpl implements TrainingPlanFacade {
     @Override
     @Transactional
     public void updateTrainingPlan(final Long trainingPlanId, final TrainingPlanDto command, final UserDetails userDetails) {
-        TrainingPlan toUpdate = trainingPlanQueryRepository.findTrainingPlanForUserByKeycloakId(trainingPlanId, userDetails.getKeycloakId(), TrainingPlan.class)
+        TrainingPlan toUpdate = trainingPlanQueryRepository.findTrainingPlanForUserByEmail(trainingPlanId, userDetails.getEmail(), TrainingPlan.class)
                 .orElseThrow(EntityNotFoundException::new);
         toUpdate.setName(command.getName());
         toUpdate.setTrainingDays(command.getTrainingDays());
@@ -40,19 +40,19 @@ class TrainingPlanFacadeImpl implements TrainingPlanFacade {
 
     @Override
     public <T> T getTrainingPlan(final Long trainingPlanId, final UserDetails userDetails, Class<T> type) {
-        return trainingPlanQueryRepository.findTrainingPlanForUserByKeycloakId(trainingPlanId, userDetails.getKeycloakId(), type)
+        return trainingPlanQueryRepository.findTrainingPlanForUserByEmail(trainingPlanId, userDetails.getEmail(), type)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public List<TrainingPlanProjection> getAllTrainingPlans(final UserDetails userDetails) {
-        return trainingPlanQueryRepository.findAllTrainingPlansForUserByKeycloakId(userDetails.getKeycloakId());
+        return trainingPlanQueryRepository.findAllTrainingPlansForUserByEmail(userDetails.getEmail());
     }
 
     @Override
     @Transactional
     public void deleteTrainingPlan(final Long trainingPlanId, final UserDetails userDetails) {
-        TrainingPlan toDelete = trainingPlanQueryRepository.findTrainingPlanForUserByKeycloakId(trainingPlanId, userDetails.getKeycloakId(), TrainingPlan.class)
+        TrainingPlan toDelete = trainingPlanQueryRepository.findTrainingPlanForUserByEmail(trainingPlanId, userDetails.getEmail(), TrainingPlan.class)
                 .orElseThrow(EntityNotFoundException::new);
         trainingPlanPersistRepository.delete(toDelete);
     }

@@ -2,12 +2,7 @@ package pl.fitnote.user_session_utils;
 
 import pl.fitnote.commons.UserDetails;
 
-record LoggedUserDetails(String keycloakId, String email) implements UserDetails {
-
-    @Override
-    public String getKeycloakId() {
-        return keycloakId;
-    }
+record LoggedUserDetails(String email) implements UserDetails {
 
     @Override
     public String getEmail() {
