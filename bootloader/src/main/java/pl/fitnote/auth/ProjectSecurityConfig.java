@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 
@@ -86,9 +85,10 @@ public class ProjectSecurityConfig {
                     return config;
                 })
                 .and()
-                .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/register")
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+                .csrf().disable()
+//                .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/register")
+//                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+//                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new JWTTokenGenerationFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JWTTokenValidationFilter(), BasicAuthenticationFilter.class)
@@ -105,6 +105,7 @@ public class ProjectSecurityConfig {
                 .requestMatchers("/trainings").authenticated()
                 .requestMatchers("/body-measurements/**").authenticated()
                 .requestMatchers("/general-measurements").authenticated()
+                .requestMatchers("/general-measurements/**").authenticated()
                 .requestMatchers("/**").authenticated()
                 .and()
                 .formLogin(Customizer.withDefaults())

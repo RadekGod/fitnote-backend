@@ -4,8 +4,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,8 +25,8 @@ class BodyMeasurementsController {
     private final BodyFacade bodyFacade;
 
     @PostMapping()
-    ResponseEntity<Long> createBodyMeasurement(Authentication authentication, @RequestBody BodyMeasurementDto command) {
-        return new ResponseEntity<>(bodyFacade.createBodyMeasurement(command, authentication.getName()), HttpStatus.OK);
+    ResponseEntity<Long> createBodyMeasurement(@RequestBody BodyMeasurementDto command) {
+        return new ResponseEntity<>(bodyFacade.createBodyMeasurement(command, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -41,21 +39,17 @@ class BodyMeasurementsController {
     }
 
     @GetMapping("/latest")
-    ResponseEntity<BodyMeasurementProjection> getLatestBodyMeasurement(Authentication authentication) {
-        var temp = SecurityContextHolder.getContext();
-//        SecurityContextUtils.getLoggedUserDetails();
+    ResponseEntity<?> getLatestBodyMeasurement() {
         try {
-            return new ResponseEntity<>(bodyFacade.getUsersLatestBodyMeasurement(authentication.getName(), BodyMeasurementProjection.class), HttpStatus.OK);
+            return new ResponseEntity<>(bodyFacade.getUsersLatestBodyMeasurement(SecurityContextUtils.getLoggedUserDetails(), BodyMeasurementProjection.class), HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Measurements found");
+            return new ResponseEntity<>("No Measurements found", HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping()
-    ResponseEntity<List<BodyMeasurementProjection>> getAllBodyMeasurements(Authentication authentication) {
-        var temp1 = authentication.getName();
-        var temp = bodyFacade.getAllBodyMeasurements(authentication.getName());
-        return new ResponseEntity<>(bodyFacade.getAllBodyMeasurements(authentication.getName()), HttpStatus.OK);
+    ResponseEntity<List<BodyMeasurementProjection>> getAllBodyMeasurements() {
+        return new ResponseEntity<>(bodyFacade.getAllBodyMeasurements(SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

@@ -24,8 +24,8 @@ class BodyFacadeImpl implements BodyFacade {
 
     @Override
     @Transactional
-    public Long createBodyMeasurement(final BodyMeasurementDto command, final String email) {
-        User requestingUser = userFacade.getUser(email, User.class);
+    public Long createBodyMeasurement(final BodyMeasurementDto command, final UserDetails userDetails) {
+        User requestingUser = userFacade.getUser(userDetails.getEmail(), User.class);
         BodyMeasurement bodyMeasurementToSave = bodyMeasurementFactory.createBodyMeasurementFromDto(command);
         bodyMeasurementToSave.setUser(requestingUser);
         return bodyMeasurementPersistRepository.save(bodyMeasurementToSave).getId();
@@ -47,14 +47,14 @@ class BodyFacadeImpl implements BodyFacade {
     }
 
     @Override
-    public <T> T getUsersLatestBodyMeasurement(final String email, final Class<T> type) {
-        return bodyMeasurementQueryRepository.findLatestBodyMeasurementByGivenEmail(email, type)
+    public <T> T getUsersLatestBodyMeasurement(final UserDetails userDetails, final Class<T> type) {
+        return bodyMeasurementQueryRepository.findLatestBodyMeasurementByGivenEmail(userDetails.getEmail(), type)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public List<BodyMeasurementProjection> getAllBodyMeasurements(final String email) {
-        return bodyMeasurementQueryRepository.findAllBodyMeasurementsByGivenEmail(email);
+    public List<BodyMeasurementProjection> getAllBodyMeasurements(final UserDetails userDetails) {
+        return bodyMeasurementQueryRepository.findAllBodyMeasurementsByGivenEmail(userDetails.getEmail());
     }
 
     @Override
@@ -91,8 +91,14 @@ class BodyFacadeImpl implements BodyFacade {
     }
 
     @Override
-    public List<GeneralMeasurementProjection> getAllGeneralMeasurements(final String email) {
-        return generalMeasurementQueryRepository.findAllGeneralMeasurementsByGivenEmail(email);
+    public <T> T getUsersLatestGeneralMeasurement(final UserDetails userDetails, final Class<T> type) {
+        return generalMeasurementQueryRepository.findLatestGeneralMeasurementByGivenEmail(userDetails.getEmail(), type)
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public List<GeneralMeasurementProjection> getAllGeneralMeasurements(final UserDetails userDetails) {
+        return generalMeasurementQueryRepository.findAllGeneralMeasurementsByGivenEmail(userDetails.getEmail());
     }
 
     @Override
