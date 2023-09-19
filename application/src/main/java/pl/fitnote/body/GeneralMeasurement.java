@@ -1,20 +1,14 @@
 package pl.fitnote.body;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.fitnote.user.LengthUnit;
 import pl.fitnote.user.User;
+import pl.fitnote.user.WeightUnit;
 
 import java.time.LocalDateTime;
 
@@ -47,7 +41,13 @@ public class GeneralMeasurement {
 
     private Float muscleContent;
 
-    private Float fatContent;
+    private Float bodyFat;
+
+    @Enumerated(EnumType.STRING)
+    private WeightUnit weightUnit;
+
+    @Enumerated(EnumType.STRING)
+    private LengthUnit lengthUnit;
 
     @Column(nullable = false)
     private LocalDateTime measurementDate;

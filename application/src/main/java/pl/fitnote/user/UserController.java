@@ -16,7 +16,7 @@ import pl.fitnote.user.dto.CreateUserDto;
 import pl.fitnote.user.dto.UpdateUserDto;
 import pl.fitnote.user.dto.UserProjection;
 import pl.fitnote.user.dto.UserSettingsDto;
-import pl.fitnote.user_session_utils.SecurityContextUtils;
+import pl.fitnote.commons.user_session_utils.SecurityContextUtils;
 
 @RestController
 @RequiredArgsConstructor

@@ -5,8 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.fitnote.commons.UserDetails;
+import pl.fitnote.user.LengthUnit;
 import pl.fitnote.user.User;
 import pl.fitnote.user.UserFacade;
+import pl.fitnote.user.WeightUnit;
 
 import java.util.List;
 
@@ -47,9 +49,14 @@ class BodyFacadeImpl implements BodyFacade {
     }
 
     @Override
-    public <T> T getUsersLatestBodyMeasurement(final UserDetails userDetails, final Class<T> type) {
-        return bodyMeasurementQueryRepository.findLatestBodyMeasurementByGivenEmail(userDetails.getEmail(), type)
+    public BodyMeasurementDto getUsersLatestBodyMeasurement(final UserDetails userDetails) {
+        User requestingUser = userFacade.getUser(userDetails, User.class);
+        BodyMeasurementProjection bodyMeasurementProjection = bodyMeasurementQueryRepository.findLatestBodyMeasurementByGivenEmail(userDetails.getEmail(), BodyMeasurementProjection.class)
                 .orElseThrow(EntityNotFoundException::new);
+        if (!measurementLengthMatchWithUsersLength(bodyMeasurementProjection.getLengthUnit(), requestingUser.getUserSettings().getLengthUnit())) {
+            return bodyMeasurementFactory.recalculateMeasurementValuesAndCreateDto(requestingUser, bodyMeasurementProjection);
+        }
+        return bodyMeasurementFactory.createDtoFromProjection(bodyMeasurementProjection);
     }
 
     @Override
@@ -91,9 +98,15 @@ class BodyFacadeImpl implements BodyFacade {
     }
 
     @Override
-    public <T> T getUsersLatestGeneralMeasurement(final UserDetails userDetails, final Class<T> type) {
-        return generalMeasurementQueryRepository.findLatestGeneralMeasurementByGivenEmail(userDetails.getEmail(), type)
+    public GeneralMeasurementDto getUsersLatestGeneralMeasurement(final UserDetails userDetails) {
+        User requestingUser = userFacade.getUser(userDetails, User.class);
+        GeneralMeasurementProjection generalMeasurementProjection = generalMeasurementQueryRepository.findLatestGeneralMeasurementByGivenEmail(userDetails.getEmail(), GeneralMeasurementProjection.class)
                 .orElseThrow(EntityNotFoundException::new);
+        if (!measurementLengthMatchWithUsersLength(generalMeasurementProjection.getLengthUnit(), requestingUser.getUserSettings().getLengthUnit()) ||
+                !measurementWeightMatchWithUsersWeight(generalMeasurementProjection.getWeightUnit(), requestingUser.getUserSettings().getWeightUnit())) {
+            return generalMeasurementFactory.recalculateMeasurementValuesAndCreateDto(requestingUser, generalMeasurementProjection);
+        }
+        return generalMeasurementFactory.createDtoFromProjection(generalMeasurementProjection);
     }
 
     @Override
@@ -107,5 +120,13 @@ class BodyFacadeImpl implements BodyFacade {
         GeneralMeasurement generalMeasurement = generalMeasurementQueryRepository.findGeneralMeasurementByGivenIdAndEmail(generalMeasurementId, userDetails.getEmail(), GeneralMeasurement.class)
                 .orElseThrow(EntityNotFoundException::new);
         generalMeasurementPersistRepository.delete(generalMeasurement);
+    }
+
+    private Boolean measurementLengthMatchWithUsersLength(LengthUnit measurementLength, LengthUnit userLength) {
+        return measurementLength.equals(userLength);
+    }
+
+    private Boolean measurementWeightMatchWithUsersWeight(WeightUnit measurementWeight, WeightUnit userWeight) {
+        return measurementWeight.equals(userWeight);
     }
 }

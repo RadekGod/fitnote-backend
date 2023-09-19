@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS body.body_measurement
     thigh_right      REAL  NULL,
     calf_left        REAL  NULL,
     calf_right       REAL  NULL,
+    length_unit VARCHAR(40) NOT NULL,
     measurement_date TIMESTAMP NOT NULL,
     user_id          BIGINT    NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user_management.user_details (id)
@@ -32,7 +33,9 @@ CREATE TABLE IF NOT EXISTS body.general_measurement
     height           REAL  NOT NULL,
     bmi              REAL      NOT NULL,
     muscle_content   REAL      NULL,
-    fat_content      REAL      NULL,
+    body_fat      REAL      NULL,
+    length_unit VARCHAR(40) NOT NULL,
+    weight_unit VARCHAR(40) NOT NULL,
     measurement_date TIMESTAMP NOT NULL,
     user_id          BIGINT    NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user_management.user_details (id)

@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import pl.fitnote.user_session_utils.SecurityContextUtils;
+import pl.fitnote.commons.user_session_utils.SecurityContextUtils;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package pl.fitnote.user_session_utils;
+package pl.fitnote.commons.user_session_utils;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import pl.fitnote.commons.UserDetails;

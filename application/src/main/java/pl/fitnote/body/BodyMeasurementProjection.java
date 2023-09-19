@@ -1,5 +1,7 @@
 package pl.fitnote.body;
 
+import pl.fitnote.user.LengthUnit;
+
 import java.time.LocalDateTime;
 
 interface BodyMeasurementProjection {
@@ -15,5 +17,6 @@ interface BodyMeasurementProjection {
     Float getThighRight();
     Float getCalfLeft();
     Float getCalfRight();
+    LengthUnit getLengthUnit();
     LocalDateTime getMeasurementDate();
 }

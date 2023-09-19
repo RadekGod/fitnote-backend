@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.fitnote.user.LengthUnit;
+import pl.fitnote.user.WeightUnit;
 
 import java.time.LocalDateTime;
 
@@ -12,12 +14,15 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 class GeneralMeasurementDto {
     private Long id;
     private Float weight;
     private Float height;
+    private Float bmi;
     private Float muscleContent;
-    private Float fatContent;
+    private Float bodyFat;
+    private WeightUnit weightUnit;
+    private LengthUnit lengthUnit;
     private LocalDateTime measurementDate;
 }

@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import pl.fitnote.user_session_utils.SecurityContextUtils;
+import pl.fitnote.commons.user_session_utils.SecurityContextUtils;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/body-measurements")
-class BodyMeasurementsController {
+class BodyMeasurementController {
 
     private final BodyFacade bodyFacade;
 
@@ -41,7 +41,7 @@ class BodyMeasurementsController {
     @GetMapping("/latest")
     ResponseEntity<?> getLatestBodyMeasurement() {
         try {
-            return new ResponseEntity<>(bodyFacade.getUsersLatestBodyMeasurement(SecurityContextUtils.getLoggedUserDetails(), BodyMeasurementProjection.class), HttpStatus.OK);
+            return new ResponseEntity<>(bodyFacade.getUsersLatestBodyMeasurement(SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
             return new ResponseEntity<>("No Measurements found", HttpStatus.NOT_FOUND);
         }

@@ -12,7 +12,7 @@ public interface BodyFacade {
     List<BodyMeasurementProjection> getAllBodyMeasurements(UserDetails userDetails);
 
     <T> T getBodyMeasurement(Long bodyMeasurementId, UserDetails userDetails, Class<T> type);
-    <T> T getUsersLatestBodyMeasurement(UserDetails userDetails, Class<T> type);
+    BodyMeasurementDto getUsersLatestBodyMeasurement(UserDetails userDetails);
 
     void deleteBodyMeasurement(Long bodyMeasurementId, UserDetails userDetails);
 
@@ -23,7 +23,7 @@ public interface BodyFacade {
     List<GeneralMeasurementProjection> getAllGeneralMeasurements(UserDetails userDetails);
 
     <T> T getGeneralMeasurement(Long generalMeasurementId, UserDetails userDetails, Class<T> type);
-    <T> T getUsersLatestGeneralMeasurement(UserDetails userDetails, Class<T> type);
+    GeneralMeasurementDto getUsersLatestGeneralMeasurement(UserDetails userDetails);
 
     void deleteGeneralMeasurement(Long generalMeasurementId, UserDetails userDetails);
 }

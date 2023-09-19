@@ -1,5 +1,8 @@
 package pl.fitnote.body;
 
+import pl.fitnote.user.LengthUnit;
+import pl.fitnote.user.WeightUnit;
+
 import java.time.LocalDateTime;
 
 interface GeneralMeasurementProjection {
@@ -8,6 +11,8 @@ interface GeneralMeasurementProjection {
     Float getHeight();
     Float getBmi();
     Float getMuscleContent();
-    Float getFatContent();
+    Float getBodyFat();
+    WeightUnit getWeightUnit();
+    LengthUnit getLengthUnit();
     LocalDateTime getMeasurementDate();
 }
