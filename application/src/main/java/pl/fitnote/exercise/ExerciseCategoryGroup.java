@@ -9,6 +9,4 @@ enum ExerciseCategoryGroup {
     BICEPS,
     TRICEPS,
     CUSTOM
-
-
 }

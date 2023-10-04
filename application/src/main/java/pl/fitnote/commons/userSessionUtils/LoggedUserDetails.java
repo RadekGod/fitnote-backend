@@ -1,4 +1,4 @@
-package pl.fitnote.commons.user_session_utils;
+package pl.fitnote.commons.userSessionUtils;
 
 import pl.fitnote.commons.UserDetails;
 

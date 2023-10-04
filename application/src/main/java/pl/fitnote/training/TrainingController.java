@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import pl.fitnote.commons.user_session_utils.SecurityContextUtils;
+import pl.fitnote.commons.userSessionUtils.SecurityContextUtils;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package pl.fitnote.body;
+package pl.fitnote.body.measurements;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
