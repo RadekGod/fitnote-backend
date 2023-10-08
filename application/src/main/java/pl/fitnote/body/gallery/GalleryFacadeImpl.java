@@ -1,5 +1,6 @@
 package pl.fitnote.body.gallery;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +36,33 @@ class GalleryFacadeImpl implements GalleryFacade {
 
     @Override
     @Transactional
-    public List<GalleryPhotoProjection> getAllGalleryPhotos(final UserDetails userDetails) {
-        return galleryPhotoQueryRepository.findAllGalleryPhotosByGivenEmail(userDetails.getEmail());
+    public <T> List<T> getAllGalleryPhotos(final UserDetails userDetails, final Class<T> type) {
+        return galleryPhotoQueryRepository.findAllByUserEmailOrderByApplicationFileCreationDateDesc(userDetails.getEmail(), type);
+    }
+
+//    @Override
+//    @Transactional
+//    public List<SimpleGalleryPhotoProjection> getAllGalleryPhotoDescriptions(final UserDetails userDetails) {
+//        return galleryPhotoQueryRepository.findAllGalleryPhotoDescriptionsByGivenEmail(userDetails.getEmail());
+//    }
+
+//    @Override
+//    @Transactional
+//    public <T> List<T> getAllGalleryPhotoDescriptions(final UserDetails userDetails, final Class<T> type) {
+//        return galleryPhotoQueryRepository.findAllByUserEmail(userDetails.getEmail(), type);
+//    }
+
+//    @Override
+//    @Transactional
+//    public SimpleGalleryPhotoProjection getLatestGalleryPhotoDescription(final UserDetails userDetails) {
+//        return galleryPhotoQueryRepository.findLatestGalleryPhotoDescriptionByGivenEmail(userDetails.getEmail())
+//                .orElseThrow(EntityNotFoundException::new);
+//    }
+
+    @Override
+    @Transactional
+    public SimpleGalleryPhotoProjection getLatestGalleryPhotoDescription(final UserDetails userDetails) {
+        return galleryPhotoQueryRepository.findTop1ByUserEmailOrderByApplicationFileCreationDateDesc(userDetails.getEmail(), SimpleGalleryPhotoProjection.class)
+                .orElseThrow(EntityNotFoundException::new);
     }
 }

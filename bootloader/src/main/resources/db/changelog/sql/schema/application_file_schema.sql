@@ -7,6 +7,8 @@ CREATE SCHEMA IF NOT EXISTS application_file;
 CREATE TABLE IF NOT EXISTS application_file.application_file
 (
     id            BIGSERIAL NOT NULL PRIMARY KEY,
-    data          OID     NOT NULL,
-    creation_date TIMESTAMP NOT NULL
+    file_name      VARCHAR(100) NOT NULL,
+    creation_date TIMESTAMP NOT NULL,
+    data          OID     NOT NULL
+
 );

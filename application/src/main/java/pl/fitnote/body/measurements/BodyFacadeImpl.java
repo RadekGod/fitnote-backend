@@ -36,7 +36,7 @@ class BodyFacadeImpl implements BodyFacade {
     @Override
     @Transactional
     public void updateBodyMeasurement(final Long bodyMeasurementId, final BodyMeasurementDto command, final UserDetails userDetails) {
-        BodyMeasurement bodyMeasurementToUpdate = bodyMeasurementQueryRepository.findBodyMeasurementByGivenIdAndEmail(bodyMeasurementId, userDetails.getEmail(), BodyMeasurement.class)
+        BodyMeasurement bodyMeasurementToUpdate = bodyMeasurementQueryRepository.findByIdAndUserEmail(bodyMeasurementId, userDetails.getEmail(), BodyMeasurement.class)
                 .orElseThrow(EntityNotFoundException::new);
 
         bodyMeasurementPersistRepository.save(bodyMeasurementFactory.updateBodyMeasurementWithDto(bodyMeasurementToUpdate, command));
@@ -44,14 +44,14 @@ class BodyFacadeImpl implements BodyFacade {
 
     @Override
     public <T> T getBodyMeasurement(final Long bodyMeasurementId, final UserDetails userDetails, final Class<T> type) {
-        return bodyMeasurementQueryRepository.findBodyMeasurementByGivenIdAndEmail(bodyMeasurementId, userDetails.getEmail(), type)
+        return bodyMeasurementQueryRepository.findByIdAndUserEmail(bodyMeasurementId, userDetails.getEmail(), type)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public BodyMeasurementDto getUsersLatestBodyMeasurement(final UserDetails userDetails) {
         User requestingUser = userFacade.getUser(userDetails, User.class);
-        BodyMeasurementProjection bodyMeasurementProjection = bodyMeasurementQueryRepository.findLatestBodyMeasurementByGivenEmail(userDetails.getEmail(), BodyMeasurementProjection.class)
+        BodyMeasurementProjection bodyMeasurementProjection = bodyMeasurementQueryRepository.findTop1ByUserEmailOrderByMeasurementDateDesc(userDetails.getEmail(), BodyMeasurementProjection.class)
                 .orElseThrow(EntityNotFoundException::new);
         if (!measurementLengthMatchWithUsersLength(bodyMeasurementProjection.getLengthUnit(), requestingUser.getUserSettings().getLengthUnit())) {
             return bodyMeasurementFactory.recalculateMeasurementValuesAndCreateDto(requestingUser, bodyMeasurementProjection);
@@ -61,13 +61,13 @@ class BodyFacadeImpl implements BodyFacade {
 
     @Override
     public List<BodyMeasurementProjection> getAllBodyMeasurements(final UserDetails userDetails) {
-        return bodyMeasurementQueryRepository.findAllBodyMeasurementsByGivenEmail(userDetails.getEmail());
+        return bodyMeasurementQueryRepository.findAllByUserEmail(userDetails.getEmail());
     }
 
     @Override
     @Transactional
     public void deleteBodyMeasurement(final Long bodyMeasurementId, final UserDetails userDetails) {
-        BodyMeasurement bodyMeasurementToUpdate = bodyMeasurementQueryRepository.findBodyMeasurementByGivenIdAndEmail(bodyMeasurementId, userDetails.getEmail(), BodyMeasurement.class)
+        BodyMeasurement bodyMeasurementToUpdate = bodyMeasurementQueryRepository.findByIdAndUserEmail(bodyMeasurementId, userDetails.getEmail(), BodyMeasurement.class)
                 .orElseThrow(EntityNotFoundException::new);
         bodyMeasurementPersistRepository.delete(bodyMeasurementToUpdate);
     }

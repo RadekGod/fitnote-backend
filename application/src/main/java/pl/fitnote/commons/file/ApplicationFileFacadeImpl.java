@@ -17,6 +17,7 @@ class ApplicationFileFacadeImpl implements ApplicationFileFacade {
     public ApplicationFile saveFile(final MultipartFile file) throws IOException {
         ApplicationFile applicationFile = ApplicationFile.builder()
                 .data(file.getBytes())
+                .fileName(file.getOriginalFilename())
                 .creationDate(LocalDateTime.now())
                 .build();
         return applicationFilePersistRepository.save(applicationFile);

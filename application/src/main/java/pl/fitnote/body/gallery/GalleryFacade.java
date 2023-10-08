@@ -9,5 +9,7 @@ import java.util.List;
 public interface GalleryFacade {
     Long addGalleryPhoto(MultipartFile image, GalleryPhotoDto photoInfo, UserDetails userDetails) throws IOException;
 
-    List<GalleryPhotoProjection> getAllGalleryPhotos(UserDetails userDetails);
+    <T> List<T> getAllGalleryPhotos(UserDetails userDetails, Class<T> type);
+//    List<SimpleGalleryPhotoProjection> getAllGalleryPhotoDescriptions(UserDetails userDetails);
+    SimpleGalleryPhotoProjection getLatestGalleryPhotoDescription(UserDetails userDetails);
 }

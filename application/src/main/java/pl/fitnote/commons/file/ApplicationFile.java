@@ -35,6 +35,9 @@ public class ApplicationFile {
     private Long id;
 
     @Column(nullable = false)
+    private String fileName;
+
+    @Column(nullable = false)
     private LocalDateTime creationDate;
 
     @Lob

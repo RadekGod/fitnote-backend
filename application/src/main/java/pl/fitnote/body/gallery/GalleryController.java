@@ -1,7 +1,7 @@
 package pl.fitnote.body.gallery;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,27 +26,27 @@ class GalleryController {
     private final GalleryFacade galleryFacade;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Long> addGalleryPhoto(@RequestParam(name = "image") MultipartFile image, @RequestPart(name = "photoInfo") String photoInfo) throws JsonProcessingException, IOException {
+    public ResponseEntity<Long> addGalleryPhoto(@RequestParam(name = "image") MultipartFile image, @RequestPart(name = "photoInfo") String photoInfo) throws IOException {
         GalleryPhotoDto galleryPhotoDto = new ObjectMapper().readValue(photoInfo, GalleryPhotoDto.class);
-//
-//
-//        List<MultipartFile> multipartFileList = new ArrayList<>();
-//        multipartFileList.add(file1);
-//        multipartFileList.add(file2);
-//
-//        List<File> fileList = new ArrayList<>();
-//
-//        for (MultipartFile multipartFile : multipartFileList) {
-//            fileList.add(new FileUploader(cvService).uploadCvFile(user, multipartFile));
-//        }
-//
-//        cvService.saveUser(user, fileList);
-
         return new ResponseEntity<>(galleryFacade.addGalleryPhoto(image, galleryPhotoDto, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
     }
 
+//    @GetMapping
+//    public ResponseEntity<List<GalleryPhotoProjection>> getAllGalleryPhotos() {
+//        return new ResponseEntity<>(galleryFacade.getAllGalleryPhotos(SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
+//    }
+
     @GetMapping
-    public ResponseEntity<List<GalleryPhotoProjection>> getAllGalleryPhotos() {
-        return new ResponseEntity<>(galleryFacade.getAllGalleryPhotos(SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
+    public ResponseEntity<List<SimpleGalleryPhotoProjection>> getAllGalleryPhotoDescriptions() {
+        return new ResponseEntity<>(galleryFacade.getAllGalleryPhotos(SecurityContextUtils.getLoggedUserDetails(), SimpleGalleryPhotoProjection.class), HttpStatus.OK);
+    }
+
+    @GetMapping("/latest")
+    ResponseEntity<?> getLatestGalleryPhotoDescription() {
+        try {
+            return new ResponseEntity<>(galleryFacade.getLatestGalleryPhotoDescription(SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>("Photo not found", HttpStatus.NOT_FOUND);
+        }
     }
 }
