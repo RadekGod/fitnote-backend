@@ -16,6 +16,7 @@ interface GalleryPhotoQueryRepository extends JpaRepository<GalleryPhoto, Long> 
     List<SimpleGalleryPhotoProjection> findAllGalleryPhotoDescriptionsByGivenEmail(@Param("email") String email);
 
     <T> List<T> findAllByUserEmailOrderByApplicationFileCreationDateDesc(String email, Class<T> type);
+    <T> Optional<T> findByIdAndUserEmail(Long id, String email, Class<T> type);
 
 
 //    @Query(value = "select gp from GalleryPhoto gp join fetch gp.applicationFile join fetch gp.user where gp.user.email = :email order by gp.applicationFile.creationDate desc")

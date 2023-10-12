@@ -8,7 +8,7 @@ class TrainingPlanExerciseFactory {
 
     TrainingPlanExercise createTrainingPlanExercise(TrainingPlanExerciseDto source, Exercise exercise, TrainingPlan trainingPlan) {
             return TrainingPlanExercise.builder()
-                    .measureUnit(source.getMeasureUnit())
+                    .measurementUnit(source.getMeasurementUnit())
                     .note(source.getNote())
                     .exercise(exercise)
                     .trainingPlan(trainingPlan)

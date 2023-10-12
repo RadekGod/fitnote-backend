@@ -17,8 +17,8 @@ public class ExerciseDto {
     private Long id;
     private String name;
     private String description;
+    private List<ExerciseCategoryGroupEnum> exerciseCategoryGroups;
+    private ExerciseType exerciseType;
     private List<InvolvedMuscles> mainMuscles;
     private List<InvolvedMuscles> supportiveMuscles;
-    private List<ExerciseCategoryGroup> exerciseCategoryGroups;
-    private ExerciseType exerciseType;
 }

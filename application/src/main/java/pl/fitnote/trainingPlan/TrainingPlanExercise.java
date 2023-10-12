@@ -43,7 +43,7 @@ public class TrainingPlanExercise {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private MeasureUnit measureUnit;
+    private MeasurementUnit measurementUnit;
 
 //    @Column(nullable = false)
 //    private Long exerciseSequenceNumber;

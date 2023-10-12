@@ -24,14 +24,21 @@ class GalleryFacadeImpl implements GalleryFacade {
 
     @Override
     @Transactional
-    public Long addGalleryPhoto(final MultipartFile image, final GalleryPhotoDto photoInfo, final UserDetails userDetails) throws IOException {
+    public Long addGalleryPhoto(final MultipartFile image, final GalleryPhotoDto command, final UserDetails userDetails) throws IOException {
         User requestingUser = userFacade.getUser(userDetails.getEmail(), User.class);
-        GalleryPhoto galleryPhotoToSave = GalleryPhoto.builder()
+        GalleryPhoto toSave = GalleryPhoto.builder()
                 .applicationFile(applicationFileFacade.saveFile(image))
-                .note(photoInfo.getNote())
+                .note(command.getNote())
                 .user(requestingUser)
                 .build();
-        return galleryPhotoPersistRepository.save(galleryPhotoToSave).getId();
+        return galleryPhotoPersistRepository.save(toSave).getId();
+    }
+
+    @Override
+    @Transactional
+    public <T> T getGalleryPhoto(final Long galleryPhotoId, final UserDetails userDetails, final Class<T> type) {
+        return galleryPhotoQueryRepository.findByIdAndUserEmail(galleryPhotoId, userDetails.getEmail(), type)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

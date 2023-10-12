@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS training_history.training
 CREATE TABLE IF NOT EXISTS training_history.training_exercise
 (
     id BIGSERIAL NOT NULL PRIMARY KEY,
-    measure_unit VARCHAR(30) NULL,
+    measurement_unit VARCHAR(30) NULL,
     note VARCHAR(1000) NULL,
     exercise_id BIGINT NOT NULL,
     training_id BIGINT NOT NULL,

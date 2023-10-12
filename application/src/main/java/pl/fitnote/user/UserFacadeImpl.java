@@ -36,13 +36,13 @@ class UserFacadeImpl implements UserFacade {
 
     @Override
     public <T> T getUser(final UserDetails userDetails, final Class<T> type) {
-        return userQueryRepository.findUserByEmail(userDetails.getEmail(), type)
+        return userQueryRepository.findByEmail(userDetails.getEmail(), type)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with given E-mail"));
     }
 
     @Override
     public <T> T getUser(final String email, final Class<T> type) {
-        return userQueryRepository.findUserByEmail(email, type)
+        return userQueryRepository.findByEmail(email, type)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with given E-mail"));
     }
 

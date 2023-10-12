@@ -12,6 +12,8 @@ databaseChangeLog:
   - include:
       file: db/changelog/sql/populate/training_plan_populate.sql
   - include:
+      file: db/changelog/sql/sequences/training_plan_sequences.sql
+  - include:
       file: db/changelog/sql/schema/training_history_schema.sql
   - include:
       file: db/changelog/sql/populate/training_history_populate.sql

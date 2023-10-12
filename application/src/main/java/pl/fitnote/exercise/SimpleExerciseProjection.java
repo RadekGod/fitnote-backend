@@ -1,11 +1,11 @@
 package pl.fitnote.exercise;
 
-import pl.fitnote.commons.file.ApplicationFileProjection;
+import pl.fitnote.commons.file.SimpleApplicationFileProjection;
 
 import java.util.List;
 import java.util.Set;
 
-public interface ExerciseProjection {
+public interface SimpleExerciseProjection {
     Long getId();
     String getName();
     String getDescription();
@@ -14,5 +14,5 @@ public interface ExerciseProjection {
     Boolean getCustom();
     Set<ExerciseCategoryGroupProjection> getExerciseCategoryGroups();
     ExerciseType getExerciseType();
-    ApplicationFileProjection getApplicationFile();
+    SimpleApplicationFileProjection getApplicationFile();
 }

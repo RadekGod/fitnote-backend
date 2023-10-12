@@ -1,8 +1,14 @@
 package pl.fitnote.exercise;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.cfg.CoercionAction;
+import com.fasterxml.jackson.databind.cfg.CoercionInputShape;
+import com.fasterxml.jackson.databind.type.LogicalType;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +17,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import pl.fitnote.commons.userSessionUtils.SecurityContextUtils;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,9 +33,16 @@ import java.util.List;
 class ExerciseController {
     private final ExerciseFacade exerciseFacade;
 
-    @PostMapping()
-    ResponseEntity<Long> createExercise(@RequestBody ExerciseDto command) {
-        return new ResponseEntity<>(exerciseFacade.createExercise(command, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    ResponseEntity<Long> createExercise(@RequestParam(name = "image") Optional<MultipartFile> image, @RequestPart(name = "exerciseData") String exerciseData) throws IOException {
+
+//        new ObjectMapper().getDeserializationConfig().getDeserializationFeatures();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.coercionConfigFor(LogicalType.Array).setCoercion(CoercionInputShape.EmptyArray, CoercionAction.AsEmpty);
+        objectMapper.configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true);
+        ExerciseDto exerciseDto = objectMapper.readValue(exerciseData, ExerciseDto.class);
+
+        return new ResponseEntity<>(exerciseFacade.createExercise(image, exerciseDto, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
     }
 
     @GetMapping()
@@ -40,6 +57,11 @@ class ExerciseController {
         } catch (EntityNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Exercise not found with given id");
         }
+    }
+
+    @GetMapping("/categories")
+    ResponseEntity<List<ExerciseProjection>> getAllExercisesFromCategory(@RequestParam("category") ExerciseCategoryGroupEnum category) {
+        return new ResponseEntity<>(exerciseFacade.getAllExercisesFromCategory(category, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
     }
 
     @PutMapping("/exercise")

@@ -1,6 +1,6 @@
 package pl.fitnote.trainingPlan;
 
-public enum MeasureUnit {
+public enum MeasurementUnit {
     KILOGRAM,
     POUND,
     MINUTE,

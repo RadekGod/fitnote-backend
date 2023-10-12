@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 public class TrainingPlanExerciseDto {
     private Long id;
-    private MeasureUnit measureUnit;
+    private MeasurementUnit measurementUnit;
     private String note;
     private ExerciseDto exerciseDto;
     private List<ExerciseSetDto> exerciseSetDtoList;
