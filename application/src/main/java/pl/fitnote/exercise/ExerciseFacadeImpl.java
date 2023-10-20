@@ -12,6 +12,7 @@ import pl.fitnote.user.UserFacade;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -26,18 +27,9 @@ class ExerciseFacadeImpl implements ExerciseFacade {
     private final ExerciseQueryRepository exerciseQueryRepository;
     private final ExerciseCategoryGroupQueryRepository exerciseCategoryGroupQueryRepository;
 
-//    @Override
-//    @Transactional
-//    public Long createExercise(final ExerciseDto command, final UserDetails userDetails) {
-//        Exercise toCreate = exerciseFactory.createExerciseFromDto(command);
-//        toCreate.setUser(userFacade.getUser(userDetails, User.class));
-//        return exercisePersistRepository.save(toCreate).getId();
-//    }
-
     @Override
     @Transactional
     public Long createExercise(final Optional<MultipartFile> image, final ExerciseDto command, final UserDetails userDetails) throws IOException {
-
         User requestingUser = userFacade.getUser(userDetails.getEmail(), User.class);
         List<ExerciseCategoryGroupEnum> exerciseCategoryGroupEnums = command.getExerciseCategoryGroups();
         exerciseCategoryGroupEnums.add(ExerciseCategoryGroupEnum.CUSTOM);
@@ -63,6 +55,7 @@ class ExerciseFacadeImpl implements ExerciseFacade {
     }
 
     @Override
+    @Transactional
     public <T> T getExercise(final Long exerciseId, final UserDetails userDetails, Class<T> type) {
         return exerciseQueryRepository.findExerciseForUserByEmail(exerciseId, userDetails.getEmail(), type)
                 .orElseThrow(EntityNotFoundException::new);
@@ -70,7 +63,9 @@ class ExerciseFacadeImpl implements ExerciseFacade {
 
     @Override
     @Transactional
-    public void updateExercise(final Long exerciseId, final ExerciseDto command, final UserDetails userDetails) {
+    public void updateExercise(final Long exerciseId, final Optional<MultipartFile> image, final ExerciseDto command, final UserDetails userDetails) throws IOException {
+        List<ExerciseCategoryGroupEnum> exerciseCategoryGroupEnums = command.getExerciseCategoryGroups();
+        exerciseCategoryGroupEnums.add(ExerciseCategoryGroupEnum.CUSTOM);
         Exercise toUpdate = exerciseQueryRepository.findExerciseForUserByEmail(exerciseId, userDetails.getEmail(), Exercise.class)
                 .orElseThrow(EntityNotFoundException::new);
         toUpdate.setName(command.getName());
@@ -78,9 +73,17 @@ class ExerciseFacadeImpl implements ExerciseFacade {
         toUpdate.setMainMuscles(command.getMainMuscles());
         toUpdate.setSupportiveMuscles(command.getSupportiveMuscles());
         toUpdate.setExerciseType(command.getExerciseType());
-        toUpdate.setExerciseCategoryGroups(findAllCategoryGroupsMatchingCommand(command.getExerciseCategoryGroups()));
-//        toUpdate.setExerciseCategoryGroupEnums(command.getExerciseCategoryGroupEnums());
+        toUpdate.setExerciseCategoryGroups(findAllCategoryGroupsMatchingCommand(exerciseCategoryGroupEnums));
         exercisePersistRepository.save(toUpdate);
+
+        if (image.isPresent()) {
+
+            if (Objects.isNull(toUpdate.getApplicationFile())) {
+                toUpdate.setApplicationFile(applicationFileFacade.saveFile(image.get()));
+            } else {
+                applicationFileFacade.updateFile(toUpdate.getApplicationFile().getId(), image.get());
+            }
+        }
     }
 
     @Override
@@ -88,11 +91,12 @@ class ExerciseFacadeImpl implements ExerciseFacade {
     public void deleteExercise(final Long exerciseId, final UserDetails userDetails) {
         Exercise toDelete = exerciseQueryRepository.findExerciseForUserByEmail(exerciseId, userDetails.getEmail(), Exercise.class)
                 .orElseThrow(EntityNotFoundException::new);
-        if (toDelete.getUser() != null) {
-            exercisePersistRepository.delete(toDelete);
-        } else {
-            throw new EntityNotFoundException();
-        }
+        exercisePersistRepository.delete(toDelete);
+//        if (Objects.equals(toDelete.getUser().getEmail(), userDetails.getEmail())) {
+//            exercisePersistRepository.delete(toDelete);
+//        } else {
+//            throw new EntityNotFoundException();
+//        }
     }
 
     private Set<ExerciseCategoryGroup> findAllCategoryGroupsMatchingCommand(List<ExerciseCategoryGroupEnum> exerciseCategoryGroupEnums) {

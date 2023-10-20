@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -36,7 +35,6 @@ class ExerciseController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<Long> createExercise(@RequestParam(name = "image") Optional<MultipartFile> image, @RequestPart(name = "exerciseData") String exerciseData) throws IOException {
 
-//        new ObjectMapper().getDeserializationConfig().getDeserializationFeatures();
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.coercionConfigFor(LogicalType.Array).setCoercion(CoercionInputShape.EmptyArray, CoercionAction.AsEmpty);
         objectMapper.configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true);
@@ -51,9 +49,9 @@ class ExerciseController {
     }
 
     @GetMapping("/exercise")
-    ResponseEntity<ExerciseProjection> getExercise(@RequestParam("id") Long exerciseId) {
+    ResponseEntity<SimpleExerciseProjection> getExercise(@RequestParam("id") Long exerciseId) {
         try {
-            return new ResponseEntity<>(exerciseFacade.getExercise(exerciseId, SecurityContextUtils.getLoggedUserDetails(), ExerciseProjection.class), HttpStatus.OK);
+            return new ResponseEntity<>(exerciseFacade.getExercise(exerciseId, SecurityContextUtils.getLoggedUserDetails(), SimpleExerciseProjection.class), HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Exercise not found with given id");
         }
@@ -64,10 +62,15 @@ class ExerciseController {
         return new ResponseEntity<>(exerciseFacade.getAllExercisesFromCategory(category, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
     }
 
-    @PutMapping("/exercise")
-    ResponseEntity<Void> updateExercise(@RequestParam("id") Long exerciseId, @RequestBody ExerciseDto command) {
+    @PutMapping(name = "/exercise", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    ResponseEntity<Void> updateExercise(@RequestParam("id") Long exerciseId, @RequestParam(name = "image") Optional<MultipartFile> image, @RequestPart(name = "exerciseData") String exerciseData) throws IOException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.coercionConfigFor(LogicalType.Array).setCoercion(CoercionInputShape.EmptyArray, CoercionAction.AsEmpty);
+        objectMapper.configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true);
+        ExerciseDto exerciseDto = objectMapper.readValue(exerciseData, ExerciseDto.class);
         try {
-            exerciseFacade.updateExercise(exerciseId, command, SecurityContextUtils.getLoggedUserDetails());
+            exerciseFacade.updateExercise(exerciseId, image, exerciseDto, SecurityContextUtils.getLoggedUserDetails());
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Exercise not found with given id");

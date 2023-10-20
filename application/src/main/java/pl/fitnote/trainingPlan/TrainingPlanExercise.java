@@ -12,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -50,7 +49,7 @@ public class TrainingPlanExercise {
 
     private String note;
 
-    @OneToOne()
+    @ManyToOne
     @JoinColumn(name = "exercise_id", nullable = false)
     private Exercise exercise;
 

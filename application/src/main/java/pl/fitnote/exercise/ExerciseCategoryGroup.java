@@ -1,6 +1,5 @@
 package pl.fitnote.exercise;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -41,6 +40,6 @@ public class ExerciseCategoryGroup {
     @Enumerated(EnumType.STRING)
     private ExerciseCategoryGroupEnum categoryName;
 
-    @ManyToMany(mappedBy = "exerciseCategoryGroups", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "exerciseCategoryGroups", fetch = FetchType.EAGER)
     private Set<Exercise> exercises;
 }

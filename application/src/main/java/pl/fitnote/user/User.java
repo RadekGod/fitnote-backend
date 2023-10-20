@@ -87,7 +87,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> userAuthorities;
 
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Exercise> exercises;
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)

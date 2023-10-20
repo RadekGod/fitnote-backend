@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS training_plan.exercise
     main_muscles        VARCHAR(255)  NULL,
     supportive_muscles  VARCHAR(255)  NULL,
     custom              BOOLEAN       NOT NULL,
-    exercise_type       VARCHAR(255)  NULL,
+    exercise_type       VARCHAR(255)  NOT NULL,
     application_file_id BIGINT        NULL,
     user_id             BIGINT        NULL,
     FOREIGN KEY (application_file_id) REFERENCES application_file.application_file (id),

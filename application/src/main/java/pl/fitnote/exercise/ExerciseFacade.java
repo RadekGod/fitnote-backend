@@ -12,6 +12,7 @@ public interface ExerciseFacade {
     List<ExerciseProjection> getAllExercises(UserDetails userDetails);
     List<ExerciseProjection> getAllExercisesFromCategory(ExerciseCategoryGroupEnum exerciseCategoryGroupEnum, UserDetails userDetails);
     <T> T getExercise(Long exerciseId, UserDetails userDetails, Class<T> type);
-    void updateExercise(Long exerciseId, ExerciseDto command, UserDetails userDetails);
+
+    void updateExercise(Long exerciseId, Optional<MultipartFile> image, ExerciseDto command, UserDetails userDetails) throws IOException;
     void deleteExercise(Long exerciseId, UserDetails userDetails);
 }

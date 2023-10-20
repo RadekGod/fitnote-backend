@@ -64,13 +64,29 @@ INSERT INTO training_plan.exercise_exercise_category_group (exercise_id, exercis
 VALUES (1, 1);
 
 INSERT INTO training_plan.exercise_exercise_category_group (exercise_id, exercise_category_group_id)
+VALUES (1, 2);
+
+INSERT INTO training_plan.exercise_exercise_category_group (exercise_id, exercise_category_group_id)
 VALUES (2, 1);
+
+INSERT INTO training_plan.exercise_exercise_category_group (exercise_id, exercise_category_group_id)
+VALUES (2, 2);
 
 INSERT INTO training_plan.exercise_exercise_category_group (exercise_id, exercise_category_group_id)
 VALUES (3, 1);
 
 INSERT INTO training_plan.exercise_exercise_category_group (exercise_id, exercise_category_group_id)
+VALUES (3, 2);
+
+INSERT INTO training_plan.exercise_exercise_category_group (exercise_id, exercise_category_group_id)
 VALUES (3, 14);
+
+
+
+
+
+INSERT INTO training_plan.exercise_exercise_category_group (exercise_id, exercise_category_group_id)
+VALUES (3, 12);
 
 
 
