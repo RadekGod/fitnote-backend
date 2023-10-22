@@ -12,8 +12,10 @@ import java.util.List;
 @Getter
 @Setter
 class AuthConfig {
+    private String jwtKey;
+    private String jwtHeader;
+    private String issuer;
     private List<String> allowedOrigins;
     private List<String> allowedMethods;
     private List<String> allowedHeaders;
-    private List<String> jwtIssuers;
 }

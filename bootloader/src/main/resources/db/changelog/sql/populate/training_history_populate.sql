@@ -22,23 +22,23 @@ INSERT INTO training_history.training
 
 INSERT INTO training_history.training_exercise
 (
- id, measure_unit, note, exercise_id, training_id
+ id, measurement_unit, note, exercise_id, training_id
 ) VALUES (1, 'KILOGRAM', 'Wykonywać powoli', 1, 1);
 
 INSERT INTO training_history.training_exercise
 (
-    id, measure_unit, note, exercise_id, training_id
+    id, measurement_unit, note, exercise_id, training_id
 ) VALUES (2, 'KILOGRAM', 'Wykonywać powoli', 2, 1);
 
 
 INSERT INTO training_history.training_exercise
 (
-    id, measure_unit, note, exercise_id, training_id
+    id, measurement_unit, note, exercise_id, training_id
 ) VALUES (3, 'KILOGRAM', 'Wykonywać powoli', 1, 2);
 
 INSERT INTO training_history.training_exercise
 (
-    id, measure_unit, note, exercise_id, training_id
+    id, measurement_unit, note, exercise_id, training_id
 ) VALUES (4, 'KILOGRAM', 'Wykonywać powoli', 2, 2);
 
 

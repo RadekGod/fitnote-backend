@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TrainingPlanExerciseProjection {
     Long getId();
-    MeasureUnit getMeasureUnit();
+    MeasurementUnit getMeasurementUnit();
     String getNote();
     ExerciseProjection getExercise();
     List<ExerciseSetProjection> getExerciseSets();

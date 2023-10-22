@@ -16,5 +16,4 @@ import java.util.List;
 public class CreateTrainingPlanDto {
     private String name;
     private List<TrainingDay> trainingDays;
-    private String note;
 }

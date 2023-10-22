@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.fitnote.commons.file.ApplicationFileDto;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public class ExerciseDto {
     private String description;
     private List<InvolvedMuscles> mainMuscles;
     private List<InvolvedMuscles> supportiveMuscles;
-    private List<ExerciseCategoryGroup> exerciseCategoryGroups;
+    private Boolean custom;
+    private List<ExerciseCategoryGroupDto> exerciseCategoryGroups;
     private ExerciseType exerciseType;
+    private ApplicationFileDto applicationFile;
 }

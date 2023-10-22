@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 interface ActivityQueryRepository extends JpaRepository<Activity, Long> {
-    @Query(value = "select a from Activity a where a.id = :activityId and a.user.keycloakId = :keycloakId")
-    <T> Optional<T> findActivityByGivenIdAndKeycloakId(@Param("activityId") Long activityId, @Param("keycloakId") String keycloakId, Class<T> type);
+    @Query(value = "select a from Activity a where a.id = :activityId and a.user.email = :email")
+    <T> Optional<T> findActivityByGivenIdAndEmail(@Param("activityId") Long activityId, @Param("email") String email, Class<T> type);
 
-    @Query(value = "select a from Activity a where a.user.keycloakId = :keycloakId")
-    List<ActivityProjection> findAllActivitiesByGivenKeycloakId(@Param("keycloakId") String keycloakId);
+    @Query(value = "select a from Activity a where a.user.email = :email")
+    List<ActivityProjection> findAllActivitiesByGivenEmail(@Param("email") String email);
 }

@@ -49,7 +49,7 @@ class TrainingFacadeImpl implements TrainingFacade {
     @Override
     @Transactional
     public void updateTraining(final Long trainingId, final TrainingDto command, final UserDetails userDetails) {
-        Training trainingToUpdate = trainingQueryRepository.findTrainingByGivenIdAndKeycloakId(trainingId, userDetails.getKeycloakId(), Training.class)
+        Training trainingToUpdate = trainingQueryRepository.findByIdAndUserEmail(trainingId, userDetails.getEmail(), Training.class)
                 .orElseThrow(EntityNotFoundException::new);
         trainingToUpdate = trainingToUpdate.toBuilder()
                 .name(command.getName())
@@ -102,19 +102,19 @@ class TrainingFacadeImpl implements TrainingFacade {
 
     @Override
     public <T> T getTraining(final Long trainingId, final UserDetails userDetails, final Class<T> type) {
-        return trainingQueryRepository.findTrainingByGivenIdAndKeycloakId(trainingId, userDetails.getKeycloakId(), type)
+        return trainingQueryRepository.findByIdAndUserEmail(trainingId, userDetails.getEmail(), type)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public List<TrainingProjection> getAllTrainings(final UserDetails userDetails) {
-        return trainingQueryRepository.findAllTrainingsByGivenKeycloakId(userDetails.getKeycloakId());
+        return trainingQueryRepository.findAllByUserEmail(userDetails.getEmail());
     }
 
     @Override
     @Transactional
     public void deleteTraining(final Long trainingId, final UserDetails userDetails) {
-        Training training = trainingQueryRepository.findTrainingByGivenIdAndKeycloakId(trainingId, userDetails.getKeycloakId(), Training.class)
+        Training training = trainingQueryRepository.findByIdAndUserEmail(trainingId, userDetails.getEmail(), Training.class)
                 .orElseThrow(EntityNotFoundException::new);
         trainingPersistRepository.delete(training);
     }

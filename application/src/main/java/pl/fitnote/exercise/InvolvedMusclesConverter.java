@@ -5,6 +5,7 @@ import jakarta.persistence.Converter;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Converter
@@ -15,6 +16,7 @@ class InvolvedMusclesConverter implements AttributeConverter<List<InvolvedMuscle
             return null;
         }
         return involvedMuscles.stream()
+                .filter(Objects::nonNull)
                 .map(Enum::name)
                 .collect(Collectors.joining(", "));
     }

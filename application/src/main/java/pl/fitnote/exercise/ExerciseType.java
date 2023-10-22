@@ -1,7 +1,9 @@
 package pl.fitnote.exercise;
 
-enum ExerciseType {
-    CARDIO,
-    BODY_WEIGHT,
-    FREE_WEIGHT
+public enum ExerciseType {
+    CARDIO_TIME,
+    CARDIO_DISTANCE,
+    BODY_WEIGHT_REPEATS,
+    BODY_WEIGHT_TIME,
+    WEIGHT_TRAINING
 }

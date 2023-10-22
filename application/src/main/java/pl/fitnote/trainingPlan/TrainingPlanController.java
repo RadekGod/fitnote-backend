@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import pl.fitnote.user_session_utils.SecurityContextUtils;
+import pl.fitnote.commons.userSessionUtils.SecurityContextUtils;
 
 import java.util.List;
 
@@ -38,16 +38,16 @@ class TrainingPlanController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<TrainingPlanProjection> getTrainingPlan(@PathVariable("id") Long trainingPlanId) {
+    ResponseEntity<TrainingPlanDto> getTrainingPlan(@PathVariable("id") Long trainingPlanId) {
         try {
-            return new ResponseEntity<>(trainingPlanFacade.getTrainingPlan(trainingPlanId, SecurityContextUtils.getLoggedUserDetails(), TrainingPlanProjection.class), HttpStatus.OK);
+            return new ResponseEntity<>(trainingPlanFacade.getTrainingPlan(trainingPlanId, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Training Plan not found with given id");
         }
     }
 
     @GetMapping()
-    ResponseEntity<List<TrainingPlanProjection>> getAllTrainingPlans() {
+    ResponseEntity<List<TrainingPlanDto>> getAllTrainingPlans() {
         try {
             return new ResponseEntity<>(trainingPlanFacade.getAllTrainingPlans(SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
@@ -69,7 +69,7 @@ class TrainingPlanController {
 
     @GetMapping("/{id}/exercises")
     ResponseEntity<List<TrainingPlanExerciseProjection>> getAllExercisesFromTrainingPlan(@PathVariable("id") Long trainingPlanId) {
-        return new ResponseEntity<>(trainingPlanExerciseFacade.getAllExercisesFromTrainingPlan(trainingPlanId, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
+        return new ResponseEntity<>(trainingPlanExerciseFacade.getAllExercisesFromTrainingPlan(trainingPlanId, SecurityContextUtils.getLoggedUserDetails(), TrainingPlanExerciseProjection.class), HttpStatus.OK);
     }
 
     @PostMapping("/{id}/exercises")

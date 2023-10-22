@@ -16,4 +16,14 @@ class ExerciseSetFactory {
                 .trainingPlanExercise(trainingPlanExercise)
                 .build()).toList();
     }
+
+    ExerciseSetDto createExerciseSetDtoFromProjection(ExerciseSetProjection source) {
+        return ExerciseSetDto.builder()
+                .id(source.getId())
+                .weight(source.getWeight())
+                .repeats(source.getRepeats())
+                .completed(source.getCompleted())
+                .note(source.getNote())
+                .build();
+    }
 }

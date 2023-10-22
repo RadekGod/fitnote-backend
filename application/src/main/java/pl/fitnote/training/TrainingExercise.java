@@ -20,7 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.fitnote.exercise.Exercise;
-import pl.fitnote.trainingPlan.MeasureUnit;
+import pl.fitnote.trainingPlan.MeasurementUnit;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ class TrainingExercise {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private MeasureUnit measureUnit;
+    private MeasurementUnit measurementUnit;
 
 //    @Column(nullable = false)
 //    private Long exerciseSequenceNumber;

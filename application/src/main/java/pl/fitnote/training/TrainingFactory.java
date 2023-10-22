@@ -49,7 +49,7 @@ class TrainingFactory {
 
     TrainingExercise createTrainingExercise(TrainingExerciseDto source, Exercise exercise, List<TrainingExerciseSet> trainingExerciseSets) {
         return TrainingExercise.builder()
-                .measureUnit(source.getMeasureUnit())
+                .measurementUnit(source.getMeasurementUnit())
                 .note(source.getNote())
                 .exercise(exercise)
                 .exerciseSets(trainingExerciseSets)
