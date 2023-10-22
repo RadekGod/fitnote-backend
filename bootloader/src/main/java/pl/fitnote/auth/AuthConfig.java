@@ -12,9 +12,9 @@ import java.util.List;
 @Getter
 @Setter
 class AuthConfig {
-    private String jwtKey = "jxgEQeXHuPq8VdbyYFNkANdudQ53YUn4";
-    private String jwtHeader = "Authorization";
-    private String issuer = "FitNote";
+    private String jwtKey;
+    private String jwtHeader;
+    private String issuer;
     private List<String> allowedOrigins;
     private List<String> allowedMethods;
     private List<String> allowedHeaders;
