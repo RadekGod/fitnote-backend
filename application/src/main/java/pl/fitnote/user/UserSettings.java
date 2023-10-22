@@ -23,7 +23,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-class UserSettings {
+public class UserSettings {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_settings_sequence_generator")

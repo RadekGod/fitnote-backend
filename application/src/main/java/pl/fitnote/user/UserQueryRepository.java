@@ -4,7 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-interface UserQueryRepository extends JpaRepository<User, Long> {
+public interface UserQueryRepository extends JpaRepository<User, Long> {
 
-    <T> Optional<T> findByKeycloakId(String keycloakId, Class<T> type);
+    <T> Optional<T> findByEmail(String email, Class<T> type);
+    Boolean existsByEmail(String email);
 }

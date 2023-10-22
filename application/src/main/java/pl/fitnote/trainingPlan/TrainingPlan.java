@@ -1,9 +1,11 @@
 package pl.fitnote.trainingPlan;
 
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,13 +19,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.fitnote.exerciseSet.ExerciseSet;
 import pl.fitnote.user.User;
 
 import java.util.List;
 
 @Entity
-@Table(name = "training_plan", schema = "training")
+@Table(name = "training_plan", schema = "training_plan")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -32,11 +33,11 @@ import java.util.List;
 public class TrainingPlan {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "exercise_sequence_generator")
-    @SequenceGenerator(name = "exercise_sequence_generator",
-            sequenceName = "exercise_id_seq",
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "training_plan_sequence_generator")
+    @SequenceGenerator(name = "training_plan_sequence_generator",
+            sequenceName = "training_plan_id_seq",
             allocationSize = 1,
-            schema = "training")
+            schema = "training_plan")
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
 
@@ -46,10 +47,8 @@ public class TrainingPlan {
     @Convert(converter = TrainingDaysConverter.class)
     private List<TrainingDay> trainingDays;
 
-    private String note;
-
-    @OneToMany(mappedBy = "trainingPlan")
-    private List<ExerciseSet> exerciseSets;
+    @OneToMany(mappedBy = "trainingPlan", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<TrainingPlanExercise> trainingPlanExercises;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

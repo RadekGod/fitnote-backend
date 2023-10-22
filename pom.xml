@@ -13,7 +13,6 @@
 
 	<modules>
 		<module>bootloader</module>
-		<module>core</module>
 		<module>application</module>
 	</modules>
 

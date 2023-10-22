@@ -5,5 +5,6 @@ import pl.fitnote.user.WeightUnit;
 
 public interface UserSettingsProjection {
     WeightUnit getWeightUnit();
+
     LengthUnit getLengthUnit();
 }

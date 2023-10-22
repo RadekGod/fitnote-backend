@@ -2,7 +2,6 @@ package pl.fitnote.user;
 
 import org.springframework.stereotype.Service;
 import pl.fitnote.user.dto.UserSettingsDto;
-import pl.fitnote.user.dto.UserSettingsProjection;
 
 @Service
 class UserSettingsFactory {
@@ -14,10 +13,10 @@ class UserSettingsFactory {
                 .build();
     }
 
-    UserSettings fromProjection(UserSettingsProjection source) {
+    UserSettings createDefaultSettingsForNewUser() {
         return UserSettings.builder()
-                .weightUnit(source.getWeightUnit())
-                .lengthUnit(source.getLengthUnit())
+                .weightUnit(WeightUnit.KILOGRAM)
+                .lengthUnit(LengthUnit.CENTIMETER)
                 .build();
     }
 }

@@ -1,66 +1,120 @@
 package pl.fitnote.auth;
 
-import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 
-import java.util.Collections;
 import java.util.List;
 
 
 @Configuration
+@RequiredArgsConstructor
 public class ProjectSecurityConfig {
+
+    private final AuthConfig authConfig;
+
+//    @Bean
+//    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+//        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+//        requestHandler.setCsrfRequestAttributeName("_csrf");
+//
+//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .cors().configurationSource(request -> {
+//                    CorsConfiguration config = new CorsConfiguration();
+//                    config.setAllowedOrigins(authConfig.getAllowedOrigins());
+//                    config.setAllowedMethods(authConfig.getAllowedMethods());
+//                    config.setAllowCredentials(true);
+//                    config.setAllowedHeaders(authConfig.getAllowedHeaders());
+//                    config.setExposedHeaders(List.of("Authorization"));
+//                    config.setMaxAge(3600L);
+//                    return config;
+//                })
+//                .and()
+//                .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/register")
+//                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+//                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+//                .addFilterAfter(new JWTTokenGenerationFilter(authConfig), BasicAuthenticationFilter.class)
+//                .addFilterBefore(new JWTTokenValidationFilter(authConfig), BasicAuthenticationFilter.class)
+//                .authorizeHttpRequests()
+//                .requestMatchers("/register").permitAll()
+//                .requestMatchers("/login").permitAll()
+//                .requestMatchers("/user").authenticated()
+//                .requestMatchers("/user/settings").authenticated()
+//                .requestMatchers("/user/login").permitAll()
+//                .requestMatchers("/exercises").authenticated()
+//                .requestMatchers("/exercises/*").authenticated()
+//                .requestMatchers("/training-plans").authenticated()
+//                .requestMatchers("/training-plans/**").authenticated()
+//                .requestMatchers("/trainings/**").authenticated()
+//                .requestMatchers("/trainings").authenticated()
+//                .requestMatchers("/**").authenticated()
+//                .and().formLogin()
+//                .and().httpBasic();
+//        return http.build();
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
-        requestHandler.setCsrfRequestAttributeName("_csrf");
-        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
-
-        String STANDARD_USER = "STANDARD_USER";
-        String ADMIN = "ADMIN";
-
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .cors().configurationSource(new CorsConfigurationSource() {
-                    @Override
-                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                        CorsConfiguration config = new CorsConfiguration();
-                        config.setAllowedOrigins(Collections.singletonList("http://localhost:8100"));
-                        config.setAllowedMethods(Collections.singletonList("*"));
-                        config.setAllowCredentials(true);
-                        config.setAllowedHeaders(Collections.singletonList("*"));
-                        config.setExposedHeaders(List.of("Authorization"));
-                        config.setMaxAge(3600L);
-                        return config;
-                    }
-                }).and().csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/contact", "/register")
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+//        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+//        requestHandler.setCsrfRequestAttributeName("_csrf");
+        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors().configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedOrigins(authConfig.getAllowedOrigins());
+                    config.setAllowedMethods(authConfig.getAllowedMethods());
+                    config.setAllowCredentials(true);
+                    config.setAllowedHeaders(authConfig.getAllowedHeaders());
+                    config.setExposedHeaders(List.of("Authorization"));
+                    config.setMaxAge(3600L);
+                    return config;
+                })
+                .and()
+                .csrf().disable()
+//                .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/register")
+//                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+//                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new JWTTokenGenerationFilter(authConfig), BasicAuthenticationFilter.class)
+                .addFilterBefore(new JWTTokenValidationFilter(authConfig), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
-                .requestMatchers("/test/admin").hasRole(ADMIN)
-                .requestMatchers("/test/user").hasRole(STANDARD_USER)
-                .requestMatchers("/users").hasAnyRole(STANDARD_USER, ADMIN)
-                .requestMatchers("/users/settings").hasAnyRole(STANDARD_USER, ADMIN)
-                .requestMatchers("/exercises").hasAnyRole(STANDARD_USER, ADMIN)
-                .requestMatchers("/exercises/*").hasAnyRole(STANDARD_USER, ADMIN)
-                .requestMatchers("/training-plans").hasAnyRole(STANDARD_USER, ADMIN)
-                .requestMatchers("/training-plans/**").hasAnyRole(STANDARD_USER, ADMIN)
-                .requestMatchers("/anonymous").permitAll()
-//                .requestMatchers("/user").permitAll()
-//                .requestMatchers("/*").permitAll()
-                .and().oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter);
+                .requestMatchers("/register").permitAll()
+                .requestMatchers("/user").authenticated()
+                .requestMatchers("/user/settings").authenticated()
+                .requestMatchers("/user/login").permitAll()
+                .requestMatchers("/exercises").authenticated()
+                .requestMatchers("/exercises/*").authenticated()
+                .requestMatchers("/training-plans").authenticated()
+                .requestMatchers("/training-plans/**").authenticated()
+                .requestMatchers("/trainings/**").authenticated()
+                .requestMatchers("/trainings").authenticated()
+                .requestMatchers("/body-measurements/**").authenticated()
+                .requestMatchers("/general-measurements").authenticated()
+                .requestMatchers("/general-measurements/**").authenticated()
+                .requestMatchers("/**").authenticated()
+                .and()
+                .formLogin(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12);
+    }
 
 }
