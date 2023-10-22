@@ -39,9 +39,6 @@ public class GalleryPhoto {
     private Long id;
     private String note;
 
-//    @Column(nullable = false)
-//    private LocalDateTime creationDate;
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private ApplicationFile applicationFile;

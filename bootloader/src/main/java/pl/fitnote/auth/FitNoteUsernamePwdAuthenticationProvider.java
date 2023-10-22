@@ -10,8 +10,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import pl.fitnote.user.User;
 import pl.fitnote.user.Authority;
+import pl.fitnote.user.User;
 import pl.fitnote.user.UserFacade;
 
 import java.util.ArrayList;
@@ -32,11 +32,11 @@ public class FitNoteUsernamePwdAuthenticationProvider implements AuthenticationP
         String username = authentication.getName();
         String pwd = authentication.getCredentials().toString();
         User user = userFacade.getUser(username, User.class);
-            if (passwordEncoder.matches(pwd, user.getPassword())) {
-                return new UsernamePasswordAuthenticationToken(username, pwd, getGrantedAuthorities(user.getUserAuthorities()));
-            } else {
-                throw new BadCredentialsException("Invalid password!");
-            }
+        if (passwordEncoder.matches(pwd, user.getPassword())) {
+            return new UsernamePasswordAuthenticationToken(username, pwd, getGrantedAuthorities(user.getUserAuthorities()));
+        } else {
+            throw new BadCredentialsException("Invalid password!");
+        }
 
     }
 

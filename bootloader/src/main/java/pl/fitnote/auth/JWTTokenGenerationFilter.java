@@ -6,6 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,20 +21,22 @@ import java.util.HashSet;
 import java.util.Set;
 
 
+@RequiredArgsConstructor
 class JWTTokenGenerationFilter extends OncePerRequestFilter {
+    private final AuthConfig authConfig;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (null != authentication) {
-            SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes(StandardCharsets.UTF_8));
+            SecretKey key = Keys.hmacShaKeyFor(authConfig.getJwtKey().getBytes(StandardCharsets.UTF_8));
             String jwt = Jwts.builder().setIssuer("FitNote").setSubject("JWT Token")
                     .claim("username", authentication.getName())
                     .claim("authorities", populateAuthorities(authentication.getAuthorities()))
                     .setIssuedAt(new Date())
                     .setExpiration(new Date((new Date()).getTime() + 30000000))
                     .signWith(key).compact();
-            response.setHeader(SecurityConstants.JWT_HEADER, jwt);
+            response.setHeader(authConfig.getJwtHeader(), jwt);
         }
 
         filterChain.doFilter(request, response);

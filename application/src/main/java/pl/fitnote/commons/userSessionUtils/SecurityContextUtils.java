@@ -12,8 +12,6 @@ public class SecurityContextUtils {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
-
-
     public static UserDetails getLoggedUserDetails() {
         return new LoggedUserDetails(getLoggedUserEmail());
     }

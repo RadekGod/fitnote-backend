@@ -9,7 +9,8 @@ public interface TrainingPlanFacade {
     Long createTrainingPlan(CreateTrainingPlanDto command, UserDetails userDetails);
     void updateTrainingPlan(Long trainingPlanId, TrainingPlanDto command, UserDetails userDetails);
     <T> T getTrainingPlan(Long trainingPlanId, UserDetails userDetails, Class<T> type);
-    List<TrainingPlanProjection> getAllTrainingPlans(UserDetails userDetails);
+    TrainingPlanDto getTrainingPlan(Long trainingPlanId, UserDetails userDetails);
+    List<TrainingPlanDto> getAllTrainingPlans(UserDetails userDetails);
     void deleteTrainingPlan(final Long trainingPlanId, final UserDetails userDetails);
 
 }

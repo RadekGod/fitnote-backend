@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +32,8 @@ class ExerciseFacadeImpl implements ExerciseFacade {
     @Transactional
     public Long createExercise(final Optional<MultipartFile> image, final ExerciseDto command, final UserDetails userDetails) throws IOException {
         User requestingUser = userFacade.getUser(userDetails.getEmail(), User.class);
-        List<ExerciseCategoryGroupEnum> exerciseCategoryGroupEnums = command.getExerciseCategoryGroups();
+        List<ExerciseCategoryGroupEnum> exerciseCategoryGroupEnums = command.getExerciseCategoryGroups()
+                .stream().map(ExerciseCategoryGroupDto::getCategoryName).collect(Collectors.toList());
         exerciseCategoryGroupEnums.add(ExerciseCategoryGroupEnum.CUSTOM);
         Exercise toSave = exerciseFactory.createExerciseFromDto(command);
         toSave.setExerciseCategoryGroups(findAllCategoryGroupsMatchingCommand(exerciseCategoryGroupEnums));
@@ -64,7 +66,8 @@ class ExerciseFacadeImpl implements ExerciseFacade {
     @Override
     @Transactional
     public void updateExercise(final Long exerciseId, final Optional<MultipartFile> image, final ExerciseDto command, final UserDetails userDetails) throws IOException {
-        List<ExerciseCategoryGroupEnum> exerciseCategoryGroupEnums = command.getExerciseCategoryGroups();
+        List<ExerciseCategoryGroupEnum> exerciseCategoryGroupEnums = command.getExerciseCategoryGroups()
+                .stream().map(ExerciseCategoryGroupDto::getCategoryName).collect(Collectors.toList());
         exerciseCategoryGroupEnums.add(ExerciseCategoryGroupEnum.CUSTOM);
         Exercise toUpdate = exerciseQueryRepository.findExerciseForUserByEmail(exerciseId, userDetails.getEmail(), Exercise.class)
                 .orElseThrow(EntityNotFoundException::new);
@@ -92,11 +95,6 @@ class ExerciseFacadeImpl implements ExerciseFacade {
         Exercise toDelete = exerciseQueryRepository.findExerciseForUserByEmail(exerciseId, userDetails.getEmail(), Exercise.class)
                 .orElseThrow(EntityNotFoundException::new);
         exercisePersistRepository.delete(toDelete);
-//        if (Objects.equals(toDelete.getUser().getEmail(), userDetails.getEmail())) {
-//            exercisePersistRepository.delete(toDelete);
-//        } else {
-//            throw new EntityNotFoundException();
-//        }
     }
 
     private Set<ExerciseCategoryGroup> findAllCategoryGroupsMatchingCommand(List<ExerciseCategoryGroupEnum> exerciseCategoryGroupEnums) {

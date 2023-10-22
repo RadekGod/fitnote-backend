@@ -42,7 +42,6 @@ CREATE TABLE IF NOT EXISTS training_plan.training_plan
     id            BIGSERIAL     NOT NULL PRIMARY KEY,
     name          VARCHAR(255)  NULL,
     training_days VARCHAR(255)  NOT NULL,
-    note          VARCHAR(1000) NULL,
     user_id       BIGINT        NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user_management.user_details (id)
 );

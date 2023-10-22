@@ -2,5 +2,5 @@ package pl.fitnote.body.measurements;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-interface GeneralMeasurementPersistRepository  extends JpaRepository<GeneralMeasurement, Long> {
+interface GeneralMeasurementPersistRepository extends JpaRepository<GeneralMeasurement, Long> {
 }

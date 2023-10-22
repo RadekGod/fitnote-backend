@@ -15,10 +15,10 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateUserDto {
-    private String  firstName;
-    private String  lastName;
-    private String  email;
-    private String  password;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
     private Date birthDate;
     private Gender gender;
     private UserSettingsDto userSettingsDto;

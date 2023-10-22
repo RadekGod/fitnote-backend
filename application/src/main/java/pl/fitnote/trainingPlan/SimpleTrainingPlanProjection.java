@@ -2,9 +2,9 @@ package pl.fitnote.trainingPlan;
 
 import java.util.List;
 
-public interface TrainingPlanProjection {
+public interface SimpleTrainingPlanProjection {
     Long getId();
     String getName();
     List<TrainingDay> getTrainingDays();
-    List<TrainingPlanExerciseProjection> getTrainingPlanExercises();
+    List<SimpleTrainingPlanExerciseProjection> getTrainingPlanExercises();
 }

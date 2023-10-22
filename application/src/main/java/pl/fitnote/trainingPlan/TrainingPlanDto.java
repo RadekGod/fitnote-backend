@@ -17,7 +17,6 @@ import java.util.List;
 public class TrainingPlanDto {
         private Long id;
         private String name;
-        private List<TrainingPlanExerciseDto> trainingPlanExerciseDtoList;
         private List<TrainingDay> trainingDays;
-        private String note;
+        private List<TrainingPlanExerciseDto> trainingPlanExercises;
 }

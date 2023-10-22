@@ -93,18 +93,18 @@ VALUES (3, 12);
 
 INSERT INTO training_plan.training_plan
 (
- id, name, training_days, note, user_id
-) VALUES (1, 'Push', 'MONDAY, FRIDAY, SUNDAY','Plan treningowy przeznaczony do wzmocnienia mięśni wypychających', 1);
+ id, name, training_days, user_id
+) VALUES (1, 'Push', 'MONDAY, FRIDAY, SUNDAY', 1);
 
 INSERT INTO training_plan.training_plan
 (
-    id, name, training_days, note, user_id
-) VALUES (2, 'Pull', 'TUESDAY, SATURDAY','Plan treningowy przeznaczony do wzmocnienia mięśni przyciągających', 1);
+    id, name, training_days, user_id
+) VALUES (2, 'Pull', 'TUESDAY, SATURDAY', 1);
 
 INSERT INTO training_plan.training_plan
 (
-    id, name, training_days, note, user_id
-) VALUES (3, 'Legs', 'WEDNESDAY, SUNDAY','Plan treningowy przeznaczony do wzmocnienia dolnych partii ciała', 1);
+    id, name, training_days, user_id
+) VALUES (3, 'Legs', 'WEDNESDAY, SUNDAY', 1);
 
 
 

@@ -8,6 +8,7 @@ import pl.fitnote.commons.UserDetails;
 import pl.fitnote.user.User;
 import pl.fitnote.user.UserFacade;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +19,7 @@ class TrainingPlanFacadeImpl implements TrainingPlanFacade {
     private final UserFacade userFacade;
     private final TrainingPlanQueryRepository trainingPlanQueryRepository;
     private final TrainingPlanPersistRepository trainingPlanPersistRepository;
+    private final TrainingPlanExerciseQueryRepository trainingPlanExerciseQueryRepository;
 
     @Override
     @Transactional
@@ -30,29 +32,42 @@ class TrainingPlanFacadeImpl implements TrainingPlanFacade {
     @Override
     @Transactional
     public void updateTrainingPlan(final Long trainingPlanId, final TrainingPlanDto command, final UserDetails userDetails) {
-        TrainingPlan toUpdate = trainingPlanQueryRepository.findTrainingPlanForUserByEmail(trainingPlanId, userDetails.getEmail(), TrainingPlan.class)
+        TrainingPlan toUpdate = trainingPlanQueryRepository.findByIdAndUserEmail(trainingPlanId, userDetails.getEmail(), TrainingPlan.class)
                 .orElseThrow(EntityNotFoundException::new);
         toUpdate.setName(command.getName());
         toUpdate.setTrainingDays(command.getTrainingDays());
-        toUpdate.setNote(command.getNote());
         trainingPlanPersistRepository.save(toUpdate);
     }
 
     @Override
+    @Transactional
     public <T> T getTrainingPlan(final Long trainingPlanId, final UserDetails userDetails, Class<T> type) {
-        return trainingPlanQueryRepository.findTrainingPlanForUserByEmail(trainingPlanId, userDetails.getEmail(), type)
+        return trainingPlanQueryRepository.findByIdAndUserEmail(trainingPlanId, userDetails.getEmail(), type)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public List<TrainingPlanProjection> getAllTrainingPlans(final UserDetails userDetails) {
-        return trainingPlanQueryRepository.findAllTrainingPlansForUserByEmail(userDetails.getEmail());
+    @Transactional
+    public TrainingPlanDto getTrainingPlan(Long trainingPlanId, UserDetails userDetails) {
+        SimpleTrainingPlanProjection trainingPlanProjection = trainingPlanQueryRepository.findByIdAndUserEmail(trainingPlanId, userDetails.getEmail());
+            return trainingPlanFactory.createTrainingPlanDtoFromProjection(trainingPlanProjection);
+    }
+
+
+    @Override
+    @Transactional
+    public List<TrainingPlanDto> getAllTrainingPlans(final UserDetails userDetails) {
+        List<TrainingPlanDto> trainingPlanDtoList = new ArrayList<>();
+        trainingPlanQueryRepository.findAllByUserEmail(userDetails.getEmail()).forEach(trainingPlanProjection -> {
+            trainingPlanDtoList.add(trainingPlanFactory.createTrainingPlanDtoFromProjection(trainingPlanProjection));
+        });
+        return trainingPlanDtoList;
     }
 
     @Override
     @Transactional
     public void deleteTrainingPlan(final Long trainingPlanId, final UserDetails userDetails) {
-        TrainingPlan toDelete = trainingPlanQueryRepository.findTrainingPlanForUserByEmail(trainingPlanId, userDetails.getEmail(), TrainingPlan.class)
+        TrainingPlan toDelete = trainingPlanQueryRepository.findByIdAndUserEmail(trainingPlanId, userDetails.getEmail(), TrainingPlan.class)
                 .orElseThrow(EntityNotFoundException::new);
         trainingPlanPersistRepository.delete(toDelete);
     }

@@ -78,7 +78,7 @@ public class Exercise {
     @JoinColumn
     private ApplicationFile applicationFile;
 
-    @OneToMany(mappedBy="exercise", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL)
     private Set<TrainingPlanExercise> trainingPlanExercises;
 
     @ManyToOne

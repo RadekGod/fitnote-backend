@@ -36,19 +36,19 @@ class SleepFacadeImpl implements SleepFacade {
 
     @Override
     public List<SleepProjection> getAllSleeps(UserDetails userDetails) {
-        return sleepQueryRepository.findAllSleepsByGivenEmail(userDetails.getEmail());
+        return sleepQueryRepository.findAllByUserEmail(userDetails.getEmail());
     }
 
     @Override
     public <T> T getSleep(Long sleepId, UserDetails userDetails, Class<T> type) {
-        return sleepQueryRepository.findSleepByGivenIdAndEmail(sleepId, userDetails.getEmail(), type)
+        return sleepQueryRepository.findByIdAndUserEmail(sleepId, userDetails.getEmail(), type)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     @Transactional
     public void deleteSleep(Long sleepId, UserDetails userDetails) {
-        Sleep sleep = sleepQueryRepository.findSleepByGivenIdAndEmail(sleepId, userDetails.getEmail(), Sleep.class)
+        Sleep sleep = sleepQueryRepository.findByIdAndUserEmail(sleepId, userDetails.getEmail(), Sleep.class)
                 .orElseThrow(EntityNotFoundException::new);
         sleepPersistRepository.delete(sleep);
     }

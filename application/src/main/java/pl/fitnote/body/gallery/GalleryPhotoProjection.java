@@ -4,10 +4,8 @@ import pl.fitnote.commons.file.ApplicationFileProjection;
 
 interface GalleryPhotoProjection {
     Long getId();
-    String getNote();
 
-//    @Column(nullable = false)
-//    private LocalDateTime creationDate;
+    String getNote();
 
     ApplicationFileProjection getApplicationFile();
 }

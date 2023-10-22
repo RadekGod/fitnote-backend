@@ -15,8 +15,8 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateUserDto {
-    private String  firstName;
-    private String  lastName;
+    private String firstName;
+    private String lastName;
     private Date birthDate;
     private Gender gender;
 }

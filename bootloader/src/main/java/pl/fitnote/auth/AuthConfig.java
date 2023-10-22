@@ -14,6 +14,7 @@ import java.util.List;
 class AuthConfig {
     private String jwtKey = "jxgEQeXHuPq8VdbyYFNkANdudQ53YUn4";
     private String jwtHeader = "Authorization";
+    private String issuer = "FitNote";
     private List<String> allowedOrigins;
     private List<String> allowedMethods;
     private List<String> allowedHeaders;

@@ -33,10 +33,10 @@ class GalleryController {
         return new ResponseEntity<>(galleryFacade.addGalleryPhoto(image, galleryPhotoDto, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<GalleryPhotoProjection>> getAllGalleryPhotos() {
-//        return new ResponseEntity<>(galleryFacade.getAllGalleryPhotos(SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
-//    }
+    @GetMapping("/full-data")
+    public ResponseEntity<List<GalleryPhotoProjection>> getAllGalleryPhotos() {
+        return new ResponseEntity<>(galleryFacade.getAllGalleryPhotos(SecurityContextUtils.getLoggedUserDetails(), GalleryPhotoProjection.class), HttpStatus.OK);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<SimpleGalleryPhotoProjection> getGalleryPhotoDescription(@PathVariable("id") Long galleryPhotoId) {

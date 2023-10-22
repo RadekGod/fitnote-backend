@@ -1,4 +1,4 @@
-package pl.fitnote.sleep;
+package pl.fitnote.commons.file;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,14 +12,11 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class SleepDto {
-
+@Builder(toBuilder = true)
+public class ApplicationFileDto {
     private Long id;
-    private LocalDateTime startDate;
-    private LocalDateTime finishDate;
-    private Float rating;
-    private Integer awakeningsNumber;
-    private String note;
+    private String fileName;
     private LocalDateTime creationDate;
+    private byte[] data;
 }
+

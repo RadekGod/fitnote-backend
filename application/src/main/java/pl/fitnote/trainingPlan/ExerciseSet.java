@@ -1,5 +1,6 @@
 package pl.fitnote.trainingPlan;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public class ExerciseSet {
     private Boolean completed;
     private String note;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "training_plan_exercise_id", nullable = false)
     private TrainingPlanExercise trainingPlanExercise;
 }

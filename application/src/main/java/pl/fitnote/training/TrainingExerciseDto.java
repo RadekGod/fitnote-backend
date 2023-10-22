@@ -18,7 +18,7 @@ import java.util.List;
 class TrainingExerciseDto {
     private Long id;
     private MeasurementUnit measurementUnit;
-//    private Long exerciseSequenceNumber;
+    //    private Long exerciseSequenceNumber;
     private String note;
     private ExerciseDto exercise;
     private List<TrainingExerciseSetDto> exerciseSets;

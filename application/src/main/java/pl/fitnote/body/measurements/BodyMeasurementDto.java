@@ -1,6 +1,10 @@
 package pl.fitnote.body.measurements;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pl.fitnote.user.LengthUnit;
 
 import java.time.LocalDateTime;
@@ -11,7 +15,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 class BodyMeasurementDto {
-
     private Long id;
     private Float chest;
     private Float bicepsLeft;

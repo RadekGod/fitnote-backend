@@ -1,9 +1,11 @@
 package pl.fitnote.trainingPlan;
 
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -45,9 +47,7 @@ public class TrainingPlan {
     @Convert(converter = TrainingDaysConverter.class)
     private List<TrainingDay> trainingDays;
 
-    private String note;
-
-    @OneToMany(mappedBy = "trainingPlan")
+    @OneToMany(mappedBy = "trainingPlan", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<TrainingPlanExercise> trainingPlanExercises;
 
     @ManyToOne

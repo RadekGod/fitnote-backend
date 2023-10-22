@@ -18,7 +18,7 @@ public class TrainingPlanExerciseDto {
     private Long id;
     private MeasurementUnit measurementUnit;
     private String note;
-    private ExerciseDto exerciseDto;
-    private List<ExerciseSetDto> exerciseSetDtoList;
+    private ExerciseDto exercise;
+    private List<ExerciseSetDto> exerciseSets;
     private TrainingPlanDto trainingPlanDto;
 }

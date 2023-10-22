@@ -47,25 +47,6 @@ class GalleryFacadeImpl implements GalleryFacade {
         return galleryPhotoQueryRepository.findAllByUserEmailOrderByApplicationFileCreationDateDesc(userDetails.getEmail(), type);
     }
 
-//    @Override
-//    @Transactional
-//    public List<SimpleGalleryPhotoProjection> getAllGalleryPhotoDescriptions(final UserDetails userDetails) {
-//        return galleryPhotoQueryRepository.findAllGalleryPhotoDescriptionsByGivenEmail(userDetails.getEmail());
-//    }
-
-//    @Override
-//    @Transactional
-//    public <T> List<T> getAllGalleryPhotoDescriptions(final UserDetails userDetails, final Class<T> type) {
-//        return galleryPhotoQueryRepository.findAllByUserEmail(userDetails.getEmail(), type);
-//    }
-
-//    @Override
-//    @Transactional
-//    public SimpleGalleryPhotoProjection getLatestGalleryPhotoDescription(final UserDetails userDetails) {
-//        return galleryPhotoQueryRepository.findLatestGalleryPhotoDescriptionByGivenEmail(userDetails.getEmail())
-//                .orElseThrow(EntityNotFoundException::new);
-//    }
-
     @Override
     @Transactional
     public SimpleGalleryPhotoProjection getLatestGalleryPhotoDescription(final UserDetails userDetails) {

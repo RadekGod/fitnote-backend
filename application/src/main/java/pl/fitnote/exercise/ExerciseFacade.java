@@ -9,10 +9,14 @@ import java.util.Optional;
 
 public interface ExerciseFacade {
     Long createExercise(Optional<MultipartFile> image, ExerciseDto command, UserDetails userDetails) throws IOException;
+
     List<ExerciseProjection> getAllExercises(UserDetails userDetails);
+
     List<ExerciseProjection> getAllExercisesFromCategory(ExerciseCategoryGroupEnum exerciseCategoryGroupEnum, UserDetails userDetails);
+
     <T> T getExercise(Long exerciseId, UserDetails userDetails, Class<T> type);
 
     void updateExercise(Long exerciseId, Optional<MultipartFile> image, ExerciseDto command, UserDetails userDetails) throws IOException;
+
     void deleteExercise(Long exerciseId, UserDetails userDetails);
 }
