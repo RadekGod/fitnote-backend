@@ -30,7 +30,7 @@ class JWTTokenGenerationFilter extends OncePerRequestFilter {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (null != authentication) {
             SecretKey key = Keys.hmacShaKeyFor(authConfig.getJwtKey().getBytes(StandardCharsets.UTF_8));
-            String jwt = Jwts.builder().setIssuer("FitNote").setSubject("JWT Token")
+            String jwt = Jwts.builder().setIssuer(authConfig.getIssuer()).setSubject("JWT Token")
                     .claim("username", authentication.getName())
                     .claim("authorities", populateAuthorities(authentication.getAuthorities()))
                     .setIssuedAt(new Date())
