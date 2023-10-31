@@ -58,7 +58,7 @@ class TrainingPlanFacadeImpl implements TrainingPlanFacade {
     @Transactional
     public List<TrainingPlanDto> getAllTrainingPlans(final UserDetails userDetails) {
         List<TrainingPlanDto> trainingPlanDtoList = new ArrayList<>();
-        trainingPlanQueryRepository.findAllByUserEmail(userDetails.getEmail()).forEach(trainingPlanProjection -> {
+        trainingPlanQueryRepository.findAllByUserEmailOrderByIdAsc(userDetails.getEmail()).forEach(trainingPlanProjection -> {
             trainingPlanDtoList.add(trainingPlanFactory.createTrainingPlanDtoFromProjection(trainingPlanProjection));
         });
         return trainingPlanDtoList;

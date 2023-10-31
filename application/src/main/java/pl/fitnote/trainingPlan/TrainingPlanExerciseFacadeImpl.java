@@ -26,8 +26,8 @@ class TrainingPlanExerciseFacadeImpl implements TrainingPlanExerciseFacade {
 
     @Override
     @Transactional
-    public TrainingPlanExerciseProjection getExerciseFromTrainingPlan(final Long trainingPlanId, final Long trainingPlanExerciseId, final UserDetails userDetails) {
-        return trainingPlanExerciseQueryRepository.findTrainingPlanExerciseOfGivenTrainingPlan(trainingPlanExerciseId, userDetails.getEmail())
+    public SimpleTrainingPlanExerciseProjection getTrainingPlanExercise(final Long trainingPlanId, final Long trainingPlanExerciseId, final UserDetails userDetails) {
+        return trainingPlanExerciseQueryRepository.findByIdAndTrainingPlanIdAndTrainingPlanUserEmailOrderByIdAsc(trainingPlanExerciseId, trainingPlanId, userDetails.getEmail())
                 .orElseThrow(EntityNotFoundException::new);
     }
 
@@ -39,9 +39,9 @@ class TrainingPlanExerciseFacadeImpl implements TrainingPlanExerciseFacade {
 
     @Override
     @Transactional
-    public void addExerciseToTrainingPlan(Long trainingPlanId, final TrainingPlanExerciseDto command, final UserDetails userDetails) {
+    public void addExerciseToTrainingPlan(Long trainingPlanId, Long exerciseId, final TrainingPlanExerciseDto command, final UserDetails userDetails) {
         TrainingPlan trainingPlan = trainingPlanFacade.getTrainingPlan(trainingPlanId, userDetails, TrainingPlan.class);
-        Exercise exercise = exerciseFacade.getExercise(command.getExercise().getId(), userDetails, Exercise.class);
+        Exercise exercise = exerciseFacade.getExercise(exerciseId, userDetails, Exercise.class);
         TrainingPlanExercise trainingPlanExercise = trainingPlanExerciseFactory.createTrainingPlanExercise(command, exercise, trainingPlan);
         TrainingPlanExercise savedTrainingPlanExercise = trainingPlanExercisePersistRepository.save(trainingPlanExercise);
 
@@ -51,8 +51,11 @@ class TrainingPlanExerciseFacadeImpl implements TrainingPlanExerciseFacade {
 
     @Override
     @Transactional
-    public void updateExerciseInTrainingPlan(final Long trainingPlanId, final TrainingPlanExerciseDto command, final UserDetails userDetails) {
-        List<ExerciseSet> exerciseSetsBeforeUpdate = trainingPlanExerciseQueryRepository.findAllExerciseSetsOfGivenTrainingPlanExerciseId(command.getId(), userDetails.getEmail());
+    public void updateTrainingPlanExercise(final Long trainingPlanId, Long trainingPlanExerciseId, final TrainingPlanExerciseDto command, final UserDetails userDetails) {
+        TrainingPlanExercise trainingPlanExerciseToUpdate = trainingPlanExerciseQueryRepository.findByIdAndTrainingPlanIdAndTrainingPlanUserEmail(trainingPlanExerciseId, trainingPlanId, userDetails.getEmail())
+                .orElseThrow(EntityNotFoundException::new);
+        List<ExerciseSet> exerciseSetsBeforeUpdate = trainingPlanExerciseQueryRepository.findByIdAndTrainingPlanIdAndTrainingPlanUserEmail(trainingPlanExerciseId, trainingPlanId, userDetails.getEmail())
+                .orElseThrow(EntityNotFoundException::new).getExerciseSets();
         List<ExerciseSet> exerciseSetsToSave = new ArrayList<>();
 
         if (command.getExerciseSets().size() >= exerciseSetsBeforeUpdate.size()) {
@@ -60,9 +63,7 @@ class TrainingPlanExerciseFacadeImpl implements TrainingPlanExerciseFacade {
                 if (i < exerciseSetsBeforeUpdate.size()) {
                     exerciseSetsToSave.add(trainingPlanExerciseFactory.updateExerciseSet(exerciseSetsBeforeUpdate.get(i), command.getExerciseSets().get(i)));
                 } else {
-                    TrainingPlanExercise trainingPlanExercise = trainingPlanExerciseQueryRepository.findById(command.getId())
-                            .orElseThrow(EntityNotFoundException::new);
-                    exerciseSetsToSave.add(trainingPlanExerciseFactory.createExerciseSet(command.getExerciseSets().get(i), trainingPlanExercise));
+                    exerciseSetsToSave.add(trainingPlanExerciseFactory.createExerciseSet(command.getExerciseSets().get(i), trainingPlanExerciseToUpdate));
                 }
             }
         } else {
@@ -70,7 +71,8 @@ class TrainingPlanExerciseFacadeImpl implements TrainingPlanExerciseFacade {
                 exerciseSetsToSave.add(trainingPlanExerciseFactory.updateExerciseSet(exerciseSetsBeforeUpdate.get(i), command.getExerciseSets().get(i)));
             }
             List<ExerciseSet> exerciseSetsToDelete = exerciseSetsBeforeUpdate.subList(command.getExerciseSets().size(), exerciseSetsBeforeUpdate.size());
-            exerciseSetPersistRepository.deleteAll(exerciseSetsToDelete);
+            exerciseSetPersistRepository.deleteExerciseSetsByIds(exerciseSetsToDelete.stream().map(ExerciseSet::getId).collect(Collectors.toList()));
+            exerciseSetPersistRepository.flush();
         }
         exerciseSetPersistRepository.saveAll(exerciseSetsToSave);
     }

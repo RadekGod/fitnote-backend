@@ -62,9 +62,9 @@ class TrainingPlanController {
     }
 
 
-    @GetMapping("/{id}/exercises/{exerciseId}")
-    ResponseEntity<TrainingPlanExerciseProjection> getExerciseFromTrainingPlan(@PathVariable("id") Long trainingPlanId, @PathVariable("exerciseId") Long exerciseId) {
-        return new ResponseEntity<>(trainingPlanExerciseFacade.getExerciseFromTrainingPlan(trainingPlanId, exerciseId, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
+    @GetMapping("/{trainingPlanId}/exercises/{trainingPlanExerciseId}")
+    ResponseEntity<SimpleTrainingPlanExerciseProjection> getTrainingPlanExercise(@PathVariable("trainingPlanId") Long trainingPlanId, @PathVariable("trainingPlanExerciseId") Long trainingPlanExerciseId) {
+        return new ResponseEntity<>(trainingPlanExerciseFacade.getTrainingPlanExercise(trainingPlanId, trainingPlanExerciseId, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/exercises")
@@ -72,15 +72,15 @@ class TrainingPlanController {
         return new ResponseEntity<>(trainingPlanExerciseFacade.getAllExercisesFromTrainingPlan(trainingPlanId, SecurityContextUtils.getLoggedUserDetails(), TrainingPlanExerciseProjection.class), HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/exercises")
-    ResponseEntity<Void> addExerciseToTrainingPlan(@PathVariable("id") Long trainingPlanId, @RequestBody TrainingPlanExerciseDto command) {
-        trainingPlanExerciseFacade.addExerciseToTrainingPlan(trainingPlanId, command, SecurityContextUtils.getLoggedUserDetails());
+    @PostMapping("/{trainingPlanId}/exercises/{exerciseId}")
+    ResponseEntity<Void> addExerciseToTrainingPlan(@PathVariable("trainingPlanId") Long trainingPlanId, @PathVariable("exerciseId") Long exerciseId, @RequestBody TrainingPlanExerciseDto command) {
+        trainingPlanExerciseFacade.addExerciseToTrainingPlan(trainingPlanId, exerciseId, command, SecurityContextUtils.getLoggedUserDetails());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/{id}/exercises")
-    ResponseEntity<Void> updateExerciseInTrainingPlan(@PathVariable("id") Long trainingPlanId, @RequestBody TrainingPlanExerciseDto command) {
-        trainingPlanExerciseFacade.updateExerciseInTrainingPlan(trainingPlanId, command, SecurityContextUtils.getLoggedUserDetails());
+    @PutMapping("/{trainingPlanId}/exercises/{trainingPlanExerciseId}")
+    ResponseEntity<Void> updateTrainingPlanExercise(@PathVariable("trainingPlanId") Long trainingPlanId, @PathVariable("trainingPlanExerciseId") Long trainingPlanExerciseId, @RequestBody TrainingPlanExerciseDto command) {
+        trainingPlanExerciseFacade.updateTrainingPlanExercise(trainingPlanId, trainingPlanExerciseId, command, SecurityContextUtils.getLoggedUserDetails());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

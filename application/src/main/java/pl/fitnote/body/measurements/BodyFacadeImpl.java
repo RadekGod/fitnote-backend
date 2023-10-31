@@ -51,7 +51,7 @@ class BodyFacadeImpl implements BodyFacade {
     @Override
     public BodyMeasurementDto getUsersLatestBodyMeasurement(final UserDetails userDetails) {
         User requestingUser = userFacade.getUser(userDetails, User.class);
-        BodyMeasurementProjection bodyMeasurementProjection = bodyMeasurementQueryRepository.findTop1ByUserEmailOrderByMeasurementDateDesc(userDetails.getEmail(), BodyMeasurementProjection.class)
+        BodyMeasurementProjection bodyMeasurementProjection = bodyMeasurementQueryRepository.findTop1ByUserEmailOrderByMeasurementDateDescIdDesc(userDetails.getEmail(), BodyMeasurementProjection.class)
                 .orElseThrow(EntityNotFoundException::new);
         if (!measurementLengthMatchWithUsersLength(bodyMeasurementProjection.getLengthUnit(), requestingUser.getUserSettings().getLengthUnit())) {
             return bodyMeasurementFactory.recalculateMeasurementValuesAndCreateDto(requestingUser, bodyMeasurementProjection);
