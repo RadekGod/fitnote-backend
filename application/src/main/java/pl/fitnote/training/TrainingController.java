@@ -41,16 +41,16 @@ class TrainingController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<TrainingProjection> getTraining(@PathVariable("id") Long trainingId) {
+    ResponseEntity<TrainingDto> getTraining(@PathVariable("id") Long trainingId) {
         try {
-            return new ResponseEntity<>(trainingFacade.getTraining(trainingId, SecurityContextUtils.getLoggedUserDetails(), TrainingProjection.class), HttpStatus.OK);
+            return new ResponseEntity<>(trainingFacade.getTraining(trainingId, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Training not found with given id");
         }
     }
 
     @GetMapping()
-    ResponseEntity<List<TrainingProjection>> getAllTrainings() {
+    ResponseEntity<List<TrainingDto>> getAllTrainings() {
         try {
             return new ResponseEntity<>(trainingFacade.getAllTrainings(SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
         } catch (EntityNotFoundException exception) {

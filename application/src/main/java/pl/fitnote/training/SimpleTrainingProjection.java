@@ -3,7 +3,7 @@ package pl.fitnote.training;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface TrainingProjection {
+public interface SimpleTrainingProjection {
     Long getId();
 
     String getName();
@@ -14,5 +14,5 @@ public interface TrainingProjection {
 
     LocalDateTime getFinishTime();
 
-    List<TrainingExerciseProjection> getTrainingExercises();
+    List<SimpleTrainingExerciseProjection> getTrainingExercises();
 }

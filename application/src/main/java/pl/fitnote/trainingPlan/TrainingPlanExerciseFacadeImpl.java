@@ -58,6 +58,8 @@ class TrainingPlanExerciseFacadeImpl implements TrainingPlanExerciseFacade {
                 .orElseThrow(EntityNotFoundException::new).getExerciseSets();
         List<ExerciseSet> exerciseSetsToSave = new ArrayList<>();
 
+        trainingPlanExerciseToUpdate.setNote(command.getNote());
+
         if (command.getExerciseSets().size() >= exerciseSetsBeforeUpdate.size()) {
             for (int i = 0; i < command.getExerciseSets().size(); i++) {
                 if (i < exerciseSetsBeforeUpdate.size()) {
@@ -75,6 +77,8 @@ class TrainingPlanExerciseFacadeImpl implements TrainingPlanExerciseFacade {
             exerciseSetPersistRepository.flush();
         }
         exerciseSetPersistRepository.saveAll(exerciseSetsToSave);
+
+        trainingPlanExercisePersistRepository.saveAndFlush(trainingPlanExerciseToUpdate);
     }
 
     @Override

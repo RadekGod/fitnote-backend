@@ -101,14 +101,21 @@ class TrainingFacadeImpl implements TrainingFacade {
     }
 
     @Override
-    public <T> T getTraining(final Long trainingId, final UserDetails userDetails, final Class<T> type) {
-        return trainingQueryRepository.findByIdAndUserEmail(trainingId, userDetails.getEmail(), type)
+    @Transactional
+    public TrainingDto getTraining(final Long trainingId, final UserDetails userDetails) {
+        SimpleTrainingProjection simpleTrainingProjection = trainingQueryRepository.findByIdAndUserEmail(trainingId, userDetails.getEmail(), SimpleTrainingProjection.class)
                 .orElseThrow(EntityNotFoundException::new);
+        return trainingFactory.createTrainingDtoFromProjection(simpleTrainingProjection);
     }
 
     @Override
-    public List<TrainingProjection> getAllTrainings(final UserDetails userDetails) {
-        return trainingQueryRepository.findAllByUserEmail(userDetails.getEmail());
+    @Transactional
+    public List<TrainingDto> getAllTrainings(final UserDetails userDetails) {
+        List<TrainingDto> trainingDtoList = new ArrayList<>();
+        trainingQueryRepository.findAllByUserEmailOrderByStartTimeDesc(userDetails.getEmail()).forEach(trainingProjection -> {
+            trainingDtoList.add(trainingFactory.createTrainingDtoFromProjection(trainingProjection));
+        });
+        return trainingDtoList;
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class TrainingDto {
-    private Long trainingPlanId;
+    private Long id;
     private String name;
     private String note;
     private List<TrainingExerciseDto> trainingExercises;

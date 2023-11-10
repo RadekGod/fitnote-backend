@@ -9,9 +9,9 @@ interface TrainingFacade {
 
     void updateTraining(Long trainingId, TrainingDto command, UserDetails userDetails);
 
-    <T> T getTraining(Long trainingId, UserDetails userDetails, Class<T> type);
+    TrainingDto getTraining(Long trainingId, UserDetails userDetails);
 
-    List<TrainingProjection> getAllTrainings(UserDetails userDetails);
+    List<TrainingDto> getAllTrainings(UserDetails userDetails);
 
     void deleteTraining(final Long trainingId, final UserDetails userDetails);
 }

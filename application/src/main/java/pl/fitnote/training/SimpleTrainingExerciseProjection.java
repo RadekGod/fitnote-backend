@@ -5,7 +5,7 @@ import pl.fitnote.trainingPlan.MeasurementUnit;
 
 import java.util.List;
 
-public interface TrainingExerciseProjection {
+public interface SimpleTrainingExerciseProjection {
     Long getId();
 
     MeasurementUnit getMeasurementUnit();
