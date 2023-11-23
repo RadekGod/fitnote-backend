@@ -1,17 +1,11 @@
-package pl.fitnote.body.measurements;
+package pl.fitnote.body.measurements.generalMeasurement;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.fitnote.commons.userSessionUtils.SecurityContextUtils;
 
@@ -22,17 +16,17 @@ import java.util.List;
 @RequestMapping("/general-measurements")
 class GeneralMeasurementController {
 
-    private final BodyFacade bodyFacade;
+    private final GeneralMeasurementFacade generalMeasurementFacade;
 
     @PostMapping()
-    ResponseEntity<Long> createGeneralMeasurement(@RequestBody GeneralMeasurementDto command) {
-        return new ResponseEntity<>(bodyFacade.createGeneralMeasurement(command, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
+    ResponseEntity<Long> createGeneralMeasurement(@RequestBody @Valid GeneralMeasurementDto command) {
+        return new ResponseEntity<>(generalMeasurementFacade.createGeneralMeasurement(command, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     ResponseEntity<GeneralMeasurementProjection> getGeneralMeasurement(@PathVariable("id") Long generalMeasurementId) {
         try {
-            return new ResponseEntity<>(bodyFacade.getGeneralMeasurement(generalMeasurementId, SecurityContextUtils.getLoggedUserDetails(), GeneralMeasurementProjection.class), HttpStatus.OK);
+            return new ResponseEntity<>(generalMeasurementFacade.getGeneralMeasurement(generalMeasurementId, SecurityContextUtils.getLoggedUserDetails(), GeneralMeasurementProjection.class), HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Measurement not found with given id");
         }
@@ -41,7 +35,7 @@ class GeneralMeasurementController {
     @GetMapping("/latest")
     ResponseEntity<GeneralMeasurementDto> getLatestGeneralMeasurement() {
         try {
-            return new ResponseEntity<>(bodyFacade.getUsersLatestGeneralMeasurement(SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
+            return new ResponseEntity<>(generalMeasurementFacade.getUsersLatestGeneralMeasurement(SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Measurements found");
         }
@@ -49,13 +43,13 @@ class GeneralMeasurementController {
 
     @GetMapping()
     ResponseEntity<List<GeneralMeasurementProjection>> getAllGeneralMeasurements() {
-        return new ResponseEntity<>(bodyFacade.getAllGeneralMeasurements(SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
+        return new ResponseEntity<>(generalMeasurementFacade.getAllGeneralMeasurements(SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<Void> updateGeneralMeasurement(@PathVariable("id") Long generalMeasurementId, @RequestBody GeneralMeasurementDto command) {
+    ResponseEntity<Void> updateGeneralMeasurement(@PathVariable("id") Long generalMeasurementId, @RequestBody @Valid GeneralMeasurementDto command) {
         try {
-            bodyFacade.updateGeneralMeasurement(generalMeasurementId, command, SecurityContextUtils.getLoggedUserDetails());
+            generalMeasurementFacade.updateGeneralMeasurement(generalMeasurementId, command, SecurityContextUtils.getLoggedUserDetails());
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Measurement not found with given id");
@@ -65,7 +59,7 @@ class GeneralMeasurementController {
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteGeneralMeasurement(@PathVariable("id") Long generalMeasurementId) {
         try {
-            bodyFacade.deleteGeneralMeasurement(generalMeasurementId, SecurityContextUtils.getLoggedUserDetails());
+            generalMeasurementFacade.deleteGeneralMeasurement(generalMeasurementId, SecurityContextUtils.getLoggedUserDetails());
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Measurement not found with given id");

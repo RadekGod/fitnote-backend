@@ -9,6 +9,7 @@ import pl.fitnote.commons.UserDetails;
 import pl.fitnote.user.dto.CreateUserDto;
 import pl.fitnote.user.dto.UpdateUserDto;
 import pl.fitnote.user.dto.UserSettingsDto;
+import pl.fitnote.user.exceptions.UserNotFoundException;
 
 import java.util.Set;
 
@@ -37,13 +38,13 @@ class UserFacadeImpl implements UserFacade {
     @Override
     public <T> T getUser(final UserDetails userDetails, final Class<T> type) {
         return userQueryRepository.findByEmail(userDetails.getEmail(), type)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with given E-mail"));
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Override
     public <T> T getUser(final String email, final Class<T> type) {
         return userQueryRepository.findByEmail(email, type)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with given E-mail"));
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Override

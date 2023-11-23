@@ -1,4 +1,4 @@
-package pl.fitnote.body.measurements;
+package pl.fitnote.body.measurements.generalMeasurement;
 
 import org.springframework.stereotype.Service;
 import pl.fitnote.commons.MeasureUnitsCalculator;

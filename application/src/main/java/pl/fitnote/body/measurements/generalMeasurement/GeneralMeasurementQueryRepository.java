@@ -1,4 +1,4 @@
-package pl.fitnote.body.measurements;
+package pl.fitnote.body.measurements.generalMeasurement;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,10 +1,7 @@
-package pl.fitnote.body.measurements;
+package pl.fitnote.body.measurements.generalMeasurement;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import pl.fitnote.user.LengthUnit;
 import pl.fitnote.user.WeightUnit;
 
@@ -24,5 +21,6 @@ class GeneralMeasurementDto {
     private Float bodyFat;
     private WeightUnit weightUnit;
     private LengthUnit lengthUnit;
+    @NotNull(message = "measurementDate is required")
     private LocalDateTime measurementDate;
 }

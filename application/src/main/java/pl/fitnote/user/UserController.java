@@ -17,6 +17,8 @@ import pl.fitnote.user.dto.UpdateUserDto;
 import pl.fitnote.user.dto.UserProjection;
 import pl.fitnote.user.dto.UserSettingsDto;
 import pl.fitnote.commons.userSessionUtils.SecurityContextUtils;
+import pl.fitnote.user.exceptions.UserAlreadyExistsException;
+import pl.fitnote.user.exceptions.UserNotFoundException;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,11 +37,11 @@ class UserController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<UserProjection> getUserDetailsAfterLogin() {
+    public ResponseEntity<?> getUserDetailsAfterLogin() {
         try {
             return new ResponseEntity<>(userFacade.getUser(SecurityContextUtils.getLoggedUserDetails(), UserProjection.class), HttpStatus.OK);
-        } catch (EntityNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with given E-mail");
+        } catch (RuntimeException exception) {
+            return new ResponseEntity<>("User not found with given E-mail", HttpStatus.NOT_FOUND);
         }
     }
 

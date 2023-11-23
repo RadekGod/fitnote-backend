@@ -88,6 +88,7 @@ public class ProjectSecurityConfig {
 //                .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/register")
 //                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 //                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+
                 .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new JWTTokenGenerationFilter(authConfig), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JWTTokenValidationFilter(authConfig), BasicAuthenticationFilter.class)
