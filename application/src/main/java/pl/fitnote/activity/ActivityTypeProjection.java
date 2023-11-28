@@ -5,4 +5,5 @@ public interface ActivityTypeProjection {
     String getName();
     Float getAverageCaloriesBurntPerHour();
     Boolean getDistanceActivity();
+    Boolean getCustomActivity();
 }

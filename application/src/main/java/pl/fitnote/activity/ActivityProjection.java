@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 
 public interface ActivityProjection {
     Long getId();
-    Float getactivityDurationInMinutes();
+    Float getActivityDurationInMinutes();
+    String getTrainingPlanName();
     Integer getBurntCalories();
     Float getDistanceTraveled();
     LocalDateTime getActivityDate();

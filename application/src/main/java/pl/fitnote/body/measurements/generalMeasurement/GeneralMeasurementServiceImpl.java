@@ -54,7 +54,7 @@ public class GeneralMeasurementServiceImpl implements GeneralMeasurementService 
 
     @Override
     public List<GeneralMeasurementProjection> getAllGeneralMeasurements(final UserDetails userDetails) {
-        return generalMeasurementQueryRepository.findAllGeneralMeasurementsByGivenEmail(userDetails.getEmail());
+        return generalMeasurementQueryRepository.findAllByUserEmailOrderByMeasurementDateDesc(userDetails.getEmail());
     }
 
     @Override

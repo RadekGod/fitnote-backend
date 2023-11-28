@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class ActivityDto {
     private Long id;
     private Float activityDurationInMinutes;
+    private String trainingPlanName;
     private Integer burntCalories;
     private Float distanceTraveled;
     private LocalDateTime activityDate;

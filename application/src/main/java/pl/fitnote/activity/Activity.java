@@ -24,6 +24,7 @@ public class Activity {
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
     private Float activityDurationInMinutes;
+    private String trainingPlanName;
     private Integer burntCalories;
     private Float distanceTraveled;
 

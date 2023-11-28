@@ -10,6 +10,7 @@ class ActivityTypeFactory {
                 .name(source.getName())
                 .averageCaloriesBurntPerHour(source.getAverageCaloriesBurntPerHour())
                 .distanceActivity(source.getDistanceActivity())
+                .customActivity(true)
                 .user(user)
                 .build();
     }

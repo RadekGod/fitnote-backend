@@ -23,11 +23,15 @@ public class ActivityType {
             schema = "activity")
     @Column(nullable = false, updatable = false, unique = true)
     private Long id;
+    @Column(nullable = false)
     private String name;
     private Float averageCaloriesBurntPerHour;
 
     @Column(nullable = false)
     private Boolean distanceActivity;
+
+    @Column(nullable = false)
+    private Boolean customActivity;
 
     @OneToMany(mappedBy="activityType")
     private Set<Activity> activities;

@@ -12,4 +12,5 @@ public class ActivityTypeDto {
     private String name;
     private Float averageCaloriesBurntPerHour;
     private Boolean distanceActivity;
+    private Boolean customActivity;
 }

@@ -5,7 +5,7 @@ import pl.fitnote.user.WeightUnit;
 
 import java.time.LocalDateTime;
 
-interface GeneralMeasurementProjection {
+public interface GeneralMeasurementProjection {
     Long getId();
 
     Float getWeight();

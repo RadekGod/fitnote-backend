@@ -36,12 +36,12 @@ class ActivityTypeFacadeImpl implements ActivityTypeFacade {
 
     @Override
     public List<ActivityTypeProjection> getAllActivityTypes(UserDetails userDetails) {
-        return activityTypeQueryRepository.findAllActivityTypesForUser(userDetails.getEmail());
+        return activityTypeQueryRepository.findAllByUserEmailOrUserIsNull(userDetails.getEmail());
     }
 
     @Override
     public <T> T getActivityType(Long activityTypeId, UserDetails userDetails, Class<T> type) {
-        return activityTypeQueryRepository.findActivityTypeByGivenIdAndEmail(activityTypeId, userDetails.getEmail(), type).
+        return activityTypeQueryRepository.findActivityTypeByGivenIdAndEmail(activityTypeId, type).
                 orElseThrow(EntityNotFoundException::new);
     }
 

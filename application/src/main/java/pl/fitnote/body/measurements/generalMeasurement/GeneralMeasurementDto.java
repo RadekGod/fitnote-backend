@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-class GeneralMeasurementDto {
+public class GeneralMeasurementDto {
     private Long id;
     private Float weight;
     private Float height;

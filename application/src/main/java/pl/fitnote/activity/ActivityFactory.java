@@ -8,7 +8,10 @@ class ActivityFactory {
     Activity createActivityFromDto(ActivityDto source, User user, ActivityType activityType) {
         return Activity.builder()
                 .activityDurationInMinutes(source.getActivityDurationInMinutes())
-                .burntCalories(calculateBurntCalories(source.getActivityDurationInMinutes(), activityType.getAverageCaloriesBurntPerHour()))
+                .trainingPlanName(source.getTrainingPlanName())
+                .burntCalories(source.getBurntCalories() == 0
+                        ? calculateBurntCalories(source.getActivityDurationInMinutes(), activityType.getAverageCaloriesBurntPerHour())
+                        : source.getBurntCalories())
                 .distanceTraveled(source.getDistanceTraveled())
                 .activityDate(source.getActivityDate())
                 .activityType(activityType)
@@ -19,6 +22,7 @@ class ActivityFactory {
     Activity updateActivityWithDto(Activity toUpdate, ActivityDto source, ActivityType activityType) {
         return toUpdate.toBuilder()
                 .activityDurationInMinutes(source.getActivityDurationInMinutes())
+                .trainingPlanName(source.getTrainingPlanName())
                 .burntCalories(calculateBurntCalories(source.getActivityDurationInMinutes(), activityType.getAverageCaloriesBurntPerHour()))
                 .distanceTraveled(source.getDistanceTraveled())
                 .activityDate(source.getActivityDate())

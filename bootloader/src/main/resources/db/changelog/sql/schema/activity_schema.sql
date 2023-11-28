@@ -7,10 +7,11 @@ CREATE SCHEMA IF NOT EXISTS activity;
 CREATE TABLE IF NOT EXISTS activity.activity_type
 (
     id                              BIGSERIAL    NOT NULL PRIMARY KEY,
-    name                            VARCHAR(255) NULL,
+    name                            VARCHAR(255) NOT NULL,
     average_calories_burnt_per_hour REAL         NULL,
     distance_activity               BOOLEAN      NOT NULL,
-    user_id                         BIGINT       NOT NULL,
+    custom_activity               BOOLEAN      NOT NULL,
+    user_id                         BIGINT       NULL,
     FOREIGN KEY (user_id)
         REFERENCES user_management.user_details (id)
 );
@@ -19,6 +20,7 @@ CREATE TABLE IF NOT EXISTS activity.activity
 (
     id                BIGSERIAL NOT NULL PRIMARY KEY,
     activity_duration_in_minutes REAL      NULL,
+    training_plan_name VARCHAR(255)      NULL,
     burnt_calories    INT       NULL,
     distance_traveled REAL      NULL,
     activity_date     TIMESTAMP NOT NULL,

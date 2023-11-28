@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-class BodyMeasurementDto {
+public class BodyMeasurementDto {
     private Long id;
     private Float chest;
     private Float bicepsLeft;

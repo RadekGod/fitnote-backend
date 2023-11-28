@@ -4,12 +4,18 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.fitnote.activity.ActivityDto;
+import pl.fitnote.activity.ActivityFacade;
+import pl.fitnote.activity.ActivityTypeDto;
 import pl.fitnote.commons.UserDetails;
 import pl.fitnote.exercise.Exercise;
 import pl.fitnote.exercise.ExerciseFacade;
 import pl.fitnote.user.User;
 import pl.fitnote.user.UserFacade;
 
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,6 +26,7 @@ class TrainingFacadeImpl implements TrainingFacade {
 
     private final TrainingFactory trainingFactory;
     private final ExerciseFacade exerciseFacade;
+    private final ActivityFacade activityFacade;
     private final UserFacade userFacade;
     private final TrainingPersistRepository trainingPersistRepository;
     private final TrainingExerciseSetPersistRepository trainingExerciseSetPersistRepository;
@@ -43,7 +50,19 @@ class TrainingFacadeImpl implements TrainingFacade {
 
         Training trainingToSave = trainingFactory.createTrainingFromDto(command, trainingExercises, requestingUser);
         trainingToSave.getTrainingExercises().forEach(trainingExercise -> trainingExercise.setTraining(trainingToSave));
-        return trainingPersistRepository.save(trainingToSave).getId();
+        Long savedTrainingId = trainingPersistRepository.save(trainingToSave).getId();
+        ActivityDto activityDto = ActivityDto.builder()
+                .activityDurationInMinutes(calculateTrainingDuration(command.getFinishTime(), command.getStartTime()))
+                .trainingPlanName(command.getName())
+                .burntCalories(0)
+                .distanceTraveled(null)
+                .activityDate(command.getStartTime())
+                .activityType(ActivityTypeDto.builder()
+                        .id(7L)
+                        .build())
+                .build();
+        activityFacade.createActivity(activityDto, userDetails);
+        return savedTrainingId;
     }
 
     @Override
@@ -124,5 +143,10 @@ class TrainingFacadeImpl implements TrainingFacade {
         Training training = trainingQueryRepository.findByIdAndUserEmail(trainingId, userDetails.getEmail(), Training.class)
                 .orElseThrow(EntityNotFoundException::new);
         trainingPersistRepository.delete(training);
+    }
+
+    private float calculateTrainingDuration(LocalDateTime finishTime, LocalDateTime startTime) {
+        return (float) ((finishTime.toInstant(ZoneId.systemDefault().getRules().getOffset(finishTime)).toEpochMilli()
+                - startTime.toInstant(ZoneId.systemDefault().getRules().getOffset(startTime)).toEpochMilli()) / (1000 * 60));
     }
 }

@@ -4,7 +4,7 @@ import pl.fitnote.user.LengthUnit;
 
 import java.time.LocalDateTime;
 
-interface BodyMeasurementProjection {
+public interface BodyMeasurementProjection {
     Long getId();
 
     Float getChest();
