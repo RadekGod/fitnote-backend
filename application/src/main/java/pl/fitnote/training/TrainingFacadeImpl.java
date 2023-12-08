@@ -54,7 +54,7 @@ class TrainingFacadeImpl implements TrainingFacade {
         ActivityDto activityDto = ActivityDto.builder()
                 .activityDurationInMinutes(calculateTrainingDuration(command.getFinishTime(), command.getStartTime()))
                 .trainingPlanName(command.getName())
-                .burntCalories(0)
+                .burntKilocalories(0)
                 .distanceTraveled(null)
                 .activityDate(command.getStartTime())
                 .activityType(ActivityTypeDto.builder()

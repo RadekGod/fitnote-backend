@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS activity.activity
     id                BIGSERIAL NOT NULL PRIMARY KEY,
     activity_duration_in_minutes REAL      NULL,
     training_plan_name VARCHAR(255)      NULL,
-    burnt_calories    INT       NULL,
+    burnt_kilocalories    INT       NULL,
     distance_traveled REAL      NULL,
     activity_date     TIMESTAMP NOT NULL,
     activity_type_id  BIGINT    NOT NULL,

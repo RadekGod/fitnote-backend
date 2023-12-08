@@ -33,6 +33,12 @@ databaseChangeLog:
       file: db/changelog/sql/sequences/activity_sequences.sql
   - include:
       file: db/changelog/sql/schema/sleep_schema.sql
+  - include:
+      file: db/changelog/sql/schema/diet_schema.sql
+  - include:
+      file: db/changelog/sql/populate/diet_populate.sql
+  - include:
+      file: db/changelog/sql/sequences/diet_sequences.sql
 #  - include:
 #      file: db/changelog/sql/user_well_being_note_schema.sql
 #  - include:

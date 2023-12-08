@@ -6,7 +6,7 @@ public interface ActivityProjection {
     Long getId();
     Float getActivityDurationInMinutes();
     String getTrainingPlanName();
-    Integer getBurntCalories();
+    Integer getBurntKilocalories();
     Float getDistanceTraveled();
     LocalDateTime getActivityDate();
     ActivityTypeProjection getActivityType();

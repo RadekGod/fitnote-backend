@@ -9,9 +9,9 @@ class ActivityFactory {
         return Activity.builder()
                 .activityDurationInMinutes(source.getActivityDurationInMinutes())
                 .trainingPlanName(source.getTrainingPlanName())
-                .burntCalories(source.getBurntCalories() == 0
-                        ? calculateBurntCalories(source.getActivityDurationInMinutes(), activityType.getAverageCaloriesBurntPerHour())
-                        : source.getBurntCalories())
+                .burntKilocalories(source.getBurntKilocalories() == 0
+                        ? calculateBurntKilocalories(source.getActivityDurationInMinutes(), activityType.getAverageCaloriesBurntPerHour())
+                        : source.getBurntKilocalories())
                 .distanceTraveled(source.getDistanceTraveled())
                 .activityDate(source.getActivityDate())
                 .activityType(activityType)
@@ -23,14 +23,14 @@ class ActivityFactory {
         return toUpdate.toBuilder()
                 .activityDurationInMinutes(source.getActivityDurationInMinutes())
                 .trainingPlanName(source.getTrainingPlanName())
-                .burntCalories(calculateBurntCalories(source.getActivityDurationInMinutes(), activityType.getAverageCaloriesBurntPerHour()))
+                .burntKilocalories(calculateBurntKilocalories(source.getActivityDurationInMinutes(), activityType.getAverageCaloriesBurntPerHour()))
                 .distanceTraveled(source.getDistanceTraveled())
                 .activityDate(source.getActivityDate())
                 .activityType(activityType)
                 .build();
     }
 
-    Integer calculateBurntCalories(Float activityDurationInMinutes, Float averageCaloriesBurntPerHour) {
+    Integer calculateBurntKilocalories(Float activityDurationInMinutes, Float averageCaloriesBurntPerHour) {
         return Math.round(activityDurationInMinutes * averageCaloriesBurntPerHour / 60);
     }
 }
