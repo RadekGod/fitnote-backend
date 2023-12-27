@@ -30,14 +30,14 @@ public class GeneralMeasurementServiceImpl implements GeneralMeasurementService 
     @Override
     @Transactional
     public void updateGeneralMeasurement(final Long generalMeasurementId, final GeneralMeasurementDto command, final UserDetails userDetails) {
-        GeneralMeasurement generalMeasurementToUpdate = generalMeasurementQueryRepository.findGeneralMeasurementByGivenIdAndEmail(generalMeasurementId, userDetails.getEmail(), GeneralMeasurement.class)
+        GeneralMeasurement generalMeasurementToUpdate = generalMeasurementQueryRepository.findByIdAndUserEmail(generalMeasurementId, userDetails.getEmail(), GeneralMeasurement.class)
                 .orElseThrow(EntityNotFoundException::new);
         generalMeasurementPersistRepository.save(generalMeasurementFactory.updateGeneralMeasurementWithDto(generalMeasurementToUpdate, command));
     }
 
     @Override
     public <T> T getGeneralMeasurement(final Long generalMeasurementId, final UserDetails userDetails, final Class<T> type) {
-        return generalMeasurementQueryRepository.findGeneralMeasurementByGivenIdAndEmail(generalMeasurementId, userDetails.getEmail(), type)
+        return generalMeasurementQueryRepository.findByIdAndUserEmail(generalMeasurementId, userDetails.getEmail(), type)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
@@ -60,7 +60,7 @@ public class GeneralMeasurementServiceImpl implements GeneralMeasurementService 
     @Override
     @Transactional
     public void deleteGeneralMeasurement(final Long generalMeasurementId, final UserDetails userDetails) {
-        GeneralMeasurement generalMeasurement = generalMeasurementQueryRepository.findGeneralMeasurementByGivenIdAndEmail(generalMeasurementId, userDetails.getEmail(), GeneralMeasurement.class)
+        GeneralMeasurement generalMeasurement = generalMeasurementQueryRepository.findByIdAndUserEmail(generalMeasurementId, userDetails.getEmail(), GeneralMeasurement.class)
                 .orElseThrow(EntityNotFoundException::new);
         generalMeasurementPersistRepository.delete(generalMeasurement);
     }
