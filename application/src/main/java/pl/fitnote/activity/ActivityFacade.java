@@ -8,7 +8,7 @@ public interface ActivityFacade {
     Long createActivity(ActivityDto command, UserDetails userDetails);
 
     void updateActivity(Long activityId, ActivityDto command, UserDetails userDetails);
-    void calculateBurntCaloriesIfNeeded(Long activityTypeId, ActivityTypeDto command, UserDetails userDetails);
+    void calculateBurntKilocaloriesIfNeeded(Long activityTypeId, ActivityTypeDto command, UserDetails userDetails);
 
     List<ActivityProjection> getAllActivities(UserDetails userDetails);
 

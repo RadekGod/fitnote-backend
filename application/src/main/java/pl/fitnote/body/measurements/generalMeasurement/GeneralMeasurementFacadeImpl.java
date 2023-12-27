@@ -1,6 +1,7 @@
 package pl.fitnote.body.measurements.generalMeasurement;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import pl.fitnote.commons.UserDetails;
 import pl.fitnote.user.User;
@@ -8,7 +9,7 @@ import pl.fitnote.user.UserFacade;
 
 import java.util.List;
 
-@Service
+@Component
 @RequiredArgsConstructor
 class GeneralMeasurementFacadeImpl implements GeneralMeasurementFacade {
 

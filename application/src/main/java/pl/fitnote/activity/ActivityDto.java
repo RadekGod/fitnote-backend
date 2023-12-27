@@ -13,7 +13,7 @@ public class ActivityDto {
     private Long id;
     private Float activityDurationInMinutes;
     private String trainingPlanName;
-    private Integer burntCalories;
+    private Integer burntKilocalories;
     private Float distanceTraveled;
     private LocalDateTime activityDate;
     private ActivityTypeDto activityType;

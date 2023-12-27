@@ -40,7 +40,7 @@ class ActivityTypeController {
     @PutMapping("/{id}")
     ResponseEntity<Void> updateActivityType(@PathVariable("id") Long activityTypeId, @RequestBody ActivityTypeDto command) {
         try {
-            activityFacade.calculateBurntCaloriesIfNeeded(activityTypeId, command, SecurityContextUtils.getLoggedUserDetails());
+            activityFacade.calculateBurntKilocaloriesIfNeeded(activityTypeId, command, SecurityContextUtils.getLoggedUserDetails());
             activityTypeFacade.updateActivityType(activityTypeId, command, SecurityContextUtils.getLoggedUserDetails());
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException exception) {

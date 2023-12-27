@@ -1,6 +1,6 @@
 -- liquibase formatted sql
 
--- changeset liquibase:body_measurement_sequences runOnChange:false
+-- changeset liquibase:activity_sequences runOnChange:false
 
 
 create sequence if not exists activity.activity_id_seq;
