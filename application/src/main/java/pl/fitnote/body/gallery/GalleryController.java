@@ -29,7 +29,9 @@ class GalleryController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Long> addGalleryPhoto(@RequestParam(name = "image") MultipartFile image, @RequestPart(name = "photoInfo") String photoInfo) throws IOException {
-        GalleryPhotoDto galleryPhotoDto = new ObjectMapper().readValue(photoInfo, GalleryPhotoDto.class);
+        GalleryPhotoDto galleryPhotoDto = GalleryPhotoDto.builder()
+                .note(photoInfo)
+                .build();
         return new ResponseEntity<>(galleryFacade.addGalleryPhoto(image, galleryPhotoDto, SecurityContextUtils.getLoggedUserDetails()), HttpStatus.OK);
     }
 

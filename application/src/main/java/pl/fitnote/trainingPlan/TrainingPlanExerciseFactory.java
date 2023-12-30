@@ -19,7 +19,6 @@ class TrainingPlanExerciseFactory {
         return ExerciseSet.builder()
                 .weight(source.getWeight())
                 .repeats(source.getRepeats())
-                .completed(source.getCompleted())
                 .note(source.getNote())
                 .trainingPlanExercise(trainingPlanExercise)
                 .build();
@@ -29,7 +28,6 @@ class TrainingPlanExerciseFactory {
         return exerciseSetToUpdate.toBuilder()
                 .weight(source.getWeight())
                 .repeats(source.getRepeats())
-                .completed(source.getCompleted())
                 .note(source.getNote())
                 .build();
     }

@@ -72,7 +72,6 @@ class TrainingFacadeImpl implements TrainingFacade {
                 .orElseThrow(EntityNotFoundException::new);
         trainingToUpdate = trainingToUpdate.toBuilder()
                 .name(command.getName())
-                .note(command.getNote())
                 .startTime(command.getStartTime())
                 .finishTime(command.getFinishTime())
                 .build();

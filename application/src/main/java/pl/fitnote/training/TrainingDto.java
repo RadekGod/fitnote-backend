@@ -17,7 +17,6 @@ import java.util.List;
 public class TrainingDto {
     private Long id;
     private String name;
-    private String note;
     private List<TrainingExerciseDto> trainingExercises;
     private LocalDateTime startTime;
     private LocalDateTime finishTime;

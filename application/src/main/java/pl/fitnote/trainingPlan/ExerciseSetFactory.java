@@ -11,7 +11,6 @@ class ExerciseSetFactory {
         return source.stream().map(exerciseSetDto -> ExerciseSet.builder()
                 .weight(exerciseSetDto.getWeight())
                 .repeats(exerciseSetDto.getRepeats())
-                .completed(exerciseSetDto.getCompleted())
                 .note(exerciseSetDto.getNote())
                 .trainingPlanExercise(trainingPlanExercise)
                 .build()).toList();
@@ -22,7 +21,6 @@ class ExerciseSetFactory {
                 .id(source.getId())
                 .weight(source.getWeight())
                 .repeats(source.getRepeats())
-                .completed(source.getCompleted())
                 .note(source.getNote())
                 .build();
     }

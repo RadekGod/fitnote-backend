@@ -12,13 +12,13 @@ import java.util.List;
 public
 class TrainingExerciseSetFactory {
 
-    public List<ExerciseSet> createExerciseSet(List<ExerciseSetDto> source, TrainingPlanExercise trainingPlanExercise) {
-        return source.stream().map(exerciseSetDto -> ExerciseSet.builder()
+     List<TrainingExerciseSet> createExerciseSet(List<TrainingExerciseSetDto> source, TrainingExercise trainingExercise) {
+        return source.stream().map(exerciseSetDto -> TrainingExerciseSet.builder()
                 .weight(exerciseSetDto.getWeight())
                 .repeats(exerciseSetDto.getRepeats())
                 .completed(exerciseSetDto.getCompleted())
                 .note(exerciseSetDto.getNote())
-                .trainingPlanExercise(trainingPlanExercise)
+                .trainingExercise(trainingExercise)
                 .build()).toList();
     }
 

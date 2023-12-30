@@ -132,54 +132,54 @@ INSERT INTO training_plan.training_plan_exercise
 
 INSERT INTO training_plan.exercise_set
 (
-    id, weight, repeats, completed, note, training_plan_exercise_id
-) VALUES (1, 0, 20, false, 'Pierwsza seria rozgrzewkowa', 1);
+    id, weight, repeats, note, training_plan_exercise_id
+) VALUES (1, 0, 20, 'Pierwsza seria rozgrzewkowa', 1);
 
 INSERT INTO training_plan.exercise_set
 (
-    id, weight, repeats, completed, note, training_plan_exercise_id
-) VALUES (2, 10, 15, false, 'Pierwsza seria właściwa', 1);
+    id, weight, repeats, note, training_plan_exercise_id
+) VALUES (2, 10, 15, 'Pierwsza seria właściwa', 1);
 
 INSERT INTO training_plan.exercise_set
 (
-    id, weight, repeats, completed, note, training_plan_exercise_id
-) VALUES (3, 10, 15, false, 'Druga seria właściwa', 1);
-
-
-INSERT INTO training_plan.exercise_set
-(
-    id, weight, repeats, completed, note, training_plan_exercise_id
-) VALUES (4, 30, 12, false, 'Pierwsza seria właściwa', 2);
-
-INSERT INTO training_plan.exercise_set
-(
-    id, weight, repeats, completed, note, training_plan_exercise_id
-) VALUES (5, 30, 12, false, 'Druga seria właściwa', 2);
-
-INSERT INTO training_plan.exercise_set
-(
-    id, weight, repeats, completed, note, training_plan_exercise_id
-) VALUES (6, 35, 12, false, 'Trzecia seria właściwa', 2);
+    id, weight, repeats, note, training_plan_exercise_id
+) VALUES (3, 10, 15, 'Druga seria właściwa', 1);
 
 
 INSERT INTO training_plan.exercise_set
 (
-    id, weight, repeats, completed, note, training_plan_exercise_id
-) VALUES (7, 25, 12, false, 'Pierwsza seria właściwa', 3);
+    id, weight, repeats, note, training_plan_exercise_id
+) VALUES (4, 30, 12, 'Pierwsza seria właściwa', 2);
 
 INSERT INTO training_plan.exercise_set
 (
-    id, weight, repeats, completed, note, training_plan_exercise_id
-) VALUES (8, 30, 10, false, 'Druga seria właściwa', 3);
+    id, weight, repeats, note, training_plan_exercise_id
+) VALUES (5, 30, 12, 'Druga seria właściwa', 2);
 
 INSERT INTO training_plan.exercise_set
 (
-    id, weight, repeats, completed, note, training_plan_exercise_id
-) VALUES (9, 35, 6, false, 'Trzecia seria właściwa', 3);
+    id, weight, repeats, note, training_plan_exercise_id
+) VALUES (6, 35, 12, 'Trzecia seria właściwa', 2);
+
 
 INSERT INTO training_plan.exercise_set
 (
-    id, weight, repeats, completed, note, training_plan_exercise_id
-) VALUES (10, 0, 20, false, 'Pierwsza seria rozgrzewkowa', 4);
+    id, weight, repeats, note, training_plan_exercise_id
+) VALUES (7, 25, 12, 'Pierwsza seria właściwa', 3);
+
+INSERT INTO training_plan.exercise_set
+(
+    id, weight, repeats, note, training_plan_exercise_id
+) VALUES (8, 30, 10, 'Druga seria właściwa', 3);
+
+INSERT INTO training_plan.exercise_set
+(
+    id, weight, repeats, note, training_plan_exercise_id
+) VALUES (9, 35, 6, 'Trzecia seria właściwa', 3);
+
+INSERT INTO training_plan.exercise_set
+(
+    id, weight, repeats, note, training_plan_exercise_id
+) VALUES (10, 0, 20, 'Pierwsza seria rozgrzewkowa', 4);
 
 

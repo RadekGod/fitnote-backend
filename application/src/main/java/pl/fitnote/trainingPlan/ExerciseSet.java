@@ -35,7 +35,6 @@ public class ExerciseSet {
     private Long id;
     private Float weight;
     private Long repeats;
-    private Boolean completed;
     private String note;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

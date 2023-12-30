@@ -8,8 +8,6 @@ public interface SimpleTrainingProjection {
 
     String getName();
 
-    String getNote();
-
     LocalDateTime getStartTime();
 
     LocalDateTime getFinishTime();

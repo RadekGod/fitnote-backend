@@ -34,7 +34,7 @@ import java.time.Instant;
 import java.util.Set;
 
 @Entity
-@Table(name = "user_details", schema = "user_management")
+@Table(name = "user", schema = "user_management")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -43,9 +43,9 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_details_sequence_generator")
-    @SequenceGenerator(name = "user_details_sequence_generator",
-            sequenceName = "user_details_id_seq",
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence_generator")
+    @SequenceGenerator(name = "user_sequence_generator",
+            sequenceName = "user_id_seq",
             allocationSize = 1,
             schema = "user_management")
     @Column(nullable = false, updatable = false, unique = true)

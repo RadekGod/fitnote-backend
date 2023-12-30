@@ -23,7 +23,6 @@ class TrainingFactory {
     Training createTrainingFromDto(TrainingDto source, List<TrainingExercise> trainingExercises, User requestingUser) {
         return Training.builder()
                 .name(source.getName())
-                .note(source.getNote())
                 .startTime(source.getStartTime())
                 .finishTime(source.getFinishTime())
                 .trainingExercises(trainingExercises)
@@ -81,7 +80,6 @@ class TrainingFactory {
         return TrainingDto.builder()
                 .id(source.getId())
                 .name(source.getName())
-                .note(source.getNote())
                 .trainingExercises(trainingPlanExerciseDtoList)
                 .startTime(source.getStartTime())
                 .finishTime(source.getFinishTime())

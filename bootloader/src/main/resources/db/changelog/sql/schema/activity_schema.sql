@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS activity.activity_type
     custom_activity               BOOLEAN      NOT NULL,
     user_id                         BIGINT       NULL,
     FOREIGN KEY (user_id)
-        REFERENCES user_management.user_details (id)
+        REFERENCES user_management.user (id)
 );
 
 CREATE TABLE IF NOT EXISTS activity.activity
@@ -26,6 +26,6 @@ CREATE TABLE IF NOT EXISTS activity.activity
     activity_date     TIMESTAMP NOT NULL,
     activity_type_id  BIGINT    NOT NULL,
     user_id           BIGINT    NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user_management.user_details (id),
+    FOREIGN KEY (user_id) REFERENCES user_management.user (id),
     FOREIGN KEY (activity_type_id) REFERENCES activity.activity_type (id)
 );

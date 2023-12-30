@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS body.body_measurement
     length_unit      VARCHAR(40) NOT NULL,
     measurement_date TIMESTAMP   NOT NULL,
     user_id          BIGINT      NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user_management.user_details (id)
+    FOREIGN KEY (user_id) REFERENCES user_management.user (id)
 );
 
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS body.general_measurement
     weight_unit      VARCHAR(40) NOT NULL,
     measurement_date TIMESTAMP   NOT NULL,
     user_id          BIGINT      NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user_management.user_details (id)
+    FOREIGN KEY (user_id) REFERENCES user_management.user (id)
 );
 
 CREATE TABLE IF NOT EXISTS body.gallery_photo
@@ -49,5 +49,5 @@ CREATE TABLE IF NOT EXISTS body.gallery_photo
     application_file_id BIGINT        NOT NULL,
     user_id             BIGINT        NOT NULL,
     FOREIGN KEY (application_file_id) REFERENCES application_file.application_file (id),
-    FOREIGN KEY (user_id) REFERENCES user_management.user_details (id)
+    FOREIGN KEY (user_id) REFERENCES user_management.user (id)
 );

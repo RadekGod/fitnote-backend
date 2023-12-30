@@ -15,5 +15,5 @@ CREATE TABLE IF NOT EXISTS diet.meal
     salt            REAL              NULL,
     meal_date       TIMESTAMP NOT NULL,
     user_id         BIGINT    NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user_management.user_details (id)
+    FOREIGN KEY (user_id) REFERENCES user_management.user (id)
 );

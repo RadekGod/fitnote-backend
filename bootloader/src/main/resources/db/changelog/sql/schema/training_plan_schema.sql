@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS training_plan.exercise
     application_file_id BIGINT        NULL,
     user_id             BIGINT        NULL,
     FOREIGN KEY (application_file_id) REFERENCES application_file.application_file (id),
-    FOREIGN KEY (user_id) REFERENCES user_management.user_details (id)
+    FOREIGN KEY (user_id) REFERENCES user_management.user (id)
 );
 
 CREATE TABLE IF NOT EXISTS training_plan.exercise_category_group
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS training_plan.training_plan
     name          VARCHAR(255)  NULL,
     training_days VARCHAR(255)  NOT NULL,
     user_id       BIGINT        NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user_management.user_details (id)
+    FOREIGN KEY (user_id) REFERENCES user_management.user (id)
 );
 
 CREATE TABLE IF NOT EXISTS training_plan.training_plan_exercise
@@ -62,7 +62,6 @@ CREATE TABLE IF NOT EXISTS training_plan.exercise_set
     id                        BIGSERIAL     NOT NULL PRIMARY KEY,
     weight                    REAL          NULL,
     repeats                   INT           NULL,
-    completed                 BOOLEAN       NULL,
     note                      VARCHAR(1000) NULL,
     training_plan_exercise_id BIGINT        NOT NULL,
     FOREIGN KEY (training_plan_exercise_id) REFERENCES training_plan.training_plan_exercise (id)

@@ -15,5 +15,5 @@ CREATE TABLE IF NOT EXISTS sleep.sleep
     creation_date     TIMESTAMP     NULL,
     user_id           BIGINT        NOT NULL,
     FOREIGN KEY (user_id)
-        REFERENCES user_management.user_details (id)
+        REFERENCES user_management.user (id)
 );

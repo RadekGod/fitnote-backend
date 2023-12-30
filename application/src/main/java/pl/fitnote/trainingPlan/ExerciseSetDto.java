@@ -15,7 +15,6 @@ public class ExerciseSetDto {
     private Long id;
     private Float weight;
     private Long repeats;
-    private Boolean completed;
     private String note;
     private TrainingPlanExerciseDto trainingPlanExerciseDto;
 }

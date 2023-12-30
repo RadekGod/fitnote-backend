@@ -43,8 +43,6 @@ class Training {
     @Column(nullable = false)
     private String name;
 
-    private String note;
-
     @Column(nullable = false)
     private LocalDateTime startTime;
 

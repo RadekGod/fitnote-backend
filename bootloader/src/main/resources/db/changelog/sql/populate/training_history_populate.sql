@@ -6,14 +6,14 @@
 
 INSERT INTO training_history.training
 (
- id, name, note, start_time, finish_time, user_id
-) VALUES (1, 'Push', 'Trening przebiegł w porządku, następym razem powinienem bardziej rozgrzać ramiona',
+ id, name, start_time, finish_time, user_id
+) VALUES (1, 'Push',
           '2023-01-06T10:24', '2023-01-06T12:03', 1);
 
 INSERT INTO training_history.training
 (
-    id, name, note, start_time, finish_time, user_id
-) VALUES (2, 'Pull', 'Trening przebiegł w porządku, następym razem wziąć większe obciążenie',
+    id, name, start_time, finish_time, user_id
+) VALUES (2, 'Pull',
           '2023-01-07T10:24', '2023-01-07T12:03', 1);
 
 

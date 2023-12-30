@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS user_management.user_settings
 );
 
 
-CREATE TABLE IF NOT EXISTS user_management.user_details
+CREATE TABLE IF NOT EXISTS user_management.user
 (
     id               BIGSERIAL PRIMARY KEY,
     email            VARCHAR(255) NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS user_management.user_details
     last_name        VARCHAR(255) NULL,
     birth_date       DATE         NULL,
     gender           VARCHAR(6)   NULL,
-    user_settings_id BIGINT,
+    user_settings_id BIGINT NOT NULL,
     FOREIGN KEY (user_settings_id)
         REFERENCES user_management.user_settings (id)
 );
@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS user_management.user_authority
     user_id      BIGINT    NOT NULL,
     authority_id BIGINT    NOT NULL,
     FOREIGN KEY (user_id)
-        REFERENCES user_management.user_details (id),
+        REFERENCES user_management.user (id),
     FOREIGN KEY (authority_id)
-        REFERENCES user_management.user_details (id),
+        REFERENCES user_management.authority (id),
     CONSTRAINT user_authority_pkey PRIMARY KEY (user_id, authority_id)
 );
